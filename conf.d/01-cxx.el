@@ -4,7 +4,12 @@
 ;;(glasses-mode) 
 
 ;; CUDA files are C++ also
-(add-to-list 'auto-mode-alist '("\\.\\(cu\\|cpp\\|cxx\\|cc\\)$" . c++-mode))
+;; as Slice definitions, too (a little weird, yeah)
+(add-to-list 'auto-mode-alist '("\\.\\(cu\\|cpp\\|cxx\\|cc\\|ice\\)$" . c++-mode))
+
+(font-lock-add-keywords 'c++-mode '(("\\<\\(idempotent\\)\\>" . font-lock-keyword-face)))
+(font-lock-add-keywords 'c++-mode '(("\\<\\(interface\\)\\>" . font-lock-keyword-face)))
+(font-lock-add-keywords 'c++-mode '(("\\<\\(extends\\)\\>" . font-lock-keyword-face)))
 
 ;;; Functions for lineup in math exprs (UNUSED)
 (defun my-c-lineup-math (langelem)
