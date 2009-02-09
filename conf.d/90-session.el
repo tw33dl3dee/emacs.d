@@ -10,6 +10,8 @@
 ;;(require 'session)
 ;;(add-hook 'after-init-hook 'session-initialize)
 
+;; Way 3: Desktop
+
 (desktop-save-mode 1)
 
 ;; Customization follows below
@@ -29,9 +31,11 @@
    (regexp-history           . 60)
    (regexp-search-ring       . 20)
    (search-ring              . 20)
-   (shell-command-history    . 50)))
+   (shell-command-history    . 50)
+   desktop-dirname))
 
 (add-to-list 'desktop-locals-to-save 'buffer-file-coding-system)
+(add-to-list 'desktop-locals-to-save 'desktop-dirname)
 
 (setq desktop-buffers-not-to-save
 	  (concat "\\(" "^nn\\.a[0-9]+\\|\\.log\\|(ftp)\\|^tags\\|^TAGS"
@@ -42,7 +46,8 @@
 
 (setq-default desktop-load-locked-desktop nil)
 (setq-default desktop-missing-file-warning nil)
-(setq-default desktop-path (quote ("~")))
+(setq-default desktop-path (list "~/.emacs.d/"))
+(setq-default desktop-dirname "~/.emacs.d/")
 (setq-default desktop-save t)
 (setq-default desktop-save-mode t)
 (setq-default save-place t)
@@ -60,4 +65,10 @@
 (add-to-list 'desktop-minor-mode-handlers '(srecode-minor-mode . my-desktop-ignore-semantic))
 (add-to-list 'desktop-minor-mode-handlers '(ede-minor-mode . my-desktop-ignore-semantic))
 
-(desktop-read)
+(add-hook 'desktop-after-read-hook #'(lambda () (setq desktop-dirname "~/.emacs.d/") (setq-default desktop-dirname "~/.emacs.d/") (prin1 desktop-dirname)))
+(add-hook 'desktop-after-read-hook #'(lambda () (interactive) (list-buffers) (switch-to-buffer "*Buffer List*") (delete-other-windows)))
+
+(progn (interactive) (desktop-read "~/.emacs.d/") (setq desktop-dirname "~/.emacs.d/"))
+
+(setq desktop-dirname "~/.emacs.d/")
+(setq-default desktop-dirname "~/.emacs.d/")

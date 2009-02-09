@@ -38,7 +38,7 @@
  '(grep-template "nice grep <C> -nH -e <R> <F>")
  '(icomplete-mode t nil (icomplete))
  '(inhibit-startup-screen t)
- '(initial-buffer-choice t)
+ '(initial-buffer-choice nil)
  '(locate-command "slocate")
  '(locate-prompt-for-command nil)
  '(locate-update-command "sudo updatedb")
