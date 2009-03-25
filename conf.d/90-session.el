@@ -2,13 +2,13 @@
 
 ;; Way 1: Save place
 
-;;(require 'saveplace)
-;;(setq-default save-place t)	
+;; (require 'saveplace)
+;; (setq-default save-place t)	
 
 ;; Way 2: Session
 
-;;(require 'session)
-;;(add-hook 'after-init-hook 'session-initialize)
+(require 'session)
+(add-hook 'after-init-hook 'session-initialize)
 
 ;; Way 3: Desktop
 

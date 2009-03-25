@@ -54,6 +54,8 @@
  '(partial-completion-mode t nil (complete))
  '(perl-tab-always-indent t)
  '(python-guess-indent nil)
+ '(save-place-file "~/.emacs.d/places")
+ '(session-undo-check 0)
  '(show-paren-mode t nil (paren))
  '(size-indication-mode t)
  '(split-width-threshold nil)
