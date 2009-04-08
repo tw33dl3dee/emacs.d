@@ -1,4 +1,5 @@
 ;; key rebinding
+
 (global-unset-key "\C-z")
 (global-set-key "\C-z\C-c" 'compile)
 (global-set-key "\C-z\C-s" 'shell)
@@ -14,3 +15,6 @@
 (global-set-key "\C-z\C-r" (lambda () (interactive) (revert-buffer nil t)))
 (global-set-key [(f9)] 'PC-lisp-complete-symbol)
 (grep-compute-defaults) (global-set-key [(f2)] (lambda () (interactive) (rgrep (current-word) "*" ".")))
+
+;; make C-return alias to M-TAB (coz' ESC TAB is too slow)
+(global-set-key [C-return] "\M-\t")
