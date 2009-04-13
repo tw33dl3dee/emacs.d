@@ -20,7 +20,7 @@ not visiting a file"
                 (possible-tags-file (concat parent "TAGS")))
            (cond
              ((file-exists-p possible-tags-file) (throw 'found-it possible-tags-file))
-             ((string= "/TAGS" possible-tags-file) (error "no tags file found"))
+             ((string= "/TAGS" possible-tags-file) nil)
              (t (find-tags-file-r (directory-file-name parent))))))
 
     (if (buffer-file-name)
