@@ -30,10 +30,17 @@ not visiting a file"
 
 (defun jds-set-tags-file-path ()
   "calls `jds-find-tags-file' to recursively search up the directory tree to find
-a file named 'TAGS'. If found, set 'tags-table-list' with that path as an argument
-otherwise raises an error."
+a file named 'TAGS'. If found, set 'tags-table-list' with that path as an argument,
+otherwise raises an error. If path to TAGS differs from its previous value,
+resets `tags-completion-table'."
   (interactive)
-  (setq tags-table-list (list (jds-find-tags-file))))
+  (let ((tags-file (jds-find-tags-file)))
+	;; do nothing it TAGS not found
+	(when (and tags-file (not (equal (list tags-file) tags-table-list)))
+	  (setq tags-table-list (list tags-file) 
+			tags-completion-table nil)
+	  (message "Loaded TAGS table: %s" tags-table-list)
+	  )))
 
 ;; delay search the TAGS file after open the source file
 (add-hook 'find-file-hook

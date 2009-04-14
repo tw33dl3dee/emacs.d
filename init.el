@@ -31,6 +31,7 @@
  '(doxymacs-doxygen-dirs (quote (("^/home/twee/work/videofon/views/" "/home/twee/work/videofon/views/tags.xml" "file:///home/twee/work/videofon/views/doc/html/"))))
  '(doxymacs-use-external-xml-parser t)
  '(ebs-exclude-buffer-regexps (quote ("^ " "^\\*Messages\\*" "^\\*Buffer List\\*" "^\\*Completions\\*" "^\\*scratch\\*" "^\\*debug.*\\*" "^\\*GNU Emacs\\*")))
+ '(etags-select-go-if-unambiguous t)
  '(explicit-bash-args (quote ("--noediting" "--login" "-i")))
  '(glasses-face "bold")
  '(glasses-separate-parentheses-p nil)
