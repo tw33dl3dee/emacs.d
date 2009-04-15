@@ -34,13 +34,14 @@ a file named 'TAGS'. If found, set 'tags-table-list' with that path as an argume
 otherwise raises an error. If path to TAGS differs from its previous value,
 resets `tags-completion-table'."
   (interactive)
-  (let ((tags-file (jds-find-tags-file)))
-	;; do nothing it TAGS not found
-	(when (and tags-file (not (equal (list tags-file) tags-table-list)))
-	  (setq tags-table-list (list tags-file) 
-			tags-completion-table nil)
-	  (message "Loaded TAGS table: %s" tags-table-list)
-	  )))
+  (unless (file-remote-p (buffer-file-name))
+	(let ((tags-file (jds-find-tags-file)))
+	  ;; do nothing it TAGS not found
+	  (when (and tags-file (not (equal (list tags-file) tags-table-list)))
+		(setq tags-table-list (list tags-file) 
+			  tags-completion-table nil)
+		(message "Loaded TAGS table: %s" tags-table-list)
+		))))
 
 ;; delay search the TAGS file after open the source file
 (add-hook 'find-file-hook
