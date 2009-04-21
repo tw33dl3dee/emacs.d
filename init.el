@@ -11,6 +11,7 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(PC-include-file-path (quote ("/usr/include" "/usr/local/include" "/opt/boost/include/" "/usr/include/mysql" "/usr/lib/qt4/include/QtCore" "/usr/lib/qt4/include/QtQui" "/usr/lib/qt4/include/QtNetwork" "/usr/lib/qt4/include/QtSql" "/usr/lib/qt4/include/QtOpenGL")))
+ '(ange-ftp-try-passive-mode t)
  '(auto-compression-mode t nil (jka-compr))
  '(backward-delete-char-untabify-method nil)
  '(browse-url-browser-function (quote w3m-browse-url))
