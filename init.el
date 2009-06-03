@@ -28,6 +28,8 @@
  '(default-input-method "cyrillic-jcuken")
  '(delphi-case-label-indent 4)
  '(delphi-indent-level 4)
+ '(dictionary-default-dictionary "jbo->en")
+ '(dictionary-server "www.lojban.org")
  '(display-time-mode t)
  '(doxymacs-doxygen-dirs (quote (("^/home/twee/work/videofon/views/" "/home/twee/work/videofon/views/tags.xml" "file:///home/twee/work/videofon/views/doc/html/"))))
  '(doxymacs-use-external-xml-parser t)
