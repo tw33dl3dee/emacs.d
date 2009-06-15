@@ -3,7 +3,11 @@
 (add-to-list 'load-path "~/.emacs.d/site-lisp/python")
 
 ;;; indent after Return
-(add-hook 'python-mode-hook '(lambda () (define-key python-mode-map "\C-m" 'newline-and-indent)))
+(add-hook 'python-mode-hook 
+		  '(lambda () 
+			 (define-key python-mode-map "\C-m" 'newline-and-indent)
+			 ;;; Turn tabs off
+			 (set (make-local-variable 'indent-tabs-mode) nil)))
 
 ;; To enable ElDoc by default in your python mode buffers, you might want something like:
 ;;(add-hook 'python-mode-hook
