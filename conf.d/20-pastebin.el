@@ -1,0 +1,3 @@
+;; pastebin interface
+
+(load "pastebin")
