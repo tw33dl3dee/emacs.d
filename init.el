@@ -49,6 +49,11 @@
  '(locate-prompt-for-command nil)
  '(locate-update-command "sudo updatedb")
  '(make-backup-files nil)
+ '(matlab-comment-line-s "%% ")
+ '(matlab-comment-region-s "%%%")
+ '(matlab-indent-function t)
+ '(matlab-indent-level 4)
+ '(matlab-shell-command-switches "-nodesktop -nosplash")
  '(mouse-wheel-down-button 4 t)
  '(mouse-wheel-follow-mouse t)
  '(mouse-wheel-mode t nil (mwheel))
@@ -109,10 +114,3 @@
   (if (file-readable-p path) (load-file path)))
 
 (load-file-silently "~/.emacs.d/local.el")
-
- (autoload 'matlab-mode "matlab" "Matlab Editing Mode" t)
- (add-to-list
-  'auto-mode-alist
-  '("\\.m$" . matlab-mode))
- (setq matlab-indent-function t)
- (setq matlab-shell-command "matlab")

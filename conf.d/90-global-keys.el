@@ -9,6 +9,7 @@
 (global-set-key "\C-z\C-i" 'indent-region)
 (global-set-key "\C-z\C-l" 'locate)
 (global-set-key "\C-z\C-p" 'pastebin)
+(global-set-key "\C-z\C-m" 'matlab-shell)
 (global-set-key "\C-zl" 'locate-with-filter)
 (global-set-key "\C-z " 'xref-completion)
 (global-set-key "\C-z\C-x" (lambda () (interactive) (compile-and-run)))

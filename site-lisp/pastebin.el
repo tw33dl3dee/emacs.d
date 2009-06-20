@@ -64,6 +64,8 @@
     (sql-mode . "sql")
     (pascal-mode . "pascal")
     (tcl-mode . "tcl")
+    (octave-mode . "matlab")
+    (matlab-mode . "matlab")
     (nxml-mode . "xml")))
 
 (defvar pastebin-retrieved nil)
