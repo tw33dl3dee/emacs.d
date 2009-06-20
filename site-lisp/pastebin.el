@@ -109,7 +109,7 @@ virtual host to use.  For example use 'emacs' for 'emacs.pastebin.com'."
          (url-request-extra-headers
           '(("Content-Type" . "application/x-www-form-urlencoded")))
          (url-request-data
-          (concat (format "paste=Send&format=%s&expiry=d&poster=%s&code2=%s"
+          (concat (format "paste=Send&format=%s&expiry=m&poster=%s&remember=1&code2=%s"
                           (assoc-default major-mode pastebin-type-assoc nil "text")
                           (user-full-name)
                           (url-hexify-string data))))
