@@ -213,6 +213,32 @@ See also `lojban-compound-cmavo-rgx'.")
 
 See also `lojban-cmavo-rgx', `lojban-brivla-rgx'.")
 
+(defconst lojban-compound-cmavo-start-rgx
+  (concat lojban-cmavo-rgx "*")
+  "Regexp matching zero, single or compound cmavo (without end word marker).
+
+See also `lojban-cmavo-rgx', `lojban-compound-cmavo-rgx'.")
+
+(defconst lojban-compound-cmavo-cont-rgx
+  (concat lojban-cmavo-rgx "*\\>")
+  "Regexp matching continuation of a compound cmavo (contains end work marker).
+
+See also `lojban-cmavo-rgx', `lojban-compound-cmavo-start-rgx'.")
+
+(defconst lojban-digit-rgx
+  (regexp-opt 
+   (list  "no"   "pa"   "re"   "ci"   "vo"   "mu"   "xa"   "ze"    "bi"  "so" 					; PA1: numbers
+		  "dau"  "fei"  "gai"  "jau"  "rei"  "xei"  "vai"  										; PA2: hex
+		  "ce'i" "fi'u" "ki'o" "ma'u" "ni'u" "pi"   "pi'e" "ra'e" 								; PA3: signs
+		  "da'a" "du'e" "ji'i" "rau"  "ro"   "so'a" "so'e" "so'i" "so'o" "so'u" "su'e" "su'o"	; PA4: quantities
+		  "ci'i" "ka'o" "pai"  "te'o" "tu'o"													; PA5: constants
+		  ;;; excluded: PA3: za'u (greater), me'i (less); PA5: no'o (avg) xo (number question)
+		  )
+   t))
+
+(defconst lojban-number-rgx
+  (concat lojban-digit-rgx "+"))
+
 (defvar lojban-UI-rgx
   (concat "\\(\\.\\|\\<\\)" lojban-v-rgx "'?" lojban-v-rgx
 	  "\\(cui\\|nai\\)?")
@@ -312,7 +338,14 @@ Use `lojban-brivla-p' for an exact discrimination.
 
 This regexp, along with `lojban-compound-cmavo-rgx' and
 `lojban-cmene-rgx' should suffice to distinguish the three basic
-word types in lojban.")
+word types in lojban. See also `lojban-compound-brivla-rgx'")
+
+(defconst lojban-compound-brivla-rgx
+  (concat "\\<" lojban-valsi-rgx "\\(\\W+zei\\W+" lojban-valsi-rgx "\\)+\\>")
+
+  "Regexp matching a compound brivla (i.e. zei-abstraction whose parts are valsi).
+
+See also `lojban-brivla-rgx' and `lojban-brivla-p'.")
 
 (defun lojban-brivla-p (s &optional raise-error)
   "Return t if S is a morphologically valid brivla.
@@ -756,6 +789,10 @@ See also `lojban-parse-region'."
 	(setq end (match-beginning 0) next (point))
       (setq end (point-max)))
     (lojban-parse-region beg end t)))
+
+(defun lojban-translate-number (n)
+  (interactive "s")
+  (message (lojban-number-to-string n)))
 
 (provide 'lojban)
 

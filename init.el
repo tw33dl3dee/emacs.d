@@ -66,6 +66,7 @@
  '(partial-completion-mode t nil (complete))
  '(perl-tab-always-indent t)
  '(python-guess-indent nil)
+ '(safe-local-variable-values (quote ((minor-mode . lojban))))
  '(save-place-file "~/.emacs.d/places")
  '(session-undo-check 0)
  '(show-paren-mode t nil (paren))
@@ -87,6 +88,8 @@
  '(w3m-home-page "http://localhost/")
  '(w3m-use-cookies t)
  '(which-function-mode t nil (which-func))
+ '(woman-cache-filename "~/.wmncach.el")
+ '(woman-use-own-frame nil)
  '(x-select-enable-clipboard t)
  '(xref-completion-access-check t)
  '(xref-completion-delete-pending-identifier nil)
@@ -98,7 +101,11 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(default ((t (:stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :family "courier")))))
+ '(default ((t (:stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :family "courier"))))
+ '(woman-addition ((t nil)))
+ '(woman-bold ((((min-colors 88) (background light)) (:weight bold))))
+ '(woman-italic ((((min-colors 88) (background light)) (:underline t :slant italic))))
+ '(woman-unknown ((((background light)) nil))))
 
 ;;; Load configuration from conf.d/*.el
 (defun load-files-in-dir (path regexp)
