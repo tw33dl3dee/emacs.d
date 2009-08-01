@@ -89,6 +89,7 @@
  '(w3m-use-cookies t)
  '(which-function-mode t nil (which-func))
  '(woman-cache-filename "~/.wmncach.el")
+ '(woman-fill-frame t)
  '(woman-use-own-frame nil)
  '(x-select-enable-clipboard t)
  '(xref-completion-access-check t)
