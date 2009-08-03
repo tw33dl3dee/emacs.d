@@ -38,7 +38,7 @@
  '(ebs-exclude-buffer-regexps (quote ("^ " "^\\*Messages\\*" "^\\*Buffer List\\*" "^\\*Completions\\*" "^\\*scratch\\*" "^\\*debug.*\\*" "^\\*GNU Emacs\\*")))
  '(esense-check-syntax-when-idle 10)
  '(esense-find-function-matching-invocation-pattern t)
- '(esense-indexer-program "~/.emacs.d/site-lisp/esence/esense.sh")
+ '(esense-indexer-program "~/.emacs.d/site-lisp/esense/esense.sh")
  '(esense-preload-index-information-when-idle 5)
  '(esense-resolve-macros t)
  '(etags-select-go-if-unambiguous t)

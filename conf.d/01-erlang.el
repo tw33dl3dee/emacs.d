@@ -4,6 +4,6 @@
 (require 'erlang-start)
 (load "erlang_appwiz" t nil)
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/esence")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/esense")
 (require 'esense-start)
 
