@@ -1,3 +1,4 @@
 ;; pastebin interface
 
-(load "pastebin")
+(autoload 'pastebin "pastebin")
+(autoload 'pastebin-buffer "pastebin")

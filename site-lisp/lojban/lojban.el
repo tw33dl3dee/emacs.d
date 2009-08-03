@@ -82,7 +82,7 @@ Regexp matching letters that may appear in the middle of
 a valsi (lojban word).")
 
 (defconst lojban-c-letter-set (or "bcdfgj-npr-tvxz"
-				  "bcdfgjklmnprstvxz")
+								  "bcdfgjklmnprstvxz")
   "Lojban consonants, not including the apostrophe.")
 
 (defconst lojban-c-rgx (concat "[" lojban-c-letter-set "]")
@@ -119,20 +119,22 @@ a valsi (lojban word).")
 (defconst lojban-diphthongs+-rgx
   (regexp-opt
    (list "ai" "ei" "oi" "au" "ia" "ie" "ii" "io" "iu" "ua" "ue" "ui"
-	 "uo" "uu" "iy" "uy"))
+		 "uo" "uu" "iy" "uy"))
   "Regexp matching valid diphthongs in lojban and lojbanized words.")
 
 (defconst lojban-vv-letters
   (append lojban-diphthongs
-	  (list
-	   "a'a" "a'e" "a'i" "a'o" "a'u"
-	   "e'a" "e'e" "e'i" "e'o" "e'u"
-	   "i'a" "i'e" "i'i" "i'o" "i'u"
-	   "o'a" "o'e" "o'i" "o'o" "o'u"
-	   "u'a" "u'e" "u'i" "u'o" "u'u"))
+		  (list
+		   "a'a" "a'e" "a'i" "a'o" "a'u"
+		   "e'a" "e'e" "e'i" "e'o" "e'u"
+		   "i'a" "i'e" "i'i" "i'o" "i'u"
+		   "o'a" "o'e" "o'i" "o'o" "o'u"
+		   "u'a" "u'e" "u'i" "u'o" "u'u"))
   "Valid vowel pairs, including diphthongs.")
 
-(defconst lojban-vv-rgx "[aeiou]'[aeiou]")
+(defconst lojban-vv-rgx
+  (regexp-opt lojban-vv-letters))
+;;"[aeiou]'[aeiou]")
 
 (defconst lojban-cc-letters
   '("bl" "br" "cf" "ck" "cl" "cm" "cn" "cp"
@@ -163,15 +165,15 @@ a valsi (lojban word).")
    (or (memq a lojban-maybe-voiced-consonants)
        (memq b lojban-maybe-voiced-consonants)
        (not
-	(or
-	 (and (memq a lojban-voiced-consonants)
-	      (memq b lojban-unvoiced-consonants))
-	 (and (memq a lojban-unvoiced-consonants)
-	      (memq b lojban-voiced-consonants)))))
+		(or
+		 (and (memq a lojban-voiced-consonants)
+			  (memq b lojban-unvoiced-consonants))
+		 (and (memq a lojban-unvoiced-consonants)
+			  (memq b lojban-voiced-consonants)))))
    (not (and (memq a '(?c ?j ?s ?z)) (memq b '(?c ?j ?s ?z))))
    (not (or (and (eq b ?x) (memq a '(?c ?k)))
-	    (and (eq a ?x) (memq b '(?c ?k)))
-	    (and (eq a ?m) (eq b ?z))))))
+			(and (eq a ?x) (memq b '(?c ?k)))
+			(and (eq a ?m) (eq b ?z))))))
 
 (defconst lojban-c/c-rgx (concat lojban-c-rgx lojban-c-rgx)
   "Regexp matching consonant pairs, with eventual false positives.
@@ -183,10 +185,10 @@ The first two letters should constitute a valid consonant pair, the
 last two a valid initial consonant pair."
   (and (lojban-c/c-p a b) (lojban-cc-p b c)
        (not (and (eq a ?n)
-		 (or (and (eq b ?d)
-			  (memq c '(?j ?z)))
-		     (and (eq b ?t)
-			  (memq c '(?c ?z))))))))
+				 (or (and (eq b ?d)
+						  (memq c '(?j ?z)))
+					 (and (eq b ?t)
+						  (memq c '(?c ?z))))))))
 
 (defconst lojban-valsi-rgx
   (concat "\\.?" lojban-middle-letter-rgx "+" "\\.?")
@@ -232,6 +234,7 @@ See also `lojban-cmavo-rgx', `lojban-compound-cmavo-start-rgx'.")
 		  "ce'i" "fi'u" "ki'o" "ma'u" "ni'u" "pi"   "pi'e" "ra'e" 								; PA3: signs
 		  "da'a" "du'e" "ji'i" "rau"  "ro"   "so'a" "so'e" "so'i" "so'o" "so'u" "su'e" "su'o"	; PA4: quantities
 		  "ci'i" "ka'o" "pai"  "te'o" "tu'o"													; PA5: constants
+		  "gei"																					; VUhU2: 10^
 		  ;;; excluded: PA3: za'u (greater), me'i (less); PA5: no'o (avg) xo (number question)
 		  )
    t))
@@ -241,7 +244,7 @@ See also `lojban-cmavo-rgx', `lojban-compound-cmavo-start-rgx'.")
 
 (defvar lojban-UI-rgx
   (concat "\\(\\.\\|\\<\\)" lojban-v-rgx "'?" lojban-v-rgx
-	  "\\(cui\\|nai\\)?")
+		  "\\(cui\\|nai\\)?")
   "Regexp matching attitudinal indicators.")
 
 (defun lojban-split-compound-cmavo (s)
@@ -276,52 +279,52 @@ returning nil if the word is not recognized as valid."
     (not
      (string-match
       (eval-when-compile
-	(concat "\\(" lojban-c-rgx "\\)\\1")) s))
+		(concat "\\(" lojban-c-rgx "\\)\\1")) s))
     (when raise-error
       (error "Double consonant in word: %s!"
-	     (match-string 1 s))))
+			 (match-string 1 s))))
    (let ((ok t)
-	 (p 0))
+		 (p 0))
      ;; consonant clusters
      (while (and ok
-		 (string-match
-		  (eval-when-compile
-		    (concat "[bcdfgjkpstvxz][bcdfgjkpstvxz]+"))
-		  s p))
+				 (string-match
+				  (eval-when-compile
+					(concat "[bcdfgjkpstvxz][bcdfgjkpstvxz]+"))
+				  s p))
        (let ((b (match-beginning 0))
-	     (e (match-end 0)))
-	 (let ((d (- e b)))
-	   (cond
-	    ((= d 2)
-	     (let ((x (aref s b))
-		   (y (aref s (+ b 1))))
-	       (or (if (= b 0) (lojban-cc-p x y)
-		     (lojban-c/c-p x y))
-		   (when raise-error
-		     (error "Invalid consonant pair: %c %c!"
-			    x y))
-		   (setq ok nil))))
-	    ((= d 3)
-	     (and
-	      (or (> b 0)
-		  (when raise-error
-		    (error
-		     "The word starts with a consonant triple!"))
-		  (setq ok nil))
-	      (let ((x (aref s b))
-		    (y (aref s (+ b 1)))
-		    (z (aref s (+ b 2))))
-		(or (lojban-c/cc-p x y z)
-		    (when raise-error
-		      (error "Invalid consonant triple: %c %c %c!"
-			     x y z))
-		    (setq ok nil)))))
-	    (t
-	     (when raise-error
-	       (error
-		"More than 3 consecutive (non-syllabic) consonants!")
-	       (setq ok nil))))
-	   (setq p e))))
+			 (e (match-end 0)))
+		 (let ((d (- e b)))
+		   (cond
+			((= d 2)
+			 (let ((x (aref s b))
+				   (y (aref s (+ b 1))))
+			   (or (if (= b 0) (lojban-cc-p x y)
+					 (lojban-c/c-p x y))
+				   (when raise-error
+					 (error "Invalid consonant pair: %c %c!"
+							x y))
+				   (setq ok nil))))
+			((= d 3)
+			 (and
+			  (or (> b 0)
+				  (when raise-error
+					(error
+					 "The word starts with a consonant triple!"))
+				  (setq ok nil))
+			  (let ((x (aref s b))
+					(y (aref s (+ b 1)))
+					(z (aref s (+ b 2))))
+				(or (lojban-c/cc-p x y z)
+					(when raise-error
+					  (error "Invalid consonant triple: %c %c %c!"
+							 x y z))
+					(setq ok nil)))))
+			(t
+			 (when raise-error
+			   (error
+				"More than 3 consecutive (non-syllabic) consonants!")
+			   (setq ok nil))))
+		   (setq p e))))
      ok)))
 
 ;;;; brivla
@@ -356,21 +359,62 @@ See also `lojban-brivla-rgx'."
   (and
    (or
     (string-match (eval-when-compile
-		    (concat
-		     "^" lojban-brivla-rgx "$"))
-		  s)
+					(concat
+					 "^" lojban-brivla-rgx "$"))
+				  s)
     (when raise-error
       ;; try to detect a more specific error
       (lojban-valsi-p s t)
       (error "Valid as a lojban word, but not as a brivla!")))
    (lojban-valsi-p s raise-error)))
 
+;;;; rafsi
+
+(defconst lojban-rafsi-3-rgx
+  (concat "\\(" "\\(?2:" lojban-cc-rgx lojban-v-rgx "\\)"
+		  "\\|" "\\(?2:" lojban-c-rgx lojban-vv-rgx "\\)[rn]?"
+		  "\\|" "\\(?2:" lojban-c-rgx lojban-v-rgx lojban-c-rgx "\\)y?" 
+		  "\\)"))
+
+(defconst lojban-rafsi-4-no-y-rgx
+  (concat "\\(" lojban-cc-rgx lojban-v-rgx lojban-c-rgx
+		  "\\|" lojban-c-rgx lojban-v-rgx lojban-c/c-rgx
+		  "\\)"))
+
+(defconst lojban-rafsi-4-rgx
+  (concat "\\(?:" lojban-rafsi-4-no-y-rgx "\\)y"))
+
+(defconst lojban-rafsi-5-rgx
+  (concat lojban-rafsi-4-no-y-rgx lojban-v-rgx "\\>"))
+
+;;;; lujvo
+
+(defun lojban-split-lujvo ()
+  (interactive)
+  (and 
+   (lojban-brivla-p (current-word))
+   (save-excursion
+	 (or
+	  (looking-at "\\<")
+	  (backward-word))
+	 (let (rafsi-list)
+	   (while
+		   (cond
+			((looking-at lojban-rafsi-5-rgx)
+			 (push (match-string-no-properties 0) rafsi-list))
+			((looking-at lojban-rafsi-4-rgx)
+			 (push (match-string-no-properties 2) rafsi-list))
+			((looking-at lojban-rafsi-3-rgx)
+			 (push (match-string-no-properties 2) rafsi-list))
+			((looking-at "\\W") nil)
+			(t nil))
+		 (goto-char (match-end 0)))
+	   (message "%s" (reverse rafsi-list))))))
+
 ;;;; gismu
 
 (defconst lojban-gismu-rgx
-  (concat "\\<\\(" lojban-cc-rgx lojban-v-rgx lojban-c-rgx
-	  "\\|" lojban-c-rgx lojban-v-rgx lojban-c/c-rgx
-	  "\\)" lojban-v-rgx "\\>")
+  (concat "\\<" lojban-rafsi-5-rgx)
   "Regexp matching a gismu, with eventual false positives.
 Use `lojban-gismu-p' for an exact discrimination.
 
@@ -387,8 +431,8 @@ See also `lojban-gismu-p'."
     (= (length string) 5)
     (when raise-error
       (if (< (length string) 5)
-	  (error "Not a gismu: too short!")
-	(error "Not a gismu: too long!"))))
+		  (error "Not a gismu: too short!")
+		(error "Not a gismu: too long!"))))
    (or
     (string-match lojban-gismu-rgx string)
     (when raise-error
@@ -396,7 +440,7 @@ See also `lojban-gismu-p'."
    (or (not (string-match "^.[aeiou]" string 0))
        (lojban-c/c-p (aref string 2) (aref string 3))
        (when raise-error
-	 (error "Not a gismu: invalid consonant pair!")))))
+		 (error "Not a gismu: invalid consonant pair!")))))
 
 ;;;; cmene
 
@@ -418,37 +462,37 @@ RAISE-ERROR behaves as in `lojban-valsi-rgx'.
 See also `lojban-cmene-rgx'."
   (let ((l (length s)))
     (and (or (string-match (eval-when-compile
-			     (concat
-			      "^" lojban-cmene-rgx "$"))
-			   s)
-	     (when raise-error
-	       ;; try to detect a more specific error
-	       (lojban-valsi-p s raise-error)
-	       (error "Valid as a lojban word, but not as a cmene!")))
-	 (lojban-valsi-p s raise-error)
-	 (let ((n 0) (p t))
-	   (while (string-match lojban-cmene-invalid-syllabes s n)
-	     (if (not (or (= n 0) (memq (aref s (- n 1))
-					lojban-vowels)))
-		 (setq n (match-end 0))
-	       (setq n (match-end 0))
-	       (unless (and
-			(not (= n l))
-			(or
-			 (memq (aref s n) lojban-vowels)
-			 (not
-			  (or
-			   (= (+ n 1) l)
-			   (memq (aref s (+ n 1)) lojban-vowels)))))
-		 (when raise-error
-		   (error "Invalid syllabe in cmene")
-		   (setq p nil)))))
-	   p))))
+							 (concat
+							  "^" lojban-cmene-rgx "$"))
+						   s)
+			 (when raise-error
+			   ;; try to detect a more specific error
+			   (lojban-valsi-p s raise-error)
+			   (error "Valid as a lojban word, but not as a cmene!")))
+		 (lojban-valsi-p s raise-error)
+		 (let ((n 0) (p t))
+		   (while (string-match lojban-cmene-invalid-syllabes s n)
+			 (if (not (or (= n 0) (memq (aref s (- n 1))
+										lojban-vowels)))
+				 (setq n (match-end 0))
+			   (setq n (match-end 0))
+			   (unless (and
+						(not (= n l))
+						(or
+						 (memq (aref s n) lojban-vowels)
+						 (not
+						  (or
+						   (= (+ n 1) l)
+						   (memq (aref s (+ n 1)) lojban-vowels)))))
+				 (when raise-error
+				   (error "Invalid syllabe in cmene")
+				   (setq p nil)))))
+		   p))))
 
 (defun lojban-number-cmavo (n)
   "Return the cmavo for the number N."
   (aref ["no" "pa" "re" "ci" "vo" "mu" "xa" "ze" "bi" "so"
-	 "dau" "fei" "gai" "jau" "rei" "vai"] n))
+		 "dau" "fei" "gai" "jau" "rei" "vai"] n))
 
 (put 'cmavo-table 'char-table-extra-slots 0)
 
@@ -500,63 +544,91 @@ remapped for exponential notation")
     table)
   "Table mapping lojban letters and other characters into lerfu.")
 
+(defvar lojban-describe-history nil "Lojban describe functions read history.")
+
+(defun lojban-describe-gismu-by-rafsi (&optional rafsi short)
+  (interactive "sRafsi: ")
+  )
+
 (defun lojban-describe-gismu (&optional gismu short)
   "Look up GISMU, and return its description line as string.
 
 With optional argument SHORT, just give a short definition.
 When called interactively, show that description in the message area."
-  (interactive "sGismu: ")
+  (interactive
+   (list (let* ((default-entry (current-word))
+				(input (read-string
+						(format "Gismu%s"
+								(if (string= default-entry "")
+									": "
+								  (format " (default %s): " default-entry)))
+						nil 'lojban-describe-history default-entry)))
+		   (if (string= input "")
+			   (error "No args given")
+			 input))))
   (let ((p (lojban-gismu-lookup gismu)))
     (unless p (error "Unrecognized gismu: %s" gismu))
     (save-window-excursion
       (save-excursion
-	(lojban-find-gismu-buffer)
-	(save-restriction
-	  (widen)
-	  (goto-char (symbol-value p))
-	  (let ((s
-		 (if short
-		     (let ((p (+ (point) 13)))
-		       (buffer-substring
-			p
-			(save-excursion
-			  (goto-char (+ p 42))
-			  (if (search-backward-regexp "[^ ]" p t)
-			      (match-end 0) p))))
-		   (buffer-substring
-		    (save-excursion (beginning-of-line) (point))
-		    (save-excursion (end-of-line) (point))))))
-	    (when (interactive-p) (message s))
-	    s))))))
+		(lojban-find-gismu-buffer)
+		(save-restriction
+		  (widen)
+		  (goto-char (symbol-value p))
+		  (let ((s
+				 (if short
+					 (let ((p (+ (point) 13)))
+					   (buffer-substring
+						p
+						(save-excursion
+						  (goto-char (+ p 42))
+						  (if (search-backward-regexp "[^ ]" p t)
+							  (match-end 0) p))))
+				   (buffer-substring
+					(save-excursion (beginning-of-line) (point))
+					(save-excursion (end-of-line) (point))))))
+			(when (interactive-p) (message s))
+			s))))))
 
 (defun lojban-describe-cmavo (&optional cmavo short)
   "Look up CMAVO, and return its description line as string.
 
 With optional argument SHORT, just give a short definition.
 When called interactively, show that description in the message area."
-  (interactive "sCmavo: ")
+  (interactive
+   (list (let* ((default-entry (current-word))
+				(input (read-string
+						(format "Cmavo%s"
+								(if (string= default-entry "")
+									": "
+								  (format " (default %s): " default-entry)))
+						nil 'lojban-describe-history default-entry)))
+		   (if (string= input "")
+			   (error "No args given")
+			 input))))
   (let ((p (lojban-cmavo-lookup cmavo)))
     (unless p (error "Unrecognized cmavo: %s" cmavo))
     (save-window-excursion
       (save-excursion
-	(lojban-find-cmavo-buffer)
-	(save-restriction
-	  (widen)
-	  (goto-char (symbol-value p))
-	  (let ((s
-		 (if short
-		     (let ((p (+ (point) 13)))
-		       (buffer-substring
-			p
-			(save-excursion
-			  (goto-char (+ p 42))
-			  (if (search-backward-regexp "[^ ]" p t)
-			      (match-end 0) p))))
-		   (buffer-substring
-		    (save-excursion (beginning-of-line) (point))
-		    (save-excursion (end-of-line) (point))))))
-	    (when (interactive-p) (message s))
-	    s))))))
+		(lojban-find-cmavo-buffer)
+		(save-restriction
+		  (widen)
+		  (goto-char (symbol-value p))
+		  (let ((s
+				 (if short
+					 (let ((p (+ (point) 13)))
+					   (buffer-substring
+						p
+						(save-excursion
+						  (goto-char (+ p 42))
+						  (if (search-backward-regexp "[^ ]" p t)
+							  (match-end 0) p))))
+				   (buffer-substring
+					(save-excursion (beginning-of-line) (point))
+					(save-excursion (end-of-line) (point))))))
+			(when (interactive-p) (message s))
+			s))))))
+
+;;(defun lojban-describe-word-at-point)
 
 ;; paragraphs (ni'o)
 
@@ -565,23 +637,23 @@ When called interactively, show that description in the message area."
   "\\(n\\(i'o\\|o'i\\)\\)+"
   )
 
-(defun lojban-paragraph-forward (&optional n noerror limit)
+(defun lojban-paragraph-forward (&optional n error limit)
   (interactive)
   (re-search-forward
    lojban-paragraph-separator-rgx
-   limit noerror n))
+   limit (not error) n))
 
-(defun lojban-paragraph-backward (&optional n noerror limit)
+(defun lojban-paragraph-backward (&optional n error limit)
   (interactive)
   (re-search-backward
    lojban-paragraph-separator-rgx
-   limit noerror n))
+   limit (not error) n))
 
 ;; sentences
 
 (defconst lojban-sentence-separator-rgx
   (concat "\\<\\(\\(\\.\\|\\<\\)i\\(j[aeou]\\|nai?\\)?\\|"
-	  lojban-paragraph-separator-rgx "\\|fa'o\\)"))
+		  lojban-paragraph-separator-rgx "\\|fa'o\\)"))
 
 (defun lojban-sentence-forward (&optional n noerror limit)
   "Travel N sentences forward.
@@ -626,11 +698,11 @@ sentences."
 
 (defun lojban-number-to-string (n)
   (apply 'concat
-	 (mapcar
-	  (lambda (c) (aref lojban-numerical-char-table c))
-	  (string-to-list
-	   (if (stringp n) n
-	     (number-to-string n))))))
+		 (mapcar
+		  (lambda (c) (aref lojban-numerical-char-table c))
+		  (string-to-list
+		   (if (stringp n) n
+			 (number-to-string n))))))
 
 ;;;; * utilities
 
@@ -661,9 +733,9 @@ See also `lojban-gloss-region'."
   (let ((p (get-buffer "*gismu*")))
     (if p (set-buffer p)
       (save-window-excursion
-	(find-file lojban-gismu-file)
-	(setq p (current-buffer))
-	(bury-buffer p))
+		(find-file lojban-gismu-file)
+		(setq p (current-buffer))
+		(bury-buffer p))
       (set-buffer p)
       (rename-buffer "*gismu*"))))
 
@@ -671,8 +743,8 @@ See also `lojban-gloss-region'."
 (defun lojban-gismu-hash-table ()
   (or lojban-gismu-hash-table
       (progn
-	(lojban-gismu-make-hash-table)
-	lojban-gismu-hash-table)))
+		(lojban-gismu-make-hash-table)
+		lojban-gismu-hash-table)))
 
 (defun lojban-gismu-make-hash-table ()
   (setq lojban-gismu-hash-table (make-vector 319 nil))
@@ -680,10 +752,10 @@ See also `lojban-gloss-region'."
     (lojban-find-gismu-buffer)
     (setq buffer-read-only t)
     (beginning-of-buffer)
-    (let ((reg (concat "^\\(" lojban-gismu-rgx "\\) ")))
+    (let ((reg (concat "^\\W*\\(" lojban-gismu-rgx "\\) ")))
       (while (search-forward-regexp reg nil t)
-	(set (intern (match-string 1) lojban-gismu-hash-table)
-	     (match-beginning 0))))))
+		(set (intern (match-string 1) lojban-gismu-hash-table)
+			 (match-beginning 0))))))
 
 (defun lojban-gismu-lookup (word)
   (intern-soft word (lojban-gismu-hash-table)))
@@ -692,9 +764,9 @@ See also `lojban-gloss-region'."
   (let ((p (get-buffer "*cmavo*")))
     (if p (set-buffer p)
       (save-window-excursion
-	(find-file lojban-cmavo-file)
-	(setq p (current-buffer))
-	(bury-buffer p))
+		(find-file lojban-cmavo-file)
+		(setq p (current-buffer))
+		(bury-buffer p))
       (set-buffer p)
       (rename-buffer "*cmavo*"))))
 
@@ -702,8 +774,8 @@ See also `lojban-gloss-region'."
 (defun lojban-cmavo-hash-table ()
   (or lojban-cmavo-hash-table
       (progn
-	(lojban-cmavo-make-hash-table)
-	lojban-cmavo-hash-table)))
+		(lojban-cmavo-make-hash-table)
+		lojban-cmavo-hash-table)))
 
 (defun lojban-cmavo-make-hash-table ()
   (setq lojban-cmavo-hash-table (make-vector 319 nil))
@@ -712,11 +784,11 @@ See also `lojban-gloss-region'."
     (setq buffer-read-only t)
     (beginning-of-buffer)
     (let ((reg (concat "^ *\\(" lojban-compound-cmavo-rgx
-		       "\\)[ \t]+[A-Z]"))
-	  (case-fold-search nil))
+					   "\\)[ \t]+[A-Z]"))
+		  (case-fold-search nil))
       (while (search-forward-regexp reg nil t)
-	(set (intern (match-string 1) lojban-cmavo-hash-table)
-	     (match-beginning 0))))))
+		(set (intern (match-string 1) lojban-cmavo-hash-table)
+			 (match-beginning 0))))))
 
 (defun lojban-cmavo-lookup (word)
   (intern-soft word (lojban-cmavo-hash-table)))
@@ -730,27 +802,62 @@ See also `lojban-gloss-region'."
     (goto-char beg)
     (let ((case-fold-search t))
       (while (re-search-forward lojban-non-letter-rgx end t)
-	(save-excursion
-	  (let ((c (char-after (match-beginning 0))))
-	    (cond
-	     ;;((looking-at "w") (replace-match "u"))
-	     ;;((looking-at "q") (replace-match "k"))
-	     ;; FIXME: the following may modify quoted text
-	     ((eq c ?h) (replace-match "'"))
-	     ;;((memq c '(?' ?.)) t)
-	     (t (replace-match " ")))))))))
+		(save-excursion
+		  (let ((c (char-after (match-beginning 0))))
+			(cond
+			 ;;((looking-at "w") (replace-match "u"))
+			 ;;((looking-at "q") (replace-match "k"))
+			 ;; FIXME: the following may modify quoted text
+			 ((eq c ?h) (replace-match "'"))
+			 ;;((memq c '(?' ?.)) t)
+			 (t (replace-match " ")))))))))
+
+(defun lojban-current-word-region (&optional strict really-word)
+  "Return the begin and and markers of current word. Acts just like
+`current-word' but instead of returning the word itself, returns list with two elements: 
+begin and end marker."
+  (save-excursion
+    (let* ((oldpoint (point)) (start (point)) (end (point))
+		   (syntaxes (if really-word "w" "w_"))
+		   (not-syntaxes (concat "^" syntaxes)))
+      (skip-syntax-backward syntaxes) (setq start (point))
+      (goto-char oldpoint)
+      (skip-syntax-forward syntaxes) (setq end (point))
+      (when (and (eq start oldpoint) (eq end oldpoint)
+				 ;; Point is neither within nor adjacent to a word.
+				 (not strict))
+		;; Look for preceding word in same line.
+		(skip-syntax-backward not-syntaxes
+							  (save-excursion (beginning-of-line)
+											  (point)))
+		(if (bolp)
+			;; No preceding word in same line.
+			;; Look for following word in same line.
+			(progn
+			  (skip-syntax-forward not-syntaxes
+								   (save-excursion (end-of-line)
+												   (point)))
+			  (setq start (point))
+			  (skip-syntax-forward syntaxes)
+			  (setq end (point)))
+		  (setq end (point))
+		  (skip-syntax-backward syntaxes)
+		  (setq start (point))))
+      ;; If we found something nonempty, return it as a string.
+      (list start end))))
 
 (defun lojban-shell-command-on-region
   (beg end command &optional no-digest &rest rest)
+  (message "Rest: %s" rest)
   (if no-digest (apply 'shell-command-on-region beg end command rest)
     (let ((orig (current-buffer)))
       (with-temp-buffer
-	(insert-buffer-substring orig beg end)
-	(lojban-predigest-region)
-	(apply
-	 'shell-command-on-region
-	 (point-min) (point-max) command
-	 rest)))))
+		(insert-buffer-substring orig beg end)
+		(lojban-predigest-region)
+		(apply
+		 'shell-command-on-region
+		 (point-min) (point-max) command
+		 rest)))))
 
 (defun lojban-gloss-region (beg end &optional no-digest &rest rest)
   "Run cmafihe, a lojban word glosser, on the region.
@@ -761,6 +868,14 @@ See also `lojban-cmafihe-command'."
    'lojban-shell-command-on-region
    beg end lojban-cmafihe-command no-digest
    rest))
+
+(defun lojban-gloss-word (&optional no-digest)
+  "Run cmafihe, a lojban word glosser, on word under point.
+
+See also `lojban-gloss-region'."
+  (interactive)
+  (let ((reg (lojban-current-word-region)))
+	(lojban-gloss-region (car reg) (cadr reg) no-digest)))
 
 ;;;###autoload
 (defun lojban-parse-region (beg end &optional no-digest	&rest rest)
@@ -784,11 +899,11 @@ See also `lojban-parse-region'."
   (let ((beg nil) (end nil) (next nil))
     (save-excursion
       (if (lojban-sentence-backward nil t)
-	  (setq beg (match-end 0)) (setq beg (point-min))))
+		  (setq beg (match-end 0)) (setq beg (point-min))))
     (if (lojban-sentence-forward nil t)
-	(setq end (match-beginning 0) next (point))
+		(setq end (match-beginning 0) next (point))
       (setq end (point-max)))
-    (lojban-parse-region beg end t)))
+    (lojban-parse-region beg end nil)))
 
 (defun lojban-translate-number (n)
   (interactive "s")

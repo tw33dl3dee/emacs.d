@@ -1,5 +1,7 @@
 ;;; Main Emacs config
 
+(message "Start: %s" (current-time))
+
 ;;; Init load paths
 (add-to-list 'load-path "~/.emacs.d/")
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
@@ -34,6 +36,11 @@
  '(doxymacs-doxygen-dirs (quote (("^/home/twee/work/videofon/views/" "/home/twee/work/videofon/views/tags.xml" "file:///home/twee/work/videofon/views/doc/html/"))))
  '(doxymacs-use-external-xml-parser t)
  '(ebs-exclude-buffer-regexps (quote ("^ " "^\\*Messages\\*" "^\\*Buffer List\\*" "^\\*Completions\\*" "^\\*scratch\\*" "^\\*debug.*\\*" "^\\*GNU Emacs\\*")))
+ '(esense-check-syntax-when-idle 10)
+ '(esense-find-function-matching-invocation-pattern t)
+ '(esense-indexer-program "~/.emacs.d/site-lisp/esence/esense.sh")
+ '(esense-preload-index-information-when-idle 5)
+ '(esense-resolve-macros t)
  '(etags-select-go-if-unambiguous t)
  '(explicit-bash-args (quote ("--noediting" "--login" "-i")))
  '(glasses-face "bold")
@@ -48,6 +55,8 @@
  '(locate-command "slocate")
  '(locate-prompt-for-command nil)
  '(locate-update-command "sudo updatedb")
+ '(lojban-cmavo-file "~/.emacs.d/site-lisp/lojban/data/cmavo.txt")
+ '(lojban-gismu-file "~/.emacs.d/site-lisp/lojban/data/gismu.txt")
  '(make-backup-files nil)
  '(matlab-comment-line-s "%% ")
  '(matlab-comment-region-s "%%%")
@@ -122,3 +131,5 @@
   (if (file-readable-p path) (load-file path)))
 
 (load-file-silently "~/.emacs.d/local.el")
+
+(message "Finish: %s" (current-time))

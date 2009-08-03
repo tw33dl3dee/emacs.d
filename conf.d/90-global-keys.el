@@ -11,12 +11,11 @@
 (global-set-key "\C-z\C-p" 'pastebin)
 (global-set-key "\C-z\C-m" 'matlab-shell)
 (global-set-key "\C-zl" 'locate-with-filter)
-(global-set-key "\C-z " 'xref-completion)
 (global-set-key "\C-z\C-x" (lambda () (interactive) (compile-and-run)))
 (global-set-key [(f1)] (lambda () (interactive) (manual-entry (current-word))))
 (global-set-key "\C-z\C-r" (lambda () (interactive) (revert-buffer nil t)))
-(global-set-key [(f9)] 'PC-lisp-complete-symbol)
 (grep-compute-defaults) (global-set-key [(f2)] (lambda () (interactive) (rgrep (current-word) "*" ".")))
+(global-set-key (kbd "C-=") 'lisp-match-paren)
 
 ;; make C-return alias to M-TAB (coz' ESC TAB is too slow)
 (global-set-key [C-return] "\M-\t")

@@ -81,10 +81,6 @@
   "String displayed on the mode line when lojban mode is active."
   :group 'lojban-mode :type '(choice (const :tag "No indicator." nil)
 									 string))
-(or (assq 'lojban-mode minor-mode-alist)
-    (setq minor-mode-alist
-		  (cons '(lojban-mode lojban-mode-line-string)
-				minor-mode-alist)))
 
 ;;;; outline
 
@@ -179,7 +175,6 @@ the last word of text cancelled with SI, SA or SU."
 		 (start (point))		
 		 (end start)
 		 (found))
-	(message "match-zoi: start %d, limit %d" start limit)
 	(while 
 		(and
 		 (> limit end)
@@ -192,7 +187,6 @@ the last word of text cancelled with SI, SA or SU."
 		 (not
 		  (and
 		   (progn
-			 (message "Found at: %d - %d" (match-beginning 0) end)
 			 (goto-char (match-beginning 0))
 			 ;; TODO determine if it is possible to concatenate any cmavo
 			 ;; before "zoi" or "la'o" (apparently not) -- IMHO _any_ cmavo concat is possible -- twee
@@ -206,7 +200,6 @@ the last word of text cancelled with SI, SA or SU."
 					 (pos (match-beginning 2)))
 				 ;; should the following search be undelimited?
 				 ;; I think it should -- twee
-				 (message "zoi: delimiter %s" delimiter)
 				 (goto-char (match-end 0))
 				 (and delimiter
 					  (> (length delimiter) 0)
@@ -222,7 +215,6 @@ the last word of text cancelled with SI, SA or SU."
 						 (list pos (point)
 							   pos (+ pos 1)
 							   (- (point) 1) (point)))
-						(message "zoi: ok %s" (match-data))
 						t))))
 			  ((and (looking-at "lo'u")
 					(save-excursion
@@ -254,17 +246,11 @@ the last word of text cancelled with SI, SA or SU."
 					 (setq ok (point))))
 				 (when ok
 				   (set-match-data (list pos ok pos (+ pos 1) (- ok 1) ok))
-				   (message "le'u: ok %s" (match-data))
 				   t)))))
 		   (setq found t))))
-	  (message "false match; goto %d" end)
 	  (goto-char end)
 	  t)
-	(if found 
-		(progn
-		  (message "succ match; match-data: %s; point: %d" (match-data) (point))
-		  t)
-	  (message "end match; goto %d" start)
+	(if found t
 	  (goto-char start)
 	  nil)))
 
@@ -274,7 +260,6 @@ the last word of text cancelled with SI, SA or SU."
   (let* ((case-fold-search t)
 		 (start (point))
 		 found-pos)
-	(message "match to/toi: start %d, limit %d" start limit)
 	(while
 		(and 
 		 (> limit (point))
@@ -282,10 +267,8 @@ the last word of text cancelled with SI, SA or SU."
 		  (eval-when-compile
 			(concat "\\<" lojban-compound-cmavo-start-rgx "\\(?1:to\\(?:'i\\)?\\)\\>"))
 		  limit t)
-		 (message "match: %s" (match-data))
 		 (save-excursion
 		   (let ((to-pos (match-beginning 1)))
-			 (message "to-pos: %d" to-pos)
 			 (not
 			  (and
 			   ;; limited?..
@@ -297,11 +280,9 @@ the last word of text cancelled with SI, SA or SU."
 				 (set-match-data (list to-pos toi-end-pos 
 									   to-pos (1+ to-pos)
 									   (1- toi-end-pos) toi-end-pos))
-				 (message "succ toi match: %s" (match-data))
 				 (setq found-pos toi-end-pos)))
 			  )))))
 	(if found-pos (goto-char found-pos) (goto-char start))
-	(message "to/toi end: point %d" (point))
 	found-pos))
 
 ;; (defun lojban-match-to/toi (&optional limit)
@@ -342,7 +323,6 @@ the last word of text cancelled with SI, SA or SU."
 		 (start (point))
 		 (end start)
 		 (found))
-	(message "match-quoted: start %d, limit %d" start limit)
 	(while
 		(and
 		 (> limit end)
@@ -356,7 +336,6 @@ the last word of text cancelled with SI, SA or SU."
 		 (not
 		  (and
 		   (progn	
-			 (message "Found at: %d - %d" (match-beginning 0) end)
 			 (goto-char (match-beginning 0))
 			 (cond
 			  ((and (looking-at "zo\\>")
@@ -376,7 +355,7 @@ the last word of text cancelled with SI, SA or SU."
 			   ;; For simplicity we only mark the preceding word
 			   ;; FIXME: cusi, lasile e.g. won't work
 			   (when (re-search-backward "\\<\\w+\\>" nil t)
-				 (goto-char end) (message "found si/a/u; goto %d; t" end) t))
+				 (goto-char end) t))
 			  ;; FIXME: the reference grammar says "bu" concatenation is
 			  ;; possible, but does not specify its meaning
 			  ((looking-at (eval-when-compile
@@ -398,11 +377,9 @@ the last word of text cancelled with SI, SA or SU."
 				   )))
 			  (t nil)))
 		   (setq found t))))
-	  (message "false match; goto %d" end)
 	  (goto-char end)
 	  t)
 	(if found t
-	  (message "end match; goto %d" start)
 	  (goto-char start)
 	  nil)))
 
@@ -413,6 +390,15 @@ the last word of text cancelled with SI, SA or SU."
 	 ;; WARNING: this may be slow
 	 (concat "\\<" lojban-compound-cmavo-start-rgx
 			 ;; NO "\\>" -- for rests of compound cmavo whose parts were matched as qoutes/comments
+			 )
+     0 lojban-cmavo-face
+	 'keep
+	 ;;     'prepend
+     )
+	(list
+	 ;; WARNING: this too
+	 (concat lojban-compound-cmavo-cont-rgx "\\>"
+			 ;; NO "\\<" -- for rests of compound cmavo whose parts were matched as qoutes/comments
 			 )
      0 lojban-cmavo-face
 	 'keep
@@ -434,10 +420,10 @@ the last word of text cancelled with SI, SA or SU."
 	 )
 	(list
 	 (concat "\\<"
-			 lojban-UI-rgx
+			 "\\(?1:" lojban-UI-rgx "\\)"
 			 lojban-cmavo-rgx "*"
 			 "\\>")
-	 0 lojban-UI-face
+	 1 lojban-UI-face
 	 ;;    'prepend
 	 )
 	(list
@@ -524,6 +510,29 @@ the last word of text cancelled with SI, SA or SU."
 (make-variable-buffer-local 'lojban-mode-old-syntax-table)
 (defvar lojban-mode-old-font-lock nil)
 (make-variable-buffer-local 'lojban-mode-old-font-lock)
+
+;;;; keymap
+
+(defvar lojban-mode-keymap (make-sparse-keymap)
+  "Keymap used in buffers with lojban minor mode turned on.")
+
+(define-key lojban-mode-keymap "\C-c}" 'lojban-paragraph-forward)
+(define-key lojban-mode-keymap "\C-c{" 'lojban-paragraph-backward)
+(define-key lojban-mode-keymap "\C-cp" 'lojban-sentence-forward)
+(define-key lojban-mode-keymap "\C-cn" 'lojban-sentence-backward)
+(define-key lojban-mode-keymap "\C-crg" 'lojban-gloss-region)
+(define-key lojban-mode-keymap "\C-crp" 'lojban-parse-region)
+(define-key lojban-mode-keymap "\C-cw" 'lojban-gloss-word)
+(define-key lojban-mode-keymap "\C-cs" 'lojban-parse-sentence)
+(define-key lojban-mode-keymap "\C-cdg" 'lojban-describe-gismu)
+(define-key lojban-mode-keymap "\C-cgc" 'lojban-describe-cmavo)
+
+;;;###autoload
+(or (assoc 'lojban-mode minor-mode-alist)
+    (add-to-list 'minor-mode-alist (list 'lojban-mode lojban-mode-line-string)))
+
+(or (assoc 'lojban-mode-keymap minor-mode-map-alist)
+    (add-to-list 'minor-mode-map-alist (cons 'lojban-mode lojban-mode-keymap)))
 
 (defvar lojban-mode nil)
 (make-variable-buffer-local 'lojban-mode)
