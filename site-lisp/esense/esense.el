@@ -592,6 +592,7 @@ current buffer if the buffer was not modified since the information was cached."
   (unless (boundp 'esense-modules)
     (esense-initialize)))
 
+;;; This code added because it is not part of GNU Elisp
 (defun union (list1 list2 &rest rest &aux first last)
   (do ((x list1 (cdr x)))
       ((null x) (if last (rplacd last list2)) (return (or first list2)))
