@@ -370,10 +370,12 @@ See also `lojban-brivla-rgx'."
 
 ;;;; rafsi
 
+;; Group number tag must not be less than group depth.
+;; So, we set it to 100 to prevent any further problems.
 (defconst lojban-rafsi-3-rgx
-  (concat "\\(" "\\(?2:" lojban-cc-rgx lojban-v-rgx "\\)"
-		  "\\|" "\\(?2:" lojban-c-rgx lojban-vv-rgx "\\)[rn]?"
-		  "\\|" "\\(?2:" lojban-c-rgx lojban-v-rgx lojban-c-rgx "\\)y?" 
+  (concat "\\(" "\\(?100:" lojban-cc-rgx lojban-v-rgx "\\)"
+		  "\\|" "\\(?100:" lojban-c-rgx lojban-vv-rgx "\\)[rn]?"
+		  "\\|" "\\(?100:" lojban-c-rgx lojban-v-rgx lojban-c-rgx "\\)y?" 
 		  "\\)"))
 
 (defconst lojban-rafsi-4-no-y-rgx
@@ -382,7 +384,7 @@ See also `lojban-brivla-rgx'."
 		  "\\)"))
 
 (defconst lojban-rafsi-4-rgx
-  (concat "\\(?:" lojban-rafsi-4-no-y-rgx "\\)y"))
+  (concat "\\(?100:" lojban-rafsi-4-no-y-rgx "\\)y"))
 
 (defconst lojban-rafsi-5-rgx
   (concat lojban-rafsi-4-no-y-rgx lojban-v-rgx "\\>"))
@@ -403,9 +405,9 @@ See also `lojban-brivla-rgx'."
 			((looking-at lojban-rafsi-5-rgx)
 			 (push (match-string-no-properties 0) rafsi-list))
 			((looking-at lojban-rafsi-4-rgx)
-			 (push (match-string-no-properties 2) rafsi-list))
+			 (push (match-string-no-properties 100) rafsi-list))
 			((looking-at lojban-rafsi-3-rgx)
-			 (push (match-string-no-properties 2) rafsi-list))
+			 (push (match-string-no-properties 100) rafsi-list))
 			((looking-at "\\W") nil)
 			(t nil))
 		 (goto-char (match-end 0)))
@@ -547,8 +549,7 @@ remapped for exponential notation")
 (defvar lojban-describe-history nil "Lojban describe functions read history.")
 
 (defun lojban-describe-gismu-by-rafsi (&optional rafsi short)
-  (interactive "sRafsi: ")
-  )
+  (interactive "sRafsi: "))
 
 (defun lojban-describe-gismu (&optional gismu short)
   "Look up GISMU, and return its description line as string.
@@ -576,7 +577,7 @@ When called interactively, show that description in the message area."
 		  (goto-char (symbol-value p))
 		  (let ((s
 				 (if short
-					 (let ((p (+ (point) 13)))
+					 (let ((p (+ (point) 20)))
 					   (buffer-substring
 						p
 						(save-excursion
@@ -615,7 +616,7 @@ When called interactively, show that description in the message area."
 		  (goto-char (symbol-value p))
 		  (let ((s
 				 (if short
-					 (let ((p (+ (point) 13)))
+					 (let ((p (+ (point) 20)))
 					   (buffer-substring
 						p
 						(save-excursion
@@ -729,6 +730,10 @@ See also `lojban-gloss-region'."
   "File where the cmavo list can be retrieved."
   :group 'lojban)
 
+(defcustom lojban-rafsi-file "/usr/share/lojban/rafsi"
+  "File where the rafsi list can be retrieved."
+  :group 'lojban)
+
 (defun lojban-find-gismu-buffer ()
   (let ((p (get-buffer "*gismu*")))
     (if p (set-buffer p)
@@ -783,7 +788,7 @@ See also `lojban-gloss-region'."
     (lojban-find-cmavo-buffer)
     (setq buffer-read-only t)
     (beginning-of-buffer)
-    (let ((reg (concat "^ *\\(" lojban-compound-cmavo-rgx
+    (let ((reg (concat "^\\W*\\(" lojban-compound-cmavo-rgx
 					   "\\)[ \t]+[A-Z]"))
 		  (case-fold-search nil))
       (while (search-forward-regexp reg nil t)
@@ -792,6 +797,39 @@ See also `lojban-gloss-region'."
 
 (defun lojban-cmavo-lookup (word)
   (intern-soft word (lojban-cmavo-hash-table)))
+
+(defun lojban-find-rafsi-buffer ()
+  (let ((p (get-buffer "*rafsi*")))
+    (if p (set-buffer p)
+      (save-window-excursion
+		(find-file lojban-rafsi-file)
+		(setq p (current-buffer))
+		(bury-buffer p))
+      (set-buffer p)
+      (rename-buffer "*rafsi*"))))
+
+(defvar lojban-rafsi-hash-table nil)
+(defun lojban-rafsi-hash-table ()
+  (or lojban-rafsi-hash-table
+      (progn
+		(lojban-rafsi-make-hash-table)
+		lojban-rafsi-hash-table)))
+
+(defun lojban-rafsi-make-hash-table ()
+  (setq lojban-rafsi-hash-table (make-hash-table))
+  (save-excursion
+    (lojban-find-rafsi-buffer)
+    (setq buffer-read-only t)
+    (beginning-of-buffer)
+    (let ((reg (concat "^\\W*\\(?1:" lojban-rafsi-3-rgx "\\)\\W+\\(?2:" lojban-valsi-rgx "\\)")))
+      (while (search-forward-regexp reg nil t)
+		(let ((rafsi (match-string 1))
+			  (valsi (match-string 2)))
+		  (message "%s -> %s" rafsi valsi)
+		  (puthash rafsi valsi lojban-rafsi-hash-table))))))
+
+(defun lojban-rafsi-lookup (word)
+  (gethash word 'lojban-rafsi-hash-table))
 
 ;;;; parsing
 
