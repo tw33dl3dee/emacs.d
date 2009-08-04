@@ -734,6 +734,48 @@ See also `lojban-gloss-region'."
   "File where the rafsi list can be retrieved."
   :group 'lojban)
 
+(defun lojban-find-rafsi-buffer ()
+  (let ((p (get-buffer "*rafsi*")))
+    (if p (set-buffer p)
+      (save-window-excursion
+		(find-file lojban-rafsi-file)
+		(setq p (current-buffer))
+		(bury-buffer p))
+      (set-buffer p)
+      (rename-buffer "*rafsi*"))))
+
+(defvar lojban-rafsi-hash-table nil)
+(defun lojban-rafsi-hash-table ()
+  (or lojban-rafsi-hash-table
+      (progn
+		;; No typo here, rafsi table is contructed by both
+		;; `lojban-gismu-make-hash-table' and `lojban-rafsi-make-hash-table',
+		;; the former calling the latter
+		(lojban-gismu-make-hash-table)
+		lojban-rafsi-hash-table)))
+
+(defvar lojban-rafsi-symtable (make-vector 319 nil))
+
+(defun lojban-rafsi-make-hash-table ()
+  (setq lojban-rafsi-hash-table (make-hash-table))
+  (save-excursion
+    (lojban-find-rafsi-buffer)
+    (setq buffer-read-only t)
+    (beginning-of-buffer)
+    (let ((reg (concat "^\\W*\\(?1:" lojban-rafsi-3-rgx "\\)\\W+\\(?2:" lojban-valsi-rgx "\\)")))
+      (while (search-forward-regexp reg nil t)
+		(let ((rafsi (match-string 1))
+			  (valsi (match-string 2)))
+		  (puthash (intern rafsi lojban-rafsi-symtable) valsi lojban-rafsi-hash-table))))))
+
+(defun lojban-rafsi-add-from-gismu (gismu)
+  (puthash (intern gismu lojban-rafsi-symtable) gismu lojban-rafsi-hash-table)
+  (let ((rafsi-4 (substring gismu 0 4)))
+	(puthash (intern rafsi-4 lojban-rafsi-symtable) gismu lojban-rafsi-hash-table)))
+
+(defun lojban-rafsi-lookup (word)
+  (gethash (intern-soft word lojban-rafsi-symtable) lojban-rafsi-hash-table))
+
 (defun lojban-find-gismu-buffer ()
   (let ((p (get-buffer "*gismu*")))
     (if p (set-buffer p)
@@ -752,6 +794,7 @@ See also `lojban-gloss-region'."
 		lojban-gismu-hash-table)))
 
 (defun lojban-gismu-make-hash-table ()
+  (lojban-rafsi-make-hash-table)
   (setq lojban-gismu-hash-table (make-vector 319 nil))
   (save-excursion
     (lojban-find-gismu-buffer)
@@ -759,8 +802,10 @@ See also `lojban-gloss-region'."
     (beginning-of-buffer)
     (let ((reg (concat "^\\W*\\(" lojban-gismu-rgx "\\) ")))
       (while (search-forward-regexp reg nil t)
-		(set (intern (match-string 1) lojban-gismu-hash-table)
-			 (match-beginning 0))))))
+		(let ((valsi (match-string 1))
+			  (pos (match-beginning 0)))
+		  (set (intern valsi lojban-gismu-hash-table) pos)
+		  (lojban-rafsi-add-from-gismu valsi))))))
 
 (defun lojban-gismu-lookup (word)
   (intern-soft word (lojban-gismu-hash-table)))
@@ -797,39 +842,6 @@ See also `lojban-gloss-region'."
 
 (defun lojban-cmavo-lookup (word)
   (intern-soft word (lojban-cmavo-hash-table)))
-
-(defun lojban-find-rafsi-buffer ()
-  (let ((p (get-buffer "*rafsi*")))
-    (if p (set-buffer p)
-      (save-window-excursion
-		(find-file lojban-rafsi-file)
-		(setq p (current-buffer))
-		(bury-buffer p))
-      (set-buffer p)
-      (rename-buffer "*rafsi*"))))
-
-(defvar lojban-rafsi-hash-table nil)
-(defun lojban-rafsi-hash-table ()
-  (or lojban-rafsi-hash-table
-      (progn
-		(lojban-rafsi-make-hash-table)
-		lojban-rafsi-hash-table)))
-
-(defun lojban-rafsi-make-hash-table ()
-  (setq lojban-rafsi-hash-table (make-hash-table))
-  (save-excursion
-    (lojban-find-rafsi-buffer)
-    (setq buffer-read-only t)
-    (beginning-of-buffer)
-    (let ((reg (concat "^\\W*\\(?1:" lojban-rafsi-3-rgx "\\)\\W+\\(?2:" lojban-valsi-rgx "\\)")))
-      (while (search-forward-regexp reg nil t)
-		(let ((rafsi (match-string 1))
-			  (valsi (match-string 2)))
-		  (message "%s -> %s" rafsi valsi)
-		  (puthash rafsi valsi lojban-rafsi-hash-table))))))
-
-(defun lojban-rafsi-lookup (word)
-  (gethash word 'lojban-rafsi-hash-table))
 
 ;;;; parsing
 
