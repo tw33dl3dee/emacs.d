@@ -57,6 +57,7 @@
  '(locate-update-command "sudo updatedb")
  '(lojban-cmavo-file "~/.emacs.d/site-lisp/lojban/data/cmavo.txt")
  '(lojban-gismu-file "~/.emacs.d/site-lisp/lojban/data/gismu.txt")
+ '(lojban-rafsi-file "~/.emacs.d/site-lisp/lojban/data/rafsi.txt")
  '(make-backup-files nil)
  '(matlab-comment-line-s "%% ")
  '(matlab-comment-region-s "%%%")
