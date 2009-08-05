@@ -247,6 +247,11 @@ See also `lojban-cmavo-rgx', `lojban-compound-cmavo-start-rgx'.")
 		  "\\(cui\\|nai\\)?")
   "Regexp matching attitudinal indicators.")
 
+(defun lojban-cmavo-p (string &optional raise-error)
+  (or (string-match lojban-cmavo-rgx string)
+	  (when raise-error 
+		(error "Not a cmavo: neither V, CV, VV or CVV type"))))
+
 (defun lojban-split-compound-cmavo (s)
   "Split the compound cmavo S into individual cmavo."
   (let ((n 0) (r (list)))
@@ -255,6 +260,7 @@ See also `lojban-cmavo-rgx', `lojban-compound-cmavo-start-rgx'.")
       (setq n (match-end 0)))
     (reverse r)))
 
+;;;; valsi
 
 (defun lojban-valsi-p (s &optional raise-error)
   "Return t if S is a morphologically valid lojban word.
@@ -391,27 +397,30 @@ See also `lojban-brivla-rgx'."
 
 ;;;; lujvo
 
-(defun lojban-split-lujvo ()
+(defun string-looking-at (regexp string pos)
+  (eq pos (string-match regexp string pos)))
+
+(defun lojban-split-lujvo (&optional lujvo)
   (interactive)
+  (unless lujvo (setq lujvo (current-word)))
   (and 
-   (lojban-brivla-p (current-word))
-   (save-excursion
-	 (or
-	  (looking-at "\\<")
-	  (backward-word))
-	 (let (rafsi-list)
-	   (while
-		   (cond
-			((looking-at lojban-rafsi-5-rgx)
-			 (push (match-string-no-properties 0) rafsi-list))
-			((looking-at lojban-rafsi-4-rgx)
-			 (push (match-string-no-properties 100) rafsi-list))
-			((looking-at lojban-rafsi-3-rgx)
-			 (push (match-string-no-properties 100) rafsi-list))
-			((looking-at "\\W") nil)
-			(t nil))
-		 (goto-char (match-end 0)))
-	   (message "%s" (reverse rafsi-list))))))
+   (lojban-brivla-p lujvo)
+   (let (rafsi-list 
+		 (pos 0)
+		 (case-fold-search t))
+	 (while
+		 (cond
+		  ((string-looking-at lojban-rafsi-5-rgx lujvo pos)
+		   (push (match-string-no-properties 0 lujvo) rafsi-list))
+		  ((string-looking-at lojban-rafsi-4-rgx lujvo pos)
+		   (push (match-string-no-properties 100 lujvo) rafsi-list))
+		  ((string-looking-at lojban-rafsi-3-rgx lujvo pos)
+		   (push (match-string-no-properties 100 lujvo) rafsi-list))
+		  ((string-looking-at "\\W" lujvo pos) nil)
+		  (t nil))
+	   (setq pos (match-end 0)))
+	 (message "%s" (reverse rafsi-list))
+	 (reverse rafsi-list))))
 
 ;;;; gismu
 
@@ -548,9 +557,6 @@ remapped for exponential notation")
 
 (defvar lojban-describe-history nil "Lojban describe functions read history.")
 
-(defun lojban-describe-gismu-by-rafsi (&optional rafsi short)
-  (interactive "sRafsi: "))
-
 (defun lojban-describe-gismu (&optional gismu short)
   "Look up GISMU, and return its description line as string.
 
@@ -629,7 +635,44 @@ When called interactively, show that description in the message area."
 			(when (interactive-p) (message s))
 			s))))))
 
-;;(defun lojban-describe-word-at-point)
+(defun lojban-describe-valsi-by-rafsi (&optional rafsi short)
+  (interactive "sRafsi: ")
+  (let (valsi (lojban-rafsi-lookup rafsi))
+	(unless valsi (error "Unrecognized rafsi: %s" rafsi))
+	(cond ((lojban-gismu-p valsi)
+		   (lojban-describe-gismu valsi short))
+		  ((lojban-cmavo-p valsi)
+		   (lojban-describe-cmavo valsi short))
+		  (t (error "Neither cmavo or gismu: %s" valsi)))))
+
+(defun lojban-describe-lujvo (&optional lujvo short)
+  (interactive
+   (list (let* ((default-entry (current-word))
+				(input (read-string
+						(format "Lujvo%s"
+								(if (string= default-entry "")
+									": "
+								  (format " (default %s): " default-entry)))
+						nil 'lojban-describe-history default-entry)))
+		   (if (string= input "")
+			   (error "No args given")
+			 input))))
+  (let ((rafsi-list (lojban-split-lujvo lujvo)))
+	(mapcar #'(lambda (rafsi) (lojban-describe-valsi-by-rafsi rafsi)) rafsi-list)))
+
+(defun lojban-describe-valsi (&optional valsi short)
+  (interactive
+   (list (let* ((default-entry (current-word))
+				(input (read-string
+						(format "Valsi%s"
+								(if (string= default-entry "")
+									": "
+								  (format " (default %s): " default-entry)))
+						nil 'lojban-describe-history default-entry)))
+		   (if (string= input "")
+			   (error "No args given")
+			 input))))
+  )
 
 ;; paragraphs (ni'o)
 
@@ -754,10 +797,8 @@ See also `lojban-gloss-region'."
 		(lojban-gismu-make-hash-table)
 		lojban-rafsi-hash-table)))
 
-(defvar lojban-rafsi-symtable (make-vector 319 nil))
-
 (defun lojban-rafsi-make-hash-table ()
-  (setq lojban-rafsi-hash-table (make-hash-table))
+  (setq lojban-rafsi-hash-table (make-vector 319 nil))
   (save-excursion
     (lojban-find-rafsi-buffer)
     (setq buffer-read-only t)
@@ -766,15 +807,15 @@ See also `lojban-gloss-region'."
       (while (search-forward-regexp reg nil t)
 		(let ((rafsi (match-string 1))
 			  (valsi (match-string 2)))
-		  (puthash (intern rafsi lojban-rafsi-symtable) valsi lojban-rafsi-hash-table))))))
+		  (set (intern (concat "rafsi-" rafsi) lojban-rafsi-hash-table) valsi))))))
 
 (defun lojban-rafsi-add-from-gismu (gismu)
-  (puthash (intern gismu lojban-rafsi-symtable) gismu lojban-rafsi-hash-table)
+  (set (intern (concat "rafsi-" gismu) lojban-rafsi-hash-table) gismu)
   (let ((rafsi-4 (substring gismu 0 4)))
-	(puthash (intern rafsi-4 lojban-rafsi-symtable) gismu lojban-rafsi-hash-table)))
+	(set (intern (concat "rafsi-" rafsi-4) lojban-rafsi-hash-table) gismu)))
 
 (defun lojban-rafsi-lookup (word)
-  (gethash (intern-soft word lojban-rafsi-symtable) lojban-rafsi-hash-table))
+  (symbol-value (intern-soft (concat "rafsi-" word) (lojban-rafsi-hash-table))))
 
 (defun lojban-find-gismu-buffer ()
   (let ((p (get-buffer "*gismu*")))
