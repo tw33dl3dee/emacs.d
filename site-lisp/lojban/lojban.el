@@ -247,8 +247,8 @@ See also `lojban-cmavo-rgx', `lojban-compound-cmavo-start-rgx'.")
 		  "\\(cui\\|nai\\)?")
   "Regexp matching attitudinal indicators.")
 
-(defun lojban-cmavo-p (string &optional raise-error)
-  (or (string-match lojban-cmavo-rgx string)
+(defun lojban-compound-cmavo-p (string &optional raise-error)
+  (or (string-looking-at lojban-compound-cmavo-rgx string)
 	  (when raise-error 
 		(error "Not a cmavo: neither V, CV, VV or CVV type"))))
 
@@ -397,8 +397,8 @@ See also `lojban-brivla-rgx'."
 
 ;;;; lujvo
 
-(defun string-looking-at (regexp string pos)
-  (eq pos (string-match regexp string pos)))
+(defun string-looking-at (regexp string &optional pos)
+  (eq (or pos 0) (string-match regexp string pos)))
 
 (defun lojban-split-lujvo (&optional lujvo)
   (interactive)
@@ -416,8 +416,8 @@ See also `lojban-brivla-rgx'."
 		   (push (match-string-no-properties 100 lujvo) rafsi-list))
 		  ((string-looking-at lojban-rafsi-3-rgx lujvo pos)
 		   (push (match-string-no-properties 100 lujvo) rafsi-list))
-		  ((string-looking-at "\\W" lujvo pos) nil)
-		  (t nil))
+		  ((string-looking-at "\\W\\|$" lujvo pos) nil)
+		  (t (error "Invalid lujvo: %s" lujvo)))
 	   (setq pos (match-end 0)))
 	 (message "%s" (reverse rafsi-list))
 	 (reverse rafsi-list))))
@@ -637,13 +637,9 @@ When called interactively, show that description in the message area."
 
 (defun lojban-describe-valsi-by-rafsi (&optional rafsi short)
   (interactive "sRafsi: ")
-  (let (valsi (lojban-rafsi-lookup rafsi))
+  (let ((valsi (lojban-rafsi-lookup rafsi)))
 	(unless valsi (error "Unrecognized rafsi: %s" rafsi))
-	(cond ((lojban-gismu-p valsi)
-		   (lojban-describe-gismu valsi short))
-		  ((lojban-cmavo-p valsi)
-		   (lojban-describe-cmavo valsi short))
-		  (t (error "Neither cmavo or gismu: %s" valsi)))))
+	(lojban-describe-valsi valsi short t)))
 
 (defun lojban-describe-lujvo (&optional lujvo short)
   (interactive
@@ -660,7 +656,7 @@ When called interactively, show that description in the message area."
   (let ((rafsi-list (lojban-split-lujvo lujvo)))
 	(mapcar #'(lambda (rafsi) (lojban-describe-valsi-by-rafsi rafsi)) rafsi-list)))
 
-(defun lojban-describe-valsi (&optional valsi short)
+(defun lojban-describe-valsi (&optional valsi short no-lujvo)
   (interactive
    (list (let* ((default-entry (current-word))
 				(input (read-string
@@ -672,7 +668,13 @@ When called interactively, show that description in the message area."
 		   (if (string= input "")
 			   (error "No args given")
 			 input))))
-  )
+  (cond ((lojban-gismu-p valsi)
+		 (lojban-describe-gismu valsi short))
+		((lojban-compound-cmavo-p valsi)
+		 (lojban-describe-cmavo valsi short))
+		((not no-lujvo)
+		 (lojban-describe-lujvo valsi short))
+		t (error "Unknown valsi: %s" valsi)))
 
 ;; paragraphs (ni'o)
 
@@ -798,7 +800,7 @@ See also `lojban-gloss-region'."
 		lojban-rafsi-hash-table)))
 
 (defun lojban-rafsi-make-hash-table ()
-  (setq lojban-rafsi-hash-table (make-vector 319 nil))
+  (setq lojban-rafsi-hash-table (make-hash-table :test 'equal))
   (save-excursion
     (lojban-find-rafsi-buffer)
     (setq buffer-read-only t)
@@ -807,15 +809,15 @@ See also `lojban-gloss-region'."
       (while (search-forward-regexp reg nil t)
 		(let ((rafsi (match-string 1))
 			  (valsi (match-string 2)))
-		  (set (intern (concat "rafsi-" rafsi) lojban-rafsi-hash-table) valsi))))))
+		  (puthash rafsi valsi lojban-rafsi-hash-table))))))
 
 (defun lojban-rafsi-add-from-gismu (gismu)
-  (set (intern (concat "rafsi-" gismu) lojban-rafsi-hash-table) gismu)
+  (puthash gismu gismu lojban-rafsi-hash-table)
   (let ((rafsi-4 (substring gismu 0 4)))
-	(set (intern (concat "rafsi-" rafsi-4) lojban-rafsi-hash-table) gismu)))
+	(puthash rafsi-4 gismu lojban-rafsi-hash-table)))
 
 (defun lojban-rafsi-lookup (word)
-  (symbol-value (intern-soft (concat "rafsi-" word) (lojban-rafsi-hash-table))))
+  (gethash word (lojban-rafsi-hash-table)))
 
 (defun lojban-find-gismu-buffer ()
   (let ((p (get-buffer "*gismu*")))
