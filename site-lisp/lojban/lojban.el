@@ -764,6 +764,12 @@ See also `lojban-parse-region'."
 See also `lojban-gloss-region'."
   :group 'lojban
   :type 'string)
+(defcustom lojban-vlatai-command "vlatai"
+  "Command and arguments to run vlatai.
+
+See also `lojban-describe-valsi'."
+  :group 'lojban
+  :type 'string)
 
 ;;;; word lists
 
