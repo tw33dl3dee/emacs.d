@@ -15,37 +15,37 @@
 (defun my-c-lineup-math (langelem)
   (save-excursion
     (let ((equalp (save-excursion
-					(goto-char (c-point 'boi))
-					(let ((eol (c-point 'eol)))
-					  (c-forward-token-1 0 t eol)
-					  (while (and (not (eq (char-after) ?=))
-								  (= (c-forward-token-1 1 t eol) 0))))
-					(and (eq (char-after) ?=)
-						 (- (point) (c-point 'boi)))))
-		  (langelem-col (c-langelem-col langelem))
-		  donep)
+		    (goto-char (c-point 'boi))
+		    (let ((eol (c-point 'eol)))
+		      (c-forward-token-1 0 t eol)
+		      (while (and (not (eq (char-after) ?=))
+				  (= (c-forward-token-1 1 t eol) 0))))
+		    (and (eq (char-after) ?=)
+			 (- (point) (c-point 'boi)))))
+	  (langelem-col (c-langelem-col langelem))
+	  donep)
       (while (and (not donep)
-				  (< (point) (c-point 'eol)))
-		(skip-chars-forward "^=" (c-point 'eol))
-		(if (c-in-literal (cdr langelem))
-			(forward-char 1)
-		  (setq donep t)))
+		  (< (point) (c-point 'eol)))
+	(skip-chars-forward "^=" (c-point 'eol))
+	(if (c-in-literal (cdr langelem))
+	    (forward-char 1)
+	  (setq donep t)))
       (if (or (not (eq (char-after) ?=))
-			  (save-excursion
-				(forward-char 1)
-				(c-forward-syntactic-ws (c-point 'eol))
-				(eolp)))
-		  ;; there's no equal sign on the line
-		  ;; c-basic-offset
-		  nil
-		;; calculate indentation column after equals and ws, unless
-		;; our line contains an equals sign
-		(if (not equalp)
-			(progn
-			  (forward-char 1)
-			  (skip-chars-forward " \t")
-			  (setq equalp 0)))
-		(- (current-column) equalp langelem-col))
+	      (save-excursion
+		(forward-char 1)
+		(c-forward-syntactic-ws (c-point 'eol))
+		(eolp)))
+	  ;; there's no equal sign on the line
+	  ;; c-basic-offset
+	  nil
+	;; calculate indentation column after equals and ws, unless
+	;; our line contains an equals sign
+	(if (not equalp)
+	    (progn
+	      (forward-char 1)
+	      (skip-chars-forward " \t")
+	      (setq equalp 0)))
+	(- (current-column) equalp langelem-col))
       )))
 
 (defun my-c-lineup-space (langelem)

@@ -80,7 +80,7 @@
 (defcustom lojban-mode-line-string " jbo"
   "String displayed on the mode line when lojban mode is active."
   :group 'lojban-mode :type '(choice (const :tag "No indicator." nil)
-									 string))
+				     string))
 
 ;;;; outline
 
@@ -90,8 +90,8 @@
   (save-excursion
     (let ((level 0))
       (while (looking-at "\\W*ni'o\\W*")
-		(setq level (+ level 1))
-		(goto-char (match-end 0)))
+	(setq level (+ level 1))
+	(goto-char (match-end 0)))
       level)))
 
 (defun lojban-outline-mode ()
@@ -106,22 +106,21 @@
 
 ;;;; syntax table
 
-(defvar lojban-syntax-table nil)
-(unless lojban-syntax-table
+(defvar lojban-syntax-table 
   (let ((s (make-syntax-table)))
     (mapcar
      (lambda (char)
        (modify-syntax-entry char " " s))
      (string-to-list "_- \t\r\n\""))
-;;	(modify-syntax-entry ?~ "!" s)
+    ;;	(modify-syntax-entry ?~ "!" s)
     (mapcar
      (lambda (char)
        (modify-syntax-entry char "w" s))
      (append
       (list ?,)
-	  (string-to-list (upcase lojban-word-letters))
+      (string-to-list (upcase lojban-word-letters))
       (string-to-list lojban-word-letters)))
-    (setq lojban-syntax-table s)))
+    s))
 
 ;;;; font-lock
 
@@ -172,118 +171,118 @@ the last word of text cancelled with SI, SA or SU."
 
 (defun lojban-match-zoi (&optional limit)
   (let* ((case-fold-search t)
-		 (start (point))		
-		 (end start)
-		 (found))
-	(while 
-		(and
-		 (> limit end)
-		 (re-search-forward
-		  (eval-when-compile
-			(regexp-opt
-			 (list "zoi" "la'o" "lo'u")))
-		  limit t)
-		 (setq end (match-end 0))
-		 (not
-		  (and
-		   (progn
-			 (goto-char (match-beginning 0))
-			 ;; TODO determine if it is possible to concatenate any cmavo
-			 ;; before "zoi" or "la'o" (apparently not) -- IMHO _any_ cmavo concat is possible -- twee
-			 (cond
-			  ((looking-at
-				(eval-when-compile
-				  ;; we need to set group number explicitly in case inner regex contains groups
-				  (concat "\\<\\(zoi\\|la'o\\)\\>\\W+\\(\\.?\\)\\("
-						  lojban-middle-letter-rgx "+\\)\\(\\.?\\)")))	
-			   (let ((delimiter (match-string 3))
-					 (pos (match-beginning 2)))
-				 ;; should the following search be undelimited?
-				 ;; I think it should -- twee
-				 (goto-char (match-end 0))
-				 (and delimiter
-					  (> (length delimiter) 0)
-					  ;;(search-forward delimiter limit t)
-					  (progn
-						(or (re-search-forward
-							 (concat "\\<\\.?"
-									 (regexp-quote delimiter)
-									 "\\.?\\>")
-							 limit t)
-							(goto-char limit))
-						(set-match-data
-						 (list pos (point)
-							   pos (+ pos 1)
-							   (- (point) 1) (point)))
-						t))))
-			  ((and (looking-at "lo'u")
-					(save-excursion
-					  (and
-					   (or (looking-at "\\<")
-						   (re-search-backward "\\<" nil t))
-					   (looking-at lojban-compound-cmavo-rgx))))
-			   (let ((ok nil)
-					 (pos (point)))
-				 (forward-char 4)
-				 (while (and
-						 (not ok) (search-forward "le'u" limit t)
-						 ;; make sure le'u is a proper cmavo
-						 (save-excursion
-						   (and
-							(re-search-backward "\\<" nil t)
-							(looking-at
-							 lojban-compound-cmavo-rgx))))
-				   (unless
-					   ;; make sure it is not quoted by a zo (reference
-					   ;; grammar chapter 19 warns about this).
-					   (save-excursion
-						 (let ((limit (- (point) 4)))
-						   (goto-char limit)
-						   (and
-							(re-search-backward "\\<" nil t)
-							(re-search-forward "zo\\>" limit t)
-							(= (match-end 0) limit))))
-					 (setq ok (point))))
-				 (when ok
-				   (set-match-data (list pos ok pos (+ pos 1) (- ok 1) ok))
-				   t)))))
-		   (setq found t))))
-	  (goto-char end)
-	  t)
-	(if found t
-	  (goto-char start)
-	  nil)))
+	 (start (point))		
+	 (end start)
+	 (found))
+    (while 
+	(and
+	 (> limit end)
+	 (re-search-forward
+	  (eval-when-compile
+	    (regexp-opt
+	     (list "zoi" "la'o" "lo'u")))
+	  limit t)
+	 (setq end (match-end 0))
+	 (not
+	  (and
+	   (progn
+	     (goto-char (match-beginning 0))
+	     ;; TODO determine if it is possible to concatenate any cmavo
+	     ;; before "zoi" or "la'o" (apparently not) -- IMHO _any_ cmavo concat is possible -- twee
+	     (cond
+	      ((looking-at
+		(eval-when-compile
+		  ;; we need to set group number explicitly in case inner regex contains groups
+		  (concat "\\<\\(zoi\\|la'o\\)\\>\\W+\\(\\.?\\)\\("
+			  lojban-middle-letter-rgx "+\\)\\(\\.?\\)")))	
+	       (let ((delimiter (match-string 3))
+		     (pos (match-beginning 2)))
+		 ;; should the following search be undelimited?
+		 ;; I think it should -- twee
+		 (goto-char (match-end 0))
+		 (and delimiter
+		      (> (length delimiter) 0)
+		      ;;(search-forward delimiter limit t)
+		      (progn
+			(or (re-search-forward
+			     (concat "\\<\\.?"
+				     (regexp-quote delimiter)
+				     "\\.?\\>")
+			     limit t)
+			    (goto-char limit))
+			(set-match-data
+			 (list pos (point)
+			       pos (+ pos 1)
+			       (- (point) 1) (point)))
+			t))))
+	      ((and (looking-at "lo'u")
+		    (save-excursion
+		      (and
+		       (or (looking-at "\\<")
+			   (re-search-backward "\\<" nil t))
+		       (looking-at lojban-compound-cmavo-rgx))))
+	       (let ((ok nil)
+		     (pos (point)))
+		 (forward-char 4)
+		 (while (and
+			 (not ok) (search-forward "le'u" limit t)
+			 ;; make sure le'u is a proper cmavo
+			 (save-excursion
+			   (and
+			    (re-search-backward "\\<" nil t)
+			    (looking-at
+			     lojban-compound-cmavo-rgx))))
+		   (unless
+		       ;; make sure it is not quoted by a zo (reference
+		       ;; grammar chapter 19 warns about this).
+		       (save-excursion
+			 (let ((limit (- (point) 4)))
+			   (goto-char limit)
+			   (and
+			    (re-search-backward "\\<" nil t)
+			    (re-search-forward "zo\\>" limit t)
+			    (= (match-end 0) limit))))
+		     (setq ok (point))))
+		 (when ok
+		   (set-match-data (list pos ok pos (+ pos 1) (- ok 1) ok))
+		   t)))))
+	   (setq found t))))
+      (goto-char end)
+      t)
+    (if found t
+      (goto-char start)
+      nil)))
 
 ;; (and (re-search-forward "\\(a\\)b\\(c\\)") (match-data t)) abc
 
 (defun lojban-match-to/toi (&optional limit) 
   (let* ((case-fold-search t)
-		 (start (point))
-		 found-pos)
-	(while
-		(and 
-		 (> limit (point))
-		 (re-search-forward 
-		  (eval-when-compile
-			(concat "\\<" lojban-compound-cmavo-start-rgx "\\(?1:to\\(?:'i\\)?\\)\\>"))
-		  limit t)
-		 (save-excursion
-		   (let ((to-pos (match-beginning 1)))
-			 (not
-			  (and
-			   ;; limited?..
-			   (re-search-forward  
-				(eval-when-compile
-				  (concat "\\<\\(?:" lojban-compound-cmavo-start-rgx "\\)?\\(?1:toi\\)" lojban-compound-cmavo-cont-rgx))
-				limit t)
-			   (let ((toi-end-pos (match-end 1)))
-				 (set-match-data (list to-pos toi-end-pos 
-									   to-pos (1+ to-pos)
-									   (1- toi-end-pos) toi-end-pos))
-				 (setq found-pos toi-end-pos)))
-			  )))))
-	(if found-pos (goto-char found-pos) (goto-char start))
-	found-pos))
+	 (start (point))
+	 found-pos)
+    (while
+	(and 
+	 (> limit (point))
+	 (re-search-forward 
+	  (eval-when-compile
+	    (concat "\\<" lojban-compound-cmavo-start-rgx "\\(?1:to\\(?:'i\\)?\\)\\>"))
+	  limit t)
+	 (save-excursion
+	   (let ((to-pos (match-beginning 1)))
+	     (not
+	      (and
+	       ;; limited?..
+	       (re-search-forward  
+		(eval-when-compile
+		  (concat "\\<\\(?:" lojban-compound-cmavo-start-rgx "\\)?\\(?1:toi\\)" lojban-compound-cmavo-cont-rgx))
+		limit t)
+	       (let ((toi-end-pos (match-end 1)))
+		 (set-match-data (list to-pos toi-end-pos 
+				       to-pos (1+ to-pos)
+				       (1- toi-end-pos) toi-end-pos))
+		 (setq found-pos toi-end-pos)))
+	      )))))
+    (if found-pos (goto-char found-pos) (goto-char start))
+    found-pos))
 
 ;; (defun lojban-match-to/toi (&optional limit)
 ;;   (message "match to/toi: start %d, limit %d" (point) limit)
@@ -298,169 +297,123 @@ the last word of text cancelled with SI, SA or SU."
 
 (defun lojban-match-zei (&optiworonal limit) 
   (let* ((case-fold-search t)
-		 (start (point))
-		 (end start)
-		 (found))
-	(while
-		(and 
-		 (> limit end)
-		 (re-search-forward "\\<zei\\>" limit t)
-		 (prog1 t
-		   (setq end (match-end 0))
-		   (goto-char (match-beginning 0)))
-		 (not
-		  (and
-		   (re-search-backward "\\<" nil t)
-		   (looking-at "\\w+\\(\\W+zei\\W+\\w+\\)+")
-		   (prog1 (setq found t) (goto-char end)))
-		  ))
-	  (goto-char end))
-	(unless found (goto-char start))
-	found))
+	 (start (point))
+	 (end start)
+	 (found))
+    (while
+	(and 
+	 (> limit end)
+	 (re-search-forward "\\<zei\\>" limit t)
+	 (prog1 t
+	   (setq end (match-end 0))
+	   (goto-char (match-beginning 0)))
+	 (not
+	  (and
+	   (re-search-backward "\\<" nil t)
+	   (looking-at "\\w+\\(\\W+zei\\W+\\w+\\)+")
+	   (prog1 (setq found t) (goto-char end)))
+	  ))
+      (goto-char end))
+    (unless found (goto-char start))
+    found))
 
 (defun lojban-match-quoted (&optional limit)
   (let* ((case-fold-search t)
-		 (start (point))
-		 (end start)
-		 (found))
-	(while
-		(and
-		 (> limit end)
-		 (re-search-forward
-		  (eval-when-compile
-			(regexp-opt
+	 (start (point))
+	 (end start)
+	 (found))
+    (while
+	(and
+	 (> limit end)
+	 (re-search-forward
+	  (eval-when-compile
+	    (regexp-opt
 			 ;;; FIXME: add word delimiters
-			 (list "su" "si" "sa" "bu" "zo")))
-		  limit t)
-		 (setq end (match-end 0))
-		 (not
-		  (and
-		   (progn	
-			 (goto-char (match-beginning 0))
-			 (cond
-			  ((and (looking-at "zo\\>")
-					(save-excursion
-					  (or (looking-at "\\<")
-						  (and
-						   (re-search-backward "\\<" nil t)
-						   (looking-at lojban-compound-cmavo-rgx)))))
-			   ;; This time only the quoted word is marked not also the
-			   ;; quoting one as the quoting cmavo may appear at the end of
-			   ;; a compound cmavo (hum, this could be rephrased).
-			   (forward-char 2)
-			   (re-search-forward
-				"[^ \t\r\n]+" ;;"\\w+"
-				limit t))
-			  ((looking-at "\\<s[aiu]\\>")
-			   ;; For simplicity we only mark the preceding word
-			   ;; FIXME: cusi, lasile e.g. won't work
-			   (when (re-search-backward "\\<\\w+\\>" nil t)
-				 (goto-char end) t))
-			  ;; FIXME: the reference grammar says "bu" concatenation is
-			  ;; possible, but does not specify its meaning
-			  ((looking-at (eval-when-compile
-							 (concat "bu\\(\\>\\|" lojban-cmavo-rgx "\\)")))
-			   (let ((end (match-beginning 1)))
-				 (when (looking-at "\\<")
-				   ;; quote the previous word
-				   (and
-					(re-search-backward "\\<" nil t)
-					(looking-at "\\w+")
-					(progn (goto-char (max start end)) t))
-				   ;; quote the previous partial cmavo
-				   ;;(or
-				   ;; (and
-				   ;;  (re-search-backward lojban-cmavo-rgx nil t)
-				   ;;  ;;(looking-at "\\w+bu")
-				   ;;  (progn (goto-char (max start end)) t))
-				   ;; (progn (goto-char start) nil))
-				   )))
-			  (t nil)))
-		   (setq found t))))
-	  (goto-char end)
-	  t)
-	(if found t
-	  (goto-char start)
-	  nil)))
+	     (list "su" "si" "sa" "bu" "zo")))
+	  limit t)
+	 (setq end (match-end 0))
+	 (not
+	  (and
+	   (progn	
+	     (goto-char (match-beginning 0))
+	     (cond
+	      ((and (looking-at "zo\\>")
+		    (save-excursion
+		      (or (looking-at "\\<")
+			  (and
+			   (re-search-backward "\\<" nil t)
+			   (looking-at lojban-compound-cmavo-rgx)))))
+	       ;; This time only the quoted word is marked not also the
+	       ;; quoting one as the quoting cmavo may appear at the end of
+	       ;; a compound cmavo (hum, this could be rephrased).
+	       (forward-char 2)
+	       (re-search-forward
+		"[^ \t\r\n]+" ;;"\\w+"
+		limit t))
+	      ((looking-at "\\<s[aiu]\\>")
+	       ;; For simplicity we only mark the preceding word
+	       ;; FIXME: cusi, lasile e.g. won't work
+	       (when (re-search-backward "\\<\\w+\\>" nil t)
+		 (goto-char end) t))
+	      ;; FIXME: the reference grammar says "bu" concatenation is
+	      ;; possible, but does not specify its meaning
+	      ((looking-at (eval-when-compile
+			     (concat "bu\\(\\>\\|" lojban-cmavo-rgx "\\)")))
+	       (let ((end (match-beginning 1)))
+		 (when (looking-at "\\<")
+		   ;; quote the previous word
+		   (and
+		    (re-search-backward "\\<" nil t)
+		    (looking-at "\\w+")
+		    (progn (goto-char (max start end)) t))
+		   ;; quote the previous partial cmavo
+		   ;;(or
+		   ;; (and
+		   ;;  (re-search-backward lojban-cmavo-rgx nil t)
+		   ;;  ;;(looking-at "\\w+bu")
+		   ;;  (progn (goto-char (max start end)) t))
+		   ;; (progn (goto-char start) nil))
+		   )))
+	      (t nil)))
+	   (setq found t))))
+      (goto-char end)
+      t)
+    (if found t
+      (goto-char start)
+      nil)))
 
 (defconst lojban-font-lock-keywords
   (reverse
-   (list
-	(list
-	 ;; WARNING: this may be slow
-	 (concat "\\<" lojban-compound-cmavo-start-rgx
-			 ;; NO "\\>" -- for rests of compound cmavo whose parts were matched as qoutes/comments
-			 )
-     0 lojban-cmavo-face
-	 'keep
-	 ;;     'prepend
-     )
-	(list
-	 ;; WARNING: this too
-	 (concat lojban-compound-cmavo-cont-rgx "\\>"
-			 ;; NO "\\<" -- for rests of compound cmavo whose parts were matched as qoutes/comments
-			 )
-     0 lojban-cmavo-face
-	 'keep
-	 ;;     'prepend
-     )
-	(list
-	 (concat "\\<" lojban-compound-cmavo-rgx
-			 ;; "\\>" already included in compound-cmavo-rgx
-			 )
-     0 lojban-cmavo-face
-	 ;;     'prepend
-     )
-	(list
-	 (concat "\\<"
-			 lojban-number-rgx
-			 "\\>")
-	 0 lojban-number-face
-	 ;;    'prepend
-	 )
-	(list
-	 (concat "\\<"
-			 "\\(?1:" lojban-UI-rgx "\\)"
-			 lojban-cmavo-rgx "*"
-			 "\\>")
-	 1 lojban-UI-face
-	 ;;    'prepend
-	 )
-	(list
-	 (concat lojban-sentence-separator-rgx  lojban-cmavo-rgx "*\\>")
-	 0 lojban-sentence-separator-face
-	 ;;    'prepend
-	 )
-	(list
-	 lojban-cmene-rgx 0 lojban-cmene-face
-	 ;;    'prepend
-	 )
-	(list
-	 lojban-brivla-rgx 0 lojban-brivla-face
-	 ;;    'prepend
-	 )
-
-	;;(list "\\<zo\\W+\\w+\\>" 0 lojban-quoted-face)
-	;;(list 'lojban-match-zei 0 lojban-brivla-face)
-
-	(list lojban-compound-brivla-rgx 0 lojban-brivla-face)
-	
-	(list 'lojban-match-quoted 0 lojban-quoted-face)
-
-	)))
+   `(;; WARNING: this may be slow
+     ;; NO "\\>" -- for rests of compound cmavo whose parts were matched as qoutes/comments
+     (,(concat "\\<" lojban-compound-cmavo-start-rgx) 0 ,lojban-cmavo-face keep)
+     ;; WARNING: this too
+     ;; NO "\\<" -- for rests of compound cmavo whose parts were matched as qoutes/comments
+     (,(concat lojban-compound-cmavo-cont-rgx "\\>") 0 ,lojban-cmavo-face keep)
+     ;; "\\>" already included in compound-cmavo-rgx
+     (,(concat "\\<" lojban-compound-cmavo-rgx) 0 ,lojban-cmavo-face)
+     (,(concat "\\<" lojban-number-rgx "\\>") 0 ,lojban-number-face)
+     (,(concat "\\<" "\\(?1:" lojban-UI-rgx "\\)" lojban-cmavo-rgx "*" "\\>") 1 ,lojban-UI-face)
+     (,(concat lojban-sentence-separator-rgx  lojban-cmavo-rgx "*\\>") 0 ,lojban-sentence-separator-face)
+     (,(concat "\\<" lojban-gram-quote-rgx "\\>") (0 (cons lojban-cmavo-face '(bold))))
+     (,lojban-cmene-rgx 0 ,lojban-cmene-face)
+     (,lojban-brivla-rgx 0 ,lojban-brivla-face)
+     ;;(lojban-match-zei 0 ,lojban-brivla-face)
+     (,lojban-compound-brivla-rgx 0 ,lojban-brivla-face)
+     ;;("\\<zo\\W+\\w+\\>" 0 ,lojban-quoted-face)
+     (lojban-match-quoted 0 ,lojban-quoted-face))))
 
 ;; syntactic fontification of zoi, la'o and lo'u...le'u region is still
 ;; too problematic
 ;;(defconst lojban-font-lock-syntactic-keywords
 ;;  (list (list 'lojban-match-quoted 0 "_")))
 (defconst lojban-font-lock-syntactic-keywords
-  (list (list 'lojban-match-zoi
-			  (list 1 "|")
-			  (list 2 "|"))
-		(list 'lojban-match-to/toi
-			  (list 1 "!")
-			  (list 2 "!"))
-		))
+  '((lojban-match-zoi
+     (1 "|")
+     (2 "|"))
+    (lojban-match-to/toi
+     (1 "!")
+     (2 "!"))))
 ;;(defconst lojban-font-lock-syntactic-keywords
 ;;  (list
 ;;   (list "zoi \\<\\.?\\("
@@ -482,13 +435,13 @@ the last word of text cancelled with SI, SA or SU."
 
 (defun lojban-mode-override-variable (variable value)
   (let* ((bound (boundp variable))
-		 (value (and bound (symbol-value variable)))
-		 (local (and bound (local-variable-p variable))))
+	 (value (and bound (symbol-value variable)))
+	 (local (and bound (local-variable-p variable))))
     (setq lojban-mode-variable-overrides
-		  (cons
-		   (cons variable (cons value (if (not bound) 'unbound local)))
-		   (assq-delete-all
-			variable lojban-mode-variable-overrides))))
+	  (cons
+	   (cons variable (cons value (if (not bound) 'unbound local)))
+	   (assq-delete-all
+	    variable lojban-mode-variable-overrides))))
   (make-local-variable variable)
   (set variable value))
 
@@ -496,13 +449,13 @@ the last word of text cancelled with SI, SA or SU."
   (mapcar
    (lambda (entry)
      (let ((variable (car entry))
-		   (value (cadr entry))
-		   (local (cddr entry)))
+	   (value (cadr entry))
+	   (local (cddr entry)))
        (when (boundp variable)
-		 (cond
-		  ((eq local 'unbound) (unintern variable))
-		  (local (set variable value))
-		  (t (kill-local-variable variable))))))
+	 (cond
+	  ((eq local 'unbound) (unintern variable))
+	  (local (set variable value))
+	  (t (kill-local-variable variable))))))
    lojban-mode-variable-overrides)
   (setq lojban-mode-variable-overrides nil))
 
@@ -524,8 +477,7 @@ the last word of text cancelled with SI, SA or SU."
 (define-key lojban-mode-keymap "\C-crp" 'lojban-parse-region)
 (define-key lojban-mode-keymap "\C-cw" 'lojban-gloss-word)
 (define-key lojban-mode-keymap "\C-cs" 'lojban-parse-sentence)
-(define-key lojban-mode-keymap "\C-cdg" 'lojban-describe-gismu)
-(define-key lojban-mode-keymap "\C-cgc" 'lojban-describe-cmavo)
+(define-key lojban-mode-keymap "\C-cd" 'lojban-describe-valsi-at-point)
 
 ;;;###autoload
 (or (assoc 'lojban-mode minor-mode-alist)
@@ -554,7 +506,7 @@ other major or minor modes.  With prefix ARG, turn the mode on iff ARG
 is positive.  When the mode is activated, `lojban-mode-hook' is run."
   (interactive "P")
   (let ((enable nil)
-		(disable nil))
+	(disable nil))
     (cond
      ((null arg)
       (if lojban-mode (setq disable t) (setq enable t)))
@@ -562,58 +514,58 @@ is positive.  When the mode is activated, `lojban-mode-hook' is run."
       (setq enable t))
      (t (setq disable t)))
     (if disable
-		(progn
-		  (when lojban-mode-font-lock-keywords
-			(font-lock-remove-keywords
-			 nil lojban-mode-font-lock-keywords)
-			(setq lojban-mode-font-lock-keywords nil)
-			(if font-lock-mode
-				(if lojban-mode-old-font-lock
-					(font-lock-fontify-buffer)
-				  (font-lock-mode -1))))
-		  (when lojban-mode-old-syntax-table
-			(set-syntax-table lojban-mode-old-syntax-table))
-		  (lojban-mode-restore-variables)
-		  (setq lojban-mode nil))
+	(progn
+	  (when lojban-mode-font-lock-keywords
+	    (font-lock-remove-keywords
+	     nil lojban-mode-font-lock-keywords)
+	    (setq lojban-mode-font-lock-keywords nil)
+	    (if font-lock-mode
+		(if lojban-mode-old-font-lock
+		    (font-lock-fontify-buffer)
+		  (font-lock-mode -1))))
+	  (when lojban-mode-old-syntax-table
+	    (set-syntax-table lojban-mode-old-syntax-table))
+	  (lojban-mode-restore-variables)
+	  (setq lojban-mode nil))
       (if enable
-		  (progn
-			(let ((a lojban-font-lock-keywords))
-			  (setq
-			   ;; remember whether font-lock is active
-			   lojban-mode-old-font-lock font-lock-mode
-			   lojban-mode-font-lock-keywords
-			   (append a
-					   lojban-mode-font-lock-keywords)
-			   lojban-mode-old-syntax-table (syntax-table))
-			  (set-syntax-table lojban-syntax-table)
-			  (font-lock-add-keywords nil a)
-			  (mapcar 'make-local-variable
-					  '(lojban-mode-font-lock-keywords))
-			  (lojban-mode-override-variable
-			   'sentence-end lojban-sentence-separator-rgx)
-			  (lojban-mode-override-variable
-			   'outline-level 'lojban-outline-level)
-			  (lojban-mode-override-variable
-			   'outline-regexp lojban-outline-regexp)
-			  (lojban-mode-override-variable
-			   'font-lock-keywords-case-fold-search t)
-			  (lojban-mode-override-variable
-			   'font-lock-multiline t)
-			  (lojban-mode-override-variable
-			   'font-lock-keywords-only nil)
-			  (lojban-mode-override-variable
-			   'font-lock-beginning-of-syntax-function
-			   'beginning-of-buffer)
-			  (lojban-mode-override-variable
-			   'font-lock-syntactic-keywords
-			   lojban-font-lock-syntactic-keywords)
-			  (if font-lock-mode
-				  (progn 
-					(font-lock-fontify-syntactically-region (point-min) (point-max))
-					(font-lock-fontify-buffer))
-				(font-lock-mode 1))
-			  (setq lojban-mode t))
-			(run-hooks 'lojban-mode-hook))))))
+	  (progn
+	    (let ((a lojban-font-lock-keywords))
+	      (setq
+	       ;; remember whether font-lock is active
+	       lojban-mode-old-font-lock font-lock-mode
+	       lojban-mode-font-lock-keywords
+	       (append a
+		       lojban-mode-font-lock-keywords)
+	       lojban-mode-old-syntax-table (syntax-table))
+	      (set-syntax-table lojban-syntax-table)
+	      (font-lock-add-keywords nil a)
+	      (mapcar 'make-local-variable
+		      '(lojban-mode-font-lock-keywords))
+	      (lojban-mode-override-variable
+	       'sentence-end lojban-sentence-separator-rgx)
+	      (lojban-mode-override-variable
+	       'outline-level 'lojban-outline-level)
+	      (lojban-mode-override-variable
+	       'outline-regexp lojban-outline-regexp)
+	      (lojban-mode-override-variable
+	       'font-lock-keywords-case-fold-search t)
+	      (lojban-mode-override-variable
+	       'font-lock-multiline t)
+	      (lojban-mode-override-variable
+	       'font-lock-keywords-only nil)
+	      (lojban-mode-override-variable
+	       'font-lock-beginning-of-syntax-function
+	       'beginning-of-buffer)
+	      (lojban-mode-override-variable
+	       'font-lock-syntactic-keywords
+	       lojban-font-lock-syntactic-keywords)
+	      (if font-lock-mode
+		  (progn 
+		    (font-lock-fontify-syntactically-region (point-min) (point-max))
+		    (font-lock-fontify-buffer))
+		(font-lock-mode 1))
+	      (setq lojban-mode t))
+	    (run-hooks 'lojban-mode-hook))))))
 
 (provide 'lojban-mode)
 

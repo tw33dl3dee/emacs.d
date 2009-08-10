@@ -7,19 +7,13 @@
 (add-to-list 'auto-mode-alist '("\\.jbo$" . lojban-mode))
 
 (add-hook 'lojban-mode-hook
-		  '(lambda ()
-			 (local-set-key [C-down] "\C-c}")
-			 (local-set-key [C-up] "\C-c{")
-			 ;; C-;
-			 (local-set-key [67108923] 'lojban-gloss-word)
-			 ;; C-'
-			 (local-set-key [67108903] 'lojban-parse-sentence)
-			 ;; C-M-;
-			 (local-set-key [201326651] 'lojban-gloss-region)
-			 ;; C-M-'
-			 (local-set-key [201326631] 'lojban-parse-region)
-			 ;; C-,
-			 (local-set-key [67108908] 'lojban-describe-gismu)
-			 ;; C-.
-			 (local-set-key [67108910] 'lojban-describe-cmavo)
-			 ))
+	  '(lambda ()
+	     (local-set-key [C-down] 'lojban-paragraph-forward)
+	     (local-set-key [C-up] 'lojban-paragraph-backward)
+	     (local-set-key (kbd "C-;") 'lojban-gloss-word)
+	     (local-set-key (kbd "C-'") 'lojban-parse-sentence)
+	     (local-set-key (kbd "C-M-;") 'lojban-gloss-region)
+	     (local-set-key (kbd "C-M-'") 'lojban-parse-region)
+	     (local-set-key (kbd "C-,") 'lojban-describe-valsi)
+	     (local-set-key (kbd "C-.") 'lojban-describe-valsi-at-point)
+	     ))

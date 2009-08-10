@@ -126,7 +126,7 @@
         (c-tab-always-indent            . t)
         (c-toggle-hungry-state          . t)
         (c-hanging-braces-alist         . ((substatement-open after)
-										   (brace-list-open)))
+					   (brace-list-open)))
         (c-offsets-alist                . ((arglist-close . c-lineup-arglist)
                                            (case-label . +)
                                            (substatement-open . 0)
@@ -140,8 +140,8 @@
                                            (case-label after)
                                            (label after)
                                            (access-label after)))
-		(c-at-vsemi-p-fn                . qt-at-vsemi-after-q-object)
-		(c-vsemi-status-unknown-p       . qt-vsemi-status-unknown-p)
+	(c-at-vsemi-p-fn                . qt-at-vsemi-after-q-object)
+	(c-vsemi-status-unknown-p       . qt-vsemi-status-unknown-p)
         (c-cleanup-list                 . (scope-operator
                                            empty-defun-braces
                                            defun-close-semi))))

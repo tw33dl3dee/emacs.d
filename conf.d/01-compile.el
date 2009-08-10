@@ -2,9 +2,9 @@
 
 (defun compile-and-run()
   (if (compile "make")
-	  (progn 
-		(delete-other-windows)
-		(shell))))
+      (progn 
+	(delete-other-windows)
+	(shell))))
 
 ;;; Some few ways to close buffer after compilation
 
@@ -45,8 +45,8 @@
 (setq compilation-finish-functions 'compile-autoclose)
 (defun compile-autoclose (buffer string)
   (cond ((and (string-match "finished" string) (get-buffer "*compilation*"))
-		 (bury-buffer "*compilation*")
-		 (winner-undo)
-		 )
-		(t                                                                    
-		 (message "Compilation exited abnormally: %s" string))))
+	 (bury-buffer "*compilation*")
+	 (winner-undo)
+	 )
+	(t                                                                    
+	 (message "Compilation exited abnormally: %s" string))))
