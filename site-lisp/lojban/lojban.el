@@ -190,6 +190,18 @@ last two a valid initial consonant pair."
 		     (and (eq b ?t)
 			  (memq c '(?c ?z))))))))
 
+(defconst lojban-invalid-double-letters
+  "abcdefgjklmnoprstvxyz'.,"
+  "Letters than cannot be doubled in Lojbanic words.")
+
+(defconst lojban-invalid-double-letter-rgx
+  (concat "\\<" lojban-letter-rgx "*\\(" 
+	  (mapconcat '(lambda (x) (regexp-quote (concat x x)))
+		     (split-string lojban-invalid-double-letters "" t)
+		     "\\|")
+	  "\\)" lojban-letter-rgx "*\\>")
+  "Regexp matching un-lojbanic word with duplicate letters (everything except `ii' and `uu'.")
+
 (defconst lojban-valsi-rgx
   (concat "\\.?" lojban-middle-letter-rgx "+" "\\.?")
   "Regexp matching a lojban word, with eventual false positive.
@@ -229,18 +241,20 @@ See also `lojban-cmavo-rgx', `lojban-compound-cmavo-start-rgx'.")
 
 (defconst lojban-digit-rgx
   (regexp-opt 
-   (list  "no"   "pa"   "re"   "ci"   "vo"   "mu"   "xa"   "ze"    "bi"  "so" 					; PA1: numbers
-	  "dau"  "fei"  "gai"  "jau"  "rei"  "xei"  "vai"  										; PA2: hex
-	  "ce'i" "fi'u" "ki'o" "ma'u" "ni'u" "pi"   "pi'e" "ra'e" 								; PA3: signs
+   (list  "no"   "pa"   "re"   "ci"   "vo"   "mu"   "xa"   "ze"    "bi"  "so" 			; PA1: numbers
+	  "dau"  "fei"  "gai"  "jau"  "rei"  "xei"  "vai"  					; PA2: hex
+	  "ce'i" "fi'u" "ki'o" "ma'u" "ni'u" "pi"   "pi'e" "ra'e" 				; PA3: signs
 	  "da'a" "du'e" "ji'i" "rau"  "ro"   "so'a" "so'e" "so'i" "so'o" "so'u" "su'e" "su'o"	; PA4: quantities
-	  "ci'i" "ka'o" "pai"  "te'o" "tu'o"													; PA5: constants
-	  "gei"																					; VUhU2: 10^
-		  ;;; excluded: PA3: za'u (greater), me'i (less); PA5: no'o (avg) xo (number question)
+	  "ci'i" "ka'o" "pai"  "te'o" "tu'o"							; PA5: constants
+	  "gei"											; VUhU2: 10^
+	  ;;; excluded: PA3: za'u (greater), me'i (less); PA5: no'o (avg) xo (number question)
 	  )
-   t))
+   t)
+  "Regexp matching a digit word (including pseudo-digits, like 'all', 'none', etc.).")
 
 (defconst lojban-number-rgx
-  (concat lojban-digit-rgx "+"))
+  (concat lojban-digit-rgx "+")
+  "Regexp matching a number in Lojban (sequence of digit cmavos).")
 
 (defvar lojban-UI-rgx
   (concat "\\(\\.\\|\\<\\)" lojban-v-rgx "'?" lojban-v-rgx
@@ -382,18 +396,32 @@ See also `lojban-brivla-rgx'."
   (concat "\\(" "\\(?100:" lojban-cc-rgx lojban-v-rgx "\\)"
 	  "\\|" "\\(?100:" lojban-c-rgx lojban-vv-rgx "\\)[rn]?"
 	  "\\|" "\\(?100:" lojban-c-rgx lojban-v-rgx lojban-c-rgx "\\)y?" 
-	  "\\)"))
+	  "\\)")
+  "Regexp matching a short (3-letter) rafsi.
+
+Rafsi content without buffer sounds like 'y' or 'r' is matched as group number 100.
+See also `lojban-rafsi-4-rgx', `lojban-rafsi-4-no-y-rgx', `lojban-rafsi-5-rgx'.")
 
 (defconst lojban-rafsi-4-no-y-rgx
   (concat "\\(" lojban-cc-rgx lojban-v-rgx lojban-c-rgx
 	  "\\|" lojban-c-rgx lojban-v-rgx lojban-c/c-rgx
-	  "\\)"))
+	  "\\)")
+  "Regexp matching a 4-letter rafsi (without following 'y').
+
+See also `lojban-rafsi-3-rgx', `lojban-rafsi-4-rgx', `lojban-rafsi-5-rgx'.")
 
 (defconst lojban-rafsi-4-rgx
-  (concat "\\(?100:" lojban-rafsi-4-no-y-rgx "\\)y"))
+  (concat "\\(?100:" lojban-rafsi-4-no-y-rgx "\\)y")
+  "Regexp matching a 4-letter rafsi followed by 'y'.
+
+Rafsi content without 'y' is matched as group number 100.
+See also `lojban-rafsi-3-rgx', `lojban-rafsi-4-no-y-rgx', `lojban-rafsi-5-rgx'.")
 
 (defconst lojban-rafsi-5-rgx
-  (concat lojban-rafsi-4-no-y-rgx lojban-v-rgx "\\>"))
+  (concat lojban-rafsi-4-no-y-rgx lojban-v-rgx "\\>")
+  "Regexp matching a 5-letter rafsi (i.e. a gismu).
+
+See also `lojban-rafsi-3-rgx', `lojban-rafsi-4-no-y-rgx', `lojban-rafsi-4-rgx'.")
 
 ;;;; lujvo
 
@@ -401,6 +429,9 @@ See also `lojban-brivla-rgx'."
   (eq (or pos 0) (string-match regexp string pos)))
 
 (defun lojban-split-lujvo (&optional lujvo)
+  "Splits lujvo (default is word under point) into rafsi list.
+
+If word is not a valid lujvo, an error is signaled."
   (interactive)
   (unless lujvo (setq lujvo (current-word)))
   (and 
@@ -419,7 +450,6 @@ See also `lojban-brivla-rgx'."
 	  ((string-looking-at "\\W\\|$" lujvo pos) nil)
 	  (t (error "Invalid lujvo: %s" lujvo)))
        (setq pos (match-end 0)))
-     (message "%s" (reverse rafsi-list))
      (reverse rafsi-list))))
 
 ;;;; gismu
@@ -429,7 +459,7 @@ See also `lojban-brivla-rgx'."
   "Regexp matching a gismu, with eventual false positives.
 Use `lojban-gismu-p' for an exact discrimination.
 
-See also `lojban-brivla-rgx'.")
+See also `lojban-rafsi-5-rgx', `lojban-brivla-rgx'.")
 
 (defun lojban-gismu-p (string &optional raise-error)
   "Return t if STRING is a morphologically valid gismu.
@@ -556,10 +586,14 @@ remapped for exponential notation")
   "Table mapping lojban letters and other characters into lerfu.")
 
 (defun lojban-normalize-valsi (valsi)
+  "Transforms valsi to a form expected by `vlatai'.
+
+Removes trailing and/or leading dot, if any, and lowercases non-cmene words."
   (let ((undotted (replace-regexp-in-string "\\." "" valsi)))
     (if (lojban-cmene-p undotted) undotted (downcase undotted))))
 
 (defun lojban-current-word-interactive (prompt)
+  "Can be used as argument to `interactive' to prompt for a value with word under point as the default."
   (list (let* ((default-entry (current-word))
 	       (input (read-string
 		       (format "%s%s" prompt
@@ -647,6 +681,11 @@ See also `lojban-describe-compound-cmavo'."
 	    s))))))
 
 (defun lojban-describe-lujvo (&optional lujvo short)
+  "Split LUJVO into gismu list, and return their descriptions as multiline string.
+
+With optional argument SHORT, just give a short definition of each gismu.
+When called interactively, show that description in the message area.
+See also `lojban-describe-gismu', `lojban-describe-cmavo'."
   (interactive (lojban-current-word-interactive "Lujvo"))
   (let* ((rafsi-list (lojban-split-lujvo lujvo))
 	 (s (mapconcat 'lojban-describe-valsi-by-rafsi rafsi-list "\n")))
@@ -654,12 +693,25 @@ See also `lojban-describe-compound-cmavo'."
     s))
 
 (defun lojban-describe-valsi-by-rafsi (&optional rafsi short)
+  "Lookup valsi corresponding to RAFSI, and return its description line as string.
+
+With optional argument SHORT, just give a short definition of each gismu.
+When called interactively, show that description in the message area.
+See also `lojban-describe-gismu', `lojban-describe-cmavo', `lojban-describe-lujvo'."
   (interactive "sRafsi: ")
   (let ((valsi (lojban-rafsi-lookup rafsi)))
     (unless valsi (error "Unrecognized rafsi: %s" rafsi))
     (lojban-describe-valsi valsi short t)))
 
 (defun lojban-describe-valsi (&optional valsi short inner)
+  "Qualify VALSI and returns its description as returned by one of 
+`lojban-describe-gismu', `lojban-describe-compound-cmavo', or `lojban-describe-lujvo'.
+
+Output of `lojban-vlatai-command' is also added to description.
+With optional argument SHORT, just give a short definition of each gismu.
+When INNER is non-nil, lujvo is not allowed and will signal an error.
+When called interactively, show that description in the message area.
+See also `lojban-describe-gismu', `lojban-describe-compound-cmavo', `lojban-describe-lujvo'"
   (interactive (lojban-current-word-interactive "Valsi"))
   (let* ((s
 	  (cond ((lojban-gismu-p valsi)
@@ -680,6 +732,7 @@ See also `lojban-describe-compound-cmavo'."
     s*))
 
 (defun lojban-describe-valsi-at-point (&optional short)
+  "Calls `lojban-describe-valsi' for word at point, moving point to the next word."
   (interactive)
   (message "%s" (condition-case e
 		    (lojban-describe-valsi (lojban-normalize-valsi (current-word)) short)
@@ -690,7 +743,8 @@ See also `lojban-describe-compound-cmavo'."
 ;; grammatical quotes (lu ... li'u)
 
 (defconst lojban-gram-quote-rgx
-  (regexp-opt '("lu" "li'u")))
+  (regexp-opt '("lu" "li'u"))
+  "Regexp matching grammatical quotes (LU/LIhU).")
 
 ;; paragraphs (ni'o)
 

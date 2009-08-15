@@ -401,7 +401,8 @@ the last word of text cancelled with SI, SA or SU."
      ;;(lojban-match-zei 0 ,lojban-brivla-face)
      (,lojban-compound-brivla-rgx 0 ,lojban-brivla-face)
      ;;("\\<zo\\W+\\w+\\>" 0 ,lojban-quoted-face)
-     (lojban-match-quoted 0 ,lojban-quoted-face))))
+     (lojban-match-quoted 0 ,lojban-quoted-face)
+     (,lojban-invalid-double-letter-rgx 0 ,font-lock-warning-face))))
 
 ;; syntactic fontification of zoi, la'o and lo'u...le'u region is still
 ;; too problematic

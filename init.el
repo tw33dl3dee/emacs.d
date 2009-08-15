@@ -79,6 +79,7 @@
  '(safe-local-variable-values (quote ((minor-mode . lojban))))
  '(save-place-file "~/.emacs.d/places")
  '(session-undo-check 0)
+ '(sh-here-document-word "-EOF")
  '(show-paren-mode t nil (paren))
  '(size-indication-mode t)
  '(split-width-threshold nil)
