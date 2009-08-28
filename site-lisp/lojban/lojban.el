@@ -54,43 +54,35 @@
 
 ;;;; lerfu
 
-(defconst lojban-word-letters "abcdefgijklmnoprstuvxyz'.,")
+(defconst lojban-word-letters "abcdefgijklmnoprstuvxyz',"
+  "String containing all letters that can appear in middle of a Lojban word (not including '.' as it breaks words)")
 
-(defconst lojban-letter-set
-  (or "a-gi-pr-vxyz'.,"
-      "abcdefgijklmnoprstuvxyz'.,")
-  "Set of valid letters in a lojban word.")
+;; (defconst lojban-letter-set
+;;   (or "a-gi-pr-vxyz'.,"
+;;       "abcdefgijklmnoprstuvxyz'.,")
+;;   "Set of valid lojban letters (including '.').")
 
-(defconst lojban-letter-rgx
-  (or
-   (concat "[" lojban-letter-set "]")
-   "\\w" ;; needs a syntax table specifically set for lojban
-   )
-  "Regexp matching letters that may appear in a lojban word.")
+;; (defconst lojban-letter-rgx
+;;   (concat "[" lojban-letter-set "]")
+;;   "Regexp matching letters that may appear in a lojban word.")
 
-(defconst lojban-non-letter-rgx
-  (or
-   (concat "[^" lojban-letter-set "]")
-   "\\W" ;; needs a syntax table specifically set for lojban
-   )
-  "Regexp matching any non-lojban letter.")
+;; (defconst lojban-non-letter-rgx
+;;   (concat "[^" lojban-letter-set "]")
+;;   "Regexp matching any non-lojban letter.")
 
-(defconst lojban-middle-letter-rgx "[a-gi-pr-vxyz',]"
-  "Like `lojban-letter-rgx', but excludes \".\".
+(defconst lojban-middle-letter-rgx "\\w"
+  "Regexp matching letters that may appear in the middle of a valsi.")
 
-Regexp matching letters that may appear in the middle of
-a valsi (lojban word).")
-
-(defconst lojban-c-letter-set (or "bcdfgj-npr-tvxz"
+(defconst lojban-c-letter-set (or ;"bcdfgj-npr-tvxz"
 				  "bcdfgjklmnprstvxz")
   "Lojban consonants, not including the apostrophe.")
 
 (defconst lojban-c-rgx (concat "[" lojban-c-letter-set "]")
   "Regexp matching lojban consonants, not including the apostrophe.")
 
-(defconst lojban-consonants
-  (string-to-list "bcdfgjklmnprstvx'")
-  "List of lojban consonants.")
+;; (defconst lojban-consonants
+;;   (string-to-list "bcdfgjklmnprstvx'")
+;;   "List of lojban consonants.")
 
 (defconst lojban-unvoiced-consonants (string-to-list "ptkfcsx")
   "Unvoiced lojban consonants.")
@@ -101,8 +93,8 @@ a valsi (lojban word).")
 (defconst lojban-maybe-voiced-consonants (string-to-list "lmnr")
   "Lojban consonants that can be either voiced or unvoiced.")
 
-(defconst lojban-vowels '(?a ?e ?i ?o ?u ?y)
-  "Character list of lojban vowels.")
+;; (defconst lojban-vowels '(?a ?e ?i ?o ?u ?y)
+;;   "Character list of lojban vowels.")
 
 (defconst lojban-v-letter-set "aeiou"
   "Set of lojban vowels, except y.")
@@ -113,14 +105,23 @@ a valsi (lojban word).")
 (defconst lojban-v+-rgx (concat "[" lojban-v-letter-set "y]")
   "Regexp matching a lojban vowel, including y.")
 
-(defconst lojban-diphthongs (list "ai" "ei" "oi" "au")
-  "List of valid lojban diphthongs.")
+(defconst lojban-diphthongs-1
+  (list "ai" "ei" "oi" "au")
+  "List of diphthongs acceptable in all lojban valsi.")
 
-(defconst lojban-diphthongs+-rgx
-  (regexp-opt
-   (list "ai" "ei" "oi" "au" "ia" "ie" "ii" "io" "iu" "ua" "ue" "ui"
-	 "uo" "uu" "iy" "uy"))
-  "Regexp matching valid diphthongs in lojban and lojbanized words.")
+(defconst lojban-diphtongs-2 
+  (list "ai" "ei" "oi" "au" "ia" "ie" "ii" "io" "iu" "ua" "ue" "ui" "uo" "uu")
+  "List of additional diphthongs acceptable in UI cmavo.")
+
+(defconst lojban-diphtongs-3
+  (list "iy" "uy")
+  "List of additional diphthongs acceptable in cmene.")
+
+;; (defconst lojban-diphthongs+-rgx
+;;   (regexp-opt
+;;    (list "ai" "ei" "oi" "au" "ia" "ie" "ii" "io" "iu" "ua" "ue" "ui"
+;; 	 "uo" "uu" "iy" "uy"))
+;;   "Regexp matching valid diphthongs in lojban and lojbanized words.")
 
 (defconst lojban-vv-letters
   (append lojban-diphthongs
@@ -133,8 +134,16 @@ a valsi (lojban word).")
   "Valid vowel pairs, including diphthongs.")
 
 (defconst lojban-vv-rgx
-  (regexp-opt lojban-vv-letters))
-;;"[aeiou]'[aeiou]")
+  (regexp-opt lojban-diphthongs-1 lojban-vv-letters)
+  "Regexp matching VV pattern.")
+
+(defconst lojban-vv-ui-rgx 
+  (regexp-opt lojban-diphthongs-1 lojban-diphthongs-2 lojban-vv-letters)
+  "Regexp matching VV patterns acceptable in UI cmavo.")
+
+(defconst lojban-vv-cmene-rgx 
+  (regexp-opt lojban-diphthongs-1 lojban-diphthongs-2 lojban-diphthongs-3 lojban-vv-letters)
+  "Regexp matching VV patterns acceptable in cmene.")
 
 (defconst lojban-cc-letters
   '("bl" "br" "cf" "ck" "cl" "cm" "cn" "cp"
@@ -149,14 +158,14 @@ a valsi (lojban word).")
   (regexp-opt lojban-cc-letters t)
   "Regexp matching valid initial consonant pairs.")
 
-(defun lojban-cc-p (a b)
-  "Return true if A and B constitute a valid initial consonant pair."
-  (or
-   (and (memq a '(?b ?f ?g ?k ?m ?p ?v ?x)) (memq b '(?l ?r)))
-   (and (memq a '(?c ?s)) (memq b '(?f ?k ?l ?m ?n ?p ?r ?t)))
-   (and (memq a '(?j ?z)) (memq b '(?b ?d ?g ?m ?v)))
-   (and (eq a ?d) (memq b '(?j ?r ?z)))
-   (and (eq a ?t) (memq b '(?c ?r ?s)))))
+;; (defun lojban-cc-p (a b)
+;;   "Return true if A and B constitute a valid initial consonant pair."
+;;   (or
+;;    (and (memq a '(?b ?f ?g ?k ?m ?p ?v ?x)) (memq b '(?l ?r)))
+;;    (and (memq a '(?c ?s)) (memq b '(?f ?k ?l ?m ?n ?p ?r ?t)))
+;;    (and (memq a '(?j ?z)) (memq b '(?b ?d ?g ?m ?v)))
+;;    (and (eq a ?d) (memq b '(?j ?r ?z)))
+;;    (and (eq a ?t) (memq b '(?c ?r ?s)))))
 
 (defun lojban-c/c-p (a b)
   "Return true if A and B constitute a valid consonant pair."
@@ -175,32 +184,58 @@ a valsi (lojban word).")
 	    (and (eq a ?x) (memq b '(?c ?k)))
 	    (and (eq a ?m) (eq b ?z))))))
 
-(defconst lojban-c/c-rgx (concat lojban-c-rgx lojban-c-rgx)
-  "Regexp matching consonant pairs, with eventual false positives.
-Use `lojban-c/c-p' for an exact discrimination.")
+(defconst lojban-c/c-letters
+  (mapcan (lambda (b) 
+	    (mapcan (lambda (a) 
+		      (when (lojban-c/c-p a b) 
+			(list (string a b)))) 
+		    lojban-c-letter-set))
+	  lojban-c-letter-set)
+  "Valid internal consonant pairs.")
 
-(defun lojban-c/cc-p (a b c)
-  "Return true if A, B and C constitute a valid consonant triple.
-The first two letters should constitute a valid consonant pair, the
-last two a valid initial consonant pair."
-  (and (lojban-c/c-p a b) (lojban-cc-p b c)
-       (not (and (eq a ?n)
-		 (or (and (eq b ?d)
-			  (memq c '(?j ?z)))
-		     (and (eq b ?t)
-			  (memq c '(?c ?z))))))))
+(defconst lojban-c/c-rgx 
+  (regexp-opt lojban-c/c-letters)
+  "Regexp matching valid internal consonant pairs, filterd with `lojban-c/c-p'.")
 
-(defconst lojban-invalid-double-letters
-  "abcdefgjklmnoprstvxyz'.,"
-  "Letters than cannot be doubled in Lojbanic words.")
+;; (defun lojban-c/cc-p (a b c)
+;;   "Return true if A, B and C constitute a valid consonant triple.
+;; The first two letters should constitute a valid consonant pair, the
+;; last two a valid initial consonant pair."
+;;   (and (lojban-c/c-p a b) (lojban-cc-p b c)
+;;        (not (and (eq a ?n)
+;; 		 (or (and (eq b ?d)
+;; 			  (memq c '(?j ?z)))
+;; 		     (and (eq b ?t)
+;; 			  (memq c '(?c ?z))))))))
 
-(defconst lojban-invalid-double-letter-rgx
-  (concat "\\<" lojban-letter-rgx "*\\(" 
-	  (mapconcat '(lambda (x) (regexp-quote (concat x x)))
-		     (split-string lojban-invalid-double-letters "" t)
-		     "\\|")
-	  "\\)" lojban-letter-rgx "*\\>")
-  "Regexp matching un-lojbanic word with duplicate letters (everything except `ii' and `uu'.")
+;; (defconst lojban-invalid-double-letters
+;;   "abcdefgjklmnoprstvxyz'.,"
+;;   "Letters than cannot be doubled in Lojbanic words.")
+
+;; (defconst lojban-invalid-double-letter-rgx
+;;   (concat "\\<" lojban-letter-rgx "*\\(" 
+;; 	  (mapconcat '(lambda (x) (regexp-quote (concat x x)))
+;; 		     (split-string lojban-invalid-double-letters "" t)
+;; 		     "\\|")
+;; 	  "\\)" lojban-letter-rgx "*\\>")
+;;   "Regexp matching un-lojbanic word with duplicate letters (everything except `ii' and `uu'.")
+
+(defconst lojban-syntax-table 
+  (let ((s (make-syntax-table)))
+    ; although '.' is a letter, it nevetheless separates words
+    (mapcar
+     (lambda (char)
+       (modify-syntax-entry char " " s))
+     (string-to-list "_- \t\r\n\"."))
+    (modify-syntax-entry ?~ "!" s) ; ~ are comment delims
+    (mapcar
+     (lambda (char)
+       (modify-syntax-entry char "w" s))
+     (append
+      (list ?,)
+      (string-to-list (upcase lojban-word-letters))
+      (string-to-list lojban-word-letters)))
+    s))
 
 (defconst lojban-valsi-rgx
   (concat "\\.?" lojban-middle-letter-rgx "+" "\\.?")
@@ -434,23 +469,24 @@ See also `lojban-rafsi-3-rgx', `lojban-rafsi-4-no-y-rgx', `lojban-rafsi-4-rgx'."
 If word is not a valid lujvo, an error is signaled."
   (interactive)
   (unless lujvo (setq lujvo (current-word)))
-  (and 
-   (lojban-brivla-p lujvo)
-   (let (rafsi-list 
-	 (pos 0)
-	 (case-fold-search t))
-     (while
-	 (cond
-	  ((string-looking-at lojban-rafsi-5-rgx lujvo pos)
-	   (push (match-string-no-properties 0 lujvo) rafsi-list))
-	  ((string-looking-at lojban-rafsi-4-rgx lujvo pos)
-	   (push (match-string-no-properties 100 lujvo) rafsi-list))
-	  ((string-looking-at lojban-rafsi-3-rgx lujvo pos)
-	   (push (match-string-no-properties 100 lujvo) rafsi-list))
-	  ((string-looking-at "\\W\\|$" lujvo pos) nil)
-	  (t (error "Invalid lujvo: %s" lujvo)))
-       (setq pos (match-end 0)))
-     (reverse rafsi-list))))
+  (with-syntax-table lojban-syntax-table
+    (and 
+     (lojban-brivla-p lujvo)
+     (let (rafsi-list 
+	   (pos 0)
+	   (case-fold-search t))
+       (while
+	   (cond
+	    ((string-looking-at lojban-rafsi-5-rgx lujvo pos)
+	     (push (match-string-no-properties 0 lujvo) rafsi-list))
+	    ((string-looking-at lojban-rafsi-4-rgx lujvo pos)
+	     (push (match-string-no-properties 100 lujvo) rafsi-list))
+	    ((string-looking-at lojban-rafsi-3-rgx lujvo pos)
+	     (push (match-string-no-properties 100 lujvo) rafsi-list))
+	    ((string-looking-at "\\W\\|$" lujvo pos) nil)
+	    (t (error "Invalid lujvo: %s" lujvo)))
+	 (setq pos (match-end 0)))
+       (reverse rafsi-list)))))
 
 ;;;; gismu
 
@@ -594,7 +630,7 @@ Removes trailing and/or leading dot, if any, and lowercases non-cmene words."
 
 (defun lojban-current-word-interactive (prompt)
   "Can be used as argument to `interactive' to prompt for a value with word under point as the default."
-  (list (let* ((default-entry (current-word))
+  (list (let* ((default-entry (lojban-current-word))
 	       (input (read-string
 		       (format "%s%s" prompt
 			       (if (string= default-entry "")
@@ -604,6 +640,12 @@ Removes trailing and/or leading dot, if any, and lowercases non-cmene words."
 	  (if (string= input "")
 	      (error "No args given")
 	    (lojban-normalize-valsi input)))))
+
+(defun lojban-current-word ()
+  "Return the (lojbanic) word that point is on (or a nearby one), similar to `current-word'.
+
+The difference is that `lojban-syntax-table' is always in effect when fetching the word."
+  (with-syntax-table lojban-syntax-table (current-word)))
 
 (defvar lojban-describe-history nil "Lojban describe functions read history.")
 
@@ -732,7 +774,7 @@ See also `lojban-describe-gismu', `lojban-describe-compound-cmavo', `lojban-desc
     s*))
 
 (defun lojban-describe-valsi-at-point (&optional short)
-  "Calls `lojban-describe-valsi' for word at point, moving point to the next word."
+  "Calls `lojban-describe-valsi' for word at point, moving point to the next word (needs `lojban-mode' to be active)."
   (interactive)
   (message "%s" (condition-case e
 		    (lojban-describe-valsi (lojban-normalize-valsi (current-word)) short)

@@ -104,24 +104,6 @@
   (setq outline-regexp lojban-outline-regexp)
   (setq outline-level 'lojban-outline-level))
 
-;;;; syntax table
-
-(defvar lojban-syntax-table 
-  (let ((s (make-syntax-table)))
-    (mapcar
-     (lambda (char)
-       (modify-syntax-entry char " " s))
-     (string-to-list "_- \t\r\n\""))
-    ;;	(modify-syntax-entry ?~ "!" s)
-    (mapcar
-     (lambda (char)
-       (modify-syntax-entry char "w" s))
-     (append
-      (list ?,)
-      (string-to-list (upcase lojban-word-letters))
-      (string-to-list lojban-word-letters)))
-    s))
-
 ;;;; font-lock
 
 (defconst lojban-cmavo-face 'lojban-cmavo-face)

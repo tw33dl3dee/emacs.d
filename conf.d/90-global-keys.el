@@ -11,6 +11,7 @@
 (global-set-key "\C-z\C-p" 'pastebin)
 (global-set-key "\C-z\C-m" 'matlab-shell)
 (global-set-key "\C-zl" 'locate-with-filter)
+(global-set-key "\C-z\C-j" 'lojban-describe-valsi)
 (global-set-key "\C-z\C-x" (lambda () (interactive) (compile-and-run)))
 (global-set-key [(f1)] (lambda () (interactive) (manual-entry (current-word))))
 (global-set-key "\C-z\C-r" (lambda () (interactive) (revert-buffer nil t)))

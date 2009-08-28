@@ -2,6 +2,7 @@
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp/lojban")
 (autoload 'lojban-parse-region "lojban" nil t)
+(autoload 'lojban-describe-valsi "lojban" nil t)
 (autoload 'lojban-mode "lojban-mode" nil t)
 
 (add-to-list 'auto-mode-alist '("\\.jbo$" . lojban-mode))
@@ -17,3 +18,6 @@
 	     (local-set-key (kbd "C-,") 'lojban-describe-valsi)
 	     (local-set-key (kbd "C-.") 'lojban-describe-valsi-at-point)
 	     ))
+
+;(add-to-list 'load-path "~/.emacs.d/site-lisp/lojread")
+;(autoload 'lojread "lojread" nil t)
