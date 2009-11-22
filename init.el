@@ -25,6 +25,12 @@
  '(c-offsets-alist (quote ((topmost-intro-cont . 0) (brace-list-open . 0) (statement-cont . +) (substatement-open . 0) (cpp-macro-cont . +))))
  '(c-tab-always-indent t)
  '(case-fold-search t)
+ '(cperl-clobber-lisp-bindings t)
+ '(cperl-electric-linefeed t)
+ '(cperl-electric-parens t)
+ '(cperl-font-lock t)
+ '(cperl-hairy t)
+ '(cperl-highlight-variables-indiscriminately t)
  '(current-language-environment "UTF-8")
  '(debug-on-error t)
  '(default-input-method "cyrillic-jcuken")
@@ -115,6 +121,8 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(default ((t (:stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :family "courier"))))
+ '(cperl-array-face ((t (:foreground "Blue" :weight bold))))
+ '(cperl-hash-face ((((class color) (background light)) (:foreground "Red" :weight bold))))
  '(woman-addition ((t nil)))
  '(woman-bold ((((min-colors 88) (background light)) (:weight bold))))
  '(woman-italic ((((min-colors 88) (background light)) (:underline t :slant italic))))

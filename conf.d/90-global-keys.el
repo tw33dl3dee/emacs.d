@@ -14,8 +14,8 @@
 (global-set-key "\C-z\C-j" 'lojban-describe-valsi)
 (global-set-key "\C-z\C-x" (lambda () (interactive) (compile-and-run)))
 (global-set-key [(f1)] (lambda () (interactive) (manual-entry (current-word))))
+(global-set-key [(f2)] 'ffap-perl-module)
 (global-set-key "\C-z\C-r" (lambda () (interactive) (revert-buffer nil t)))
-(grep-compute-defaults) (global-set-key [(f2)] (lambda () (interactive) (rgrep (current-word) "*" ".")))
 (global-set-key (kbd "C-=") 'lisp-match-paren)
 
 ;; make C-return alias to M-TAB (coz' ESC TAB is too slow)
