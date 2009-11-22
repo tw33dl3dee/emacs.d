@@ -1900,7 +1900,7 @@ are highlighted by syntactic analysis.")
     (concat
      "\\<\\("
      "a\\(bs\\|live\\|pply\\|tom_to_list\\)\\|"
-     "binary_to_\\(list\\|term\\)\\|"
+     "b\\(inary_to_\\(list\\|term\\)\\|yte_size\\)\\|"
      "concat_binary\\|d\\(ate\\|isconnect_node\\)\\|"
      "e\\(lement\\|rase\\|xit\\)\\|"
      "float\\(\\|_to_list\\)\\|"
@@ -1916,7 +1916,7 @@ are highlighted by syntactic analysis.")
      "s\\(e\\(lf\\|telement\\)\\|ize\\|"
      "p\\(awn\\(\\|_link\\)\\|lit_binary\\)\\|tatistics\\)\\|"
      "t\\(erm_to_binary\\|hrow\\|ime\\|l\\|"
-     "r\\(ace\\|unc\\)\\|uple_to_list\\)\\|"
+     "r\\(ace\\|unc\\)\\|uple_\\(to_list\\|size\\)\\)\\|"
      "un\\(link\\|register\\)\\|whereis"
      "\\)\\s *(")
     1
@@ -3767,7 +3767,7 @@ This assumes that the preceding expression is either simple
 (defun erlang-at-operator ()
   "Are we looking at an Erlang operator?"
   (looking-at
-   "\\(bnot\\|div\\|mod\\|band\\|bor\\|bxor\\|bsl\\|bsr\\)[^_a-zA-Z0-9]"))
+   "\\(bnot\\|div\\|rem\\|band\\|bor\\|bxor\\|bsl\\|bsr\\)[^_a-zA-Z0-9]"))
 
 (defun erlang-comment-indent ()
   "Compute Erlang comment indentation.
