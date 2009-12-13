@@ -1085,11 +1085,11 @@ the completion or nil if canceled by the user."
 ;; Default templates
 
 (defconst doxymacs-JavaDoc-blank-multiline-comment-template
- '("/**" > n "* " p > n "* " > n "*/" > n)
+ '("/**" > n "* " p > n "*/" > )
  "Default JavaDoc-style template for a blank multiline doxygen comment.")
 
 (defconst doxymacs-Qt-blank-multiline-comment-template
- '("//! " p > n "/*! " > n > n "*/" > n)
+ '("//! " p > n "/*! " > n > n "*/" > n >)
  "Default Qt-style template for a blank multiline doxygen comment.")
 
 (defconst doxymacs-C++-blank-multiline-comment-template
