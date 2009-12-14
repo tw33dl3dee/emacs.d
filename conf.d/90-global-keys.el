@@ -15,6 +15,7 @@
 (global-set-key "\C-z\C-x" (lambda () (interactive) (compile-and-run)))
 (global-set-key [(f1)] (lambda () (interactive) (manual-entry (current-word))))
 (global-set-key [(f2)] 'ffap-perl-module)
+(global-set-key [(f5)] (lambda () (interactive) (switch-to-buffer (find-buffer-visiting (current-word)))))
 (global-set-key "\C-z\C-r" (lambda () (interactive) (revert-buffer nil t)))
 (global-set-key (kbd "C-=") 'lisp-match-paren)
 
