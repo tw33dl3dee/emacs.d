@@ -1,7 +1,5 @@
 ;;; Main Emacs config
 
-(message "Start: %s" (current-time))
-
 ;;; Init load paths
 (add-to-list 'load-path "~/.emacs.d/")
 (add-to-list 'load-path "~/.emacs.d/site-lisp")
@@ -12,7 +10,7 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(PC-include-file-path (quote ("/usr/include" "/usr/local/include" "/opt/boost/include/" "/usr/include/mysql" "/usr/lib/qt4/include/QtCore" "/usr/lib/qt4/include/QtQui" "/usr/lib/qt4/include/QtNetwork" "/usr/lib/qt4/include/QtSql" "/usr/lib/qt4/include/QtOpenGL")))
+ '(PC-include-file-path (quote ("/usr/include" "/usr/local/include")))
  '(ange-ftp-try-passive-mode t)
  '(auto-compression-mode t nil (jka-compr))
  '(auto-image-file-mode t)
@@ -37,14 +35,13 @@
  '(cperl-indent-level 4)
  '(current-language-environment "UTF-8")
  '(debug-on-error t)
- '(default-input-method "cyrillic-jcuken")
+ '(default-input-method "russian-computer")
  '(delphi-case-label-indent 4)
  '(delphi-indent-level 4)
  '(dictionary-default-dictionary "jbo->en")
  '(dictionary-server "www.lojban.org")
  '(dirtrackp t t)
  '(display-time-mode t)
- '(doxymacs-doxygen-dirs (quote (("^/home/twee/work/videofon/views/" "/home/twee/work/videofon/views/tags.xml" "file:///home/twee/work/videofon/views/doc/html/"))))
  '(doxymacs-use-external-xml-parser t)
  '(ebs-exclude-buffer-regexps (quote ("^ " "^\\*Messages\\*" "^\\*Buffer List\\*" "^\\*Completions\\*" "^\\*scratch\\*" "^\\*debug.*\\*" "^\\*GNU Emacs\\*" "^\\*Help\\*")))
  '(esense-check-syntax-when-idle 10)
@@ -108,7 +105,7 @@
  '(sql-user "root")
  '(standard-indent 4)
  '(tab-always-indent nil)
- '(tab-stop-list (quote (4 8 12 16 20 24 28 32 36 40 88 96 104 104 112)))
+ '(tab-stop-list (quote (4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 80 88 96 104 104 112)))
  '(tab-width 4)
  '(tags-revert-without-query t)
  '(tramp-default-method "ssh")
@@ -123,7 +120,7 @@
  '(which-function-mode t nil (which-func))
  '(winner-boring-buffers (quote ("*Completions*" "*Buffer List*" "*Apropos*")))
  '(winner-mode t nil (winner))
- '(woman-cache-filename "~/.wmncach.el")
+ '(woman-cache-filename "~/.emacs.d/.wmncach.el")
  '(woman-fill-frame t)
  '(woman-use-own-frame nil)
  '(x-select-enable-clipboard t)
@@ -148,9 +145,9 @@
 ;;; Load configuration from conf.d/*.el
 (defun load-files-in-dir (path regexp)
   (mapc #'(lambda (fname) 
-		  (if (string-match regexp fname)
-			  (load-file (concat path "/" fname))))
-	  (directory-files path)))
+	    (if (string-match regexp fname)
+		(load-file (concat path "/" fname))))
+	(directory-files path)))
 
 (load-files-in-dir "~/.emacs.d/conf.d" "^\\(.+\\)\.el$")
 
@@ -159,5 +156,3 @@
   (if (file-readable-p path) (load-file path)))
 
 (load-file-silently "~/.emacs.d/local.el")
-
-(message "Finish: %s" (current-time))
