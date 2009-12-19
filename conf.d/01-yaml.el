@@ -1,7 +1,7 @@
 ;;; YAML mode
 
 ;;(require 'yaml-mode)
-(autoload 'yaml-mode "yaml-mode" "Mode for editing YAML configs")
+(autoload 'yaml-mode "yaml-mode" "Mode for editing YAML configs" t)
 (add-to-list 'auto-mode-alist '("\\.ya?ml$" . yaml-mode))
 
 (add-hook 'yaml-mode-hook

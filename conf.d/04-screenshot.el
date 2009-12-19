@@ -1,3 +1,3 @@
 ;;; Screenshot taking support
 
-(require 'screenshot)
+(autoload 'screenshot "screenshot" "Prepare to take a screenshot to filename with scheme." t)

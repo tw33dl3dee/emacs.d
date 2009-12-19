@@ -1,3 +1,4 @@
-(autoload 'php-mode "php-mode")
-(add-to-list 'auto-mode-alist '("\\.\\(php\\)$" . php-mode))
+;;; PHP mode
 
+(autoload 'php-mode "php-mode" t)
+(add-to-list 'auto-mode-alist '("\\.\\(php\\)$" . php-mode))

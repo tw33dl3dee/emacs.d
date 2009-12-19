@@ -4,11 +4,11 @@
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp/ruby")
 (autoload 'ruby-mode "ruby-mode"
-  "Mode for editing ruby source files")
+  "Mode for editing ruby source files" t)
 (add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
 (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
 (autoload 'run-ruby "inf-ruby"
-  "Run an inferior Ruby process")
+  "Run an inferior Ruby process" t)
 (autoload 'inf-ruby-keys "inf-ruby"
   "Set local key defs for inf-ruby in ruby-mode")
 (add-hook 'ruby-mode-hook

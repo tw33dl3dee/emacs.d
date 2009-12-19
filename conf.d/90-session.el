@@ -1,4 +1,4 @@
-;; Session support
+;;; Session support
 
 ;; Way 1: Save place
 

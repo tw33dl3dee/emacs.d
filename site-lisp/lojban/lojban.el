@@ -746,7 +746,7 @@ See also `lojban-describe-gismu', `lojban-describe-cmavo', `lojban-describe-lujv
     (lojban-describe-valsi valsi short t)))
 
 (defun lojban-describe-valsi (&optional valsi short inner)
-  "Qualify VALSI and returns its description as returned by one of 
+  "Qualify VALSI and return its description as returned by one of 
 `lojban-describe-gismu', `lojban-describe-compound-cmavo', or `lojban-describe-lujvo'.
 
 Output of `lojban-vlatai-command' is also added to description.

@@ -1,9 +1,9 @@
 ;; Lojban support
 
 (add-to-list 'load-path "~/.emacs.d/site-lisp/lojban")
-(autoload 'lojban-parse-region "lojban" nil t)
-(autoload 'lojban-describe-valsi "lojban" nil t)
-(autoload 'lojban-mode "lojban-mode" nil t)
+(autoload 'lojban-parse-region "lojban" "Parse the region as lojban text." t)
+(autoload 'lojban-describe-valsi "lojban" "Qualify VALSI and returns its description" t)
+(autoload 'lojban-mode "lojban-mode" "Lojban language mode." t)
 
 (add-to-list 'auto-mode-alist '("\\.jbo$" . lojban-mode))
 
@@ -16,8 +16,4 @@
 	     (local-set-key (kbd "C-M-;") 'lojban-gloss-region)
 	     (local-set-key (kbd "C-M-'") 'lojban-parse-region)
 	     (local-set-key (kbd "C-,") 'lojban-describe-valsi)
-	     (local-set-key (kbd "C-.") 'lojban-describe-valsi-at-point)
-	     ))
-
-;(add-to-list 'load-path "~/.emacs.d/site-lisp/lojread")
-;(autoload 'lojread "lojread" nil t)
+	     (local-set-key (kbd "C-.") 'lojban-describe-valsi-at-point)))

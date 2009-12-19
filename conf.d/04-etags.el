@@ -1,11 +1,9 @@
-;;
+;;; Completion and search in TAGS
 
-;;(require 'etags-table)
+(autoload 'etags-select-find-tag-at-point "etags-select" "Do a find-tag-at-point, and display all exact matches." t)
+(autoload 'etags-select-find-tag "etags-select" "Do a find-tag, and display all exact matches." t)
 
-;;load the etags-select source code
-(require 'etags-select)
-
-;;binding the keys
+;; binding the keys
 (global-set-key "\M-?" 'etags-select-find-tag-at-point)
 (global-set-key "\M-." 'etags-select-find-tag)
 
