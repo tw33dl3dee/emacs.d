@@ -2,7 +2,9 @@
 
 (defun smart-find-file (filename)
   (interactive "B")
-  (mapc #'(lambda (buffer)
-	    (let ((path (concat (buffer-local-value 'default-directory buffer) filename)))
-	      (if (file-readable-p path) (find-file path))))
-	(buffer-list)))
+  (let* ((buffer-dirs (mapcar (lambda (buffer) (buffer-local-value 'default-directory buffer)) (buffer-list)))
+	 (uniq-dirs (remove-duplicates buffer-dirs :test 'equal))
+	 (files (mapcar (lambda (dir) (concat dir filename)) uniq-dirs))
+	 (local-files (delq nil (mapcar (lambda (file) (and (not (file-remote-p file)) (file-readable-p file) file)) files))))
+    (if (null local-files) (message "No file found by name: %s" filename)
+      (mapc (lambda (path) (find-file path) (message "%s" path)) local-files))))
