@@ -1,0 +1,76 @@
+Index: erlang.el
+===================================================================
+colordiff 1.0.6 (http://colordiff.sourceforge.net/)
+(C)2002-2006 Dave Ewart, davee@sungate.co.uk
+
+--- erlang.el	(revision 43)
++++ erlang.el	(working copy)
+@@ -2053,6 +2053,21 @@
+ Lock syntax table.  The effect is that `apply' in the atom
+ `foo_apply' will be highlighted as a bif.")
+ 
++
++(defvar erlang-font-lock-syntactic-keywords-dollar
++  (list
++   (list "\\(\\(\\$\\)\\([^\\]\\|\\\\\\([^0-7^\n]\\|[0-7]+\\|\\^[a-zA-Z]\\)\\)\\)"
++	 2 "/"))
++  "Font lock syntactic keyword for numbers in ASCII form (e.g. $A).")
++
++
++(defvar erlang-font-lock-syntactic-keywords
++  (append erlang-font-lock-syntactic-keywords-dollar)
++  "List of keywords for syntactic fontification in Erlang Mode.
++
++Currently includes only dollar-escapes.")
++
++
+ 
+ ;;; Avoid errors while compiling this file.
+ 
+@@ -2061,28 +2076,6 @@
+ (or (fboundp 'eval-when-compile)
+     (defmacro eval-when-compile (&rest rest) nil))
+ 
+-;; These umm...functions are new in Emacs 20. And, yes, until version
+-;; 19.27 Emacs backquotes were this ugly.
+-
+-(or (fboundp 'unless)
+-    (defmacro unless (condition &rest body)
+-      "(unless CONDITION BODY...): If CONDITION is false, do BODY, else return nil."
+-      (` (if (, condition) 
+-	     nil 
+-	   (,@ body)))))
+-
+-(or (fboundp 'when)
+-    (defmacro when (condition &rest body)
+-      "(when CONDITION BODY...): If CONDITION is true, do BODY, else return nil."
+-      (` (if (, condition)
+-	     (progn (,@ body)) 
+-	   nil))))
+-
+-(or (fboundp 'char-before)
+-    (defmacro char-before (&optional pos)
+-      "Return the character in the current buffer just before POS."
+-      (` (char-after (1- (or (, pos) (point)))))))
+-
+ (eval-when-compile
+   (if (or (featurep 'bytecomp)
+ 	  (featurep 'byte-compile))
+@@ -2193,7 +2186,7 @@
+ 	(modify-syntax-entry ?\n ">" table)
+ 	(modify-syntax-entry ?\" "\"" table)
+ 	(modify-syntax-entry ?# "." table)
+-	(modify-syntax-entry ?$ "/" table)
++	(modify-syntax-entry ?$ "'" table)
+ 	(modify-syntax-entry ?% "<" table)
+ 	(modify-syntax-entry ?& "." table)
+ 	(modify-syntax-entry ?\' "\"" table)
+@@ -2390,6 +2383,8 @@
+ 	   (set 'font-lock-keywords erlang-font-lock-keywords-2))
+ 	  (t
+ 	   (set 'font-lock-keywords erlang-font-lock-keywords-3))))
++  (set (make-local-variable 'font-lock-syntactic-keywords)
++       erlang-font-lock-syntactic-keywords)
+ 
+   ;; Modern font-locks can handle the above much more elegantly:
+   (set (make-local-variable 'font-lock-defaults)

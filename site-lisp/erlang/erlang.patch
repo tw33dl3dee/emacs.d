@@ -1,0 +1,67 @@
+--- erlang.el.bak	2009-09-13 18:06:38.000000000 +0400
++++ erlang.el	2009-09-13 18:01:30.000000000 +0400
+@@ -443,6 +443,9 @@
+ (defvar erlang-indent-guard 2
+   "*Indentation of Erlang guards.")
+ 
++(defvar erlang-comment-column 0
++  "*Column that comments with one % are indented to. Set to zero to disable.")
++
+ (defvar erlang-argument-indent 2
+   "*Indentation of the first argument in a function call.
+ When nil, indent to the column after the `(' of the
+@@ -2119,9 +1947,10 @@
+ current line will be indented correctly.
+ 
+ Comments starting with only one `%' are indented to the column stored
+-in the variable `comment-column'.  Comments starting with two `%':s
+-are indented with the same indentation as code.  Comments starting
+-with at least three `%':s are indented to the first column.
++in the variable `comment-column' (unless it's set to zero).  Comments
++starting with two `%':s are indented with the same indentation as code.
++Comments starting with at least three `%':s are indented to the first 
++column.
+ 
+ However, Erlang mode contains much more, this is a list of the most
+ useful commands:
+@@ -2302,7 +2131,7 @@
+   (make-local-variable 'comment-start-skip)
+   (setq comment-start-skip "%+\\s *")
+   (make-local-variable 'comment-column)
+-  (setq comment-column 48)
++  (setq comment-column erlang-comment-column)
+   (make-local-variable 'indent-line-function)
+   (setq indent-line-function 'erlang-indent-command)
+   (make-local-variable 'indent-region-function)
+@@ -3771,7 +3600,8 @@
+ Used both by `indent-for-comment' and the Erlang specific indentation
+ commands."
+   (cond ((looking-at "%%%") 0)
+-	((looking-at "%%")
++	((or (looking-at "%%")
++	     (and (zerop comment-column) (looking-at "%")))
+ 	 (or (erlang-calculate-indent)
+ 	     (current-indentation)))
+ 	(t
+@@ -5319,18 +5149,11 @@
+   (condition-case nil
+       (require 'etags)
+     (error nil))
+-  (cond ((and erlang-tags-installed
+-	      (fboundp 'complete-tag))	; Emacs 19
+-	 (let ((orig-tags-complete-tag (symbol-function 'tags-complete-tag)))
+-	   (fset 'tags-complete-tag
+-	     (symbol-function 'erlang-tags-complete-tag))
+-	   (unwind-protect
+-	       (funcall (symbol-function 'complete-tag))
+-	     (fset 'tags-complete-tag orig-tags-complete-tag))))
++  (cond 						; A little bit broken on Emacs 23. Fixed.
+ 	((fboundp 'complete-tag)	; Emacs 19
+-	 (funcall (symbol-function 'complete-tag)))
++	 (complete-tag))
+ 	((fboundp 'tag-complete-symbol)	; XEmacs
+-	 (funcall (symbol-function 'tag-complete-symbol)))
++	 (tag-complete-symbol))
+ 	(t
+ 	 (error "This version of Emacs can't complete tags"))))
+ 
