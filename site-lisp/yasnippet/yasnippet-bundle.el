@@ -4268,6 +4268,16 @@ Use multiple times to bind different COMMANDs to the same KEY."
 					 '(text-mode))
 
 
+;;; snippets for python-2-mode
+(yas/define-snippets 'python-2-mode 'nil
+					 '(python-mode))
+
+
+;;; snippets for python-3-mode
+(yas/define-snippets 'python-3-mode 'nil
+					 '(python-mode))
+
+
 ;;; snippets for rst-mode
 (yas/define-snippets 'rst-mode
 					 '(("chap" "${1:Chapter}\n${1:$(make-string (string-width text) ?\\=)}\n\n$0" "Chapter title" nil nil nil nil nil)
