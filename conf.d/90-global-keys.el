@@ -3,6 +3,8 @@
 (global-unset-key "\C-z")
 (global-set-key "\C-z\C-c" 'compile)
 (global-set-key "\C-z\C-s" 'shell)
+(global-set-key "\C-zs" (lambda () (interactive) (shell (switch-to-buffer-other-window "*shell*"))))
+(global-set-key "\C-z\C-o" (lambda () (interactive) (shell (switch-to-buffer-other-window "*shell*"))))
 (global-set-key "\C-z\C-d" 'gdb)
 (global-set-key "\C-z\C-g" 'rgrep)
 (global-set-key "\C-x\C-m" 'execute-extended-command)
