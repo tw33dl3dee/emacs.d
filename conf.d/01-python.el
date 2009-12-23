@@ -11,8 +11,8 @@
 	     (set (make-local-variable 'indent-tabs-mode) nil)))
 
 ;; To enable ElDoc by default in your python mode buffers, you might want something like:
-;;(add-hook 'python-mode-hook
-;;          '(lambda () (eldoc-mode 1)) t)
+(add-hook 'python-mode-hook
+          '(lambda () (eldoc-mode 1)) t)
 
 ;;; (unused)
 (defun my-python-documentation (w)

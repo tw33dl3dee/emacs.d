@@ -154,7 +154,7 @@
      (1 font-lock-builtin-face))
     (,(rx symbol-start (or
 	  ;; other built-ins
-	  "True" "False" "Ellipsis"
+	  "True" "False" "Ellipsis" "NotImplemented"
 	  "_" "__debug__" "__doc__" "__import__" "__name__") symbol-end)
      . font-lock-builtin-face))
   "Font Lock keywords appropriate for both Python 2 and 3.")

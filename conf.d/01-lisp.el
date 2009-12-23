@@ -11,6 +11,7 @@
 (mapcar (lambda (sym) 
 	  (add-hook sym
 		    '(lambda ()
-		       (set (make-local-variable 'tab-width) 8))))
+		       (set (make-local-variable 'tab-width) 8)
+		       (eldoc-mode 1))))
 	'(lisp-mode-hook emacs-lisp-mode-hook lisp-interaction-mode-hook))
 
