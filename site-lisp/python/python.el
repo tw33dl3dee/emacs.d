@@ -126,7 +126,7 @@
 	  "FutureWarning" "GeneratorExit" "IOError" "ImportError"
 	  "ImportWarning" "IndentationError" "IndexError" "KeyError"
 	  "KeyboardInterrupt" "LookupError" "MemoryError" "NameError"
-	  "NotImplemented" "NotImplementedError" "OSError"
+	  "NotImplementedError" "OSError"
 	  "OverflowError" "PendingDeprecationWarning" "ReferenceError"
 	  "RuntimeError" "RuntimeWarning" "StandardError"
 	  "StopIteration" "SyntaxError" "SyntaxWarning" "SystemError"
