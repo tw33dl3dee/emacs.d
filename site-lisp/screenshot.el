@@ -1,5 +1,5 @@
 ;;; screenshot.el --- Take a screenshot in Emacs
-;; $Id: screenshot.el,v 1.7 2009/03/07 18:11:40 rubikitch Exp $
+;; $Id: screenshot.el,v 1.7 2009/03/07 18:11:40 rubikitch Exp rubikitch $
 
 ;; Copyright (C) 2009  rubikitch
 
@@ -49,10 +49,13 @@
 ;;
 ;;  `screenshot-schemes'
 ;;    *Screenshot configuration list.
+;;    default = (quote (("local" :dir "~/images/") ("current-directory" :dir default-directory) ("remote-ssh" :dir "/tmp/" :ssh-dir "www.example.org:public_html/archive/" ...) ("EmacsWiki" :dir "~/.yaoddmuse/EmacsWiki/" :yaoddmuse "EmacsWiki") ("local-server" :dir "~/public_html/" :url "http://127.0.0.1/")))
 ;;  `screenshot-default-scheme'
 ;;    *Default scheme name of screenshot.el.
+;;    default = nil
 ;;  `screenshot-take-delay'
 ;;    *Delay time to take a screenshot.
+;;    default = 0.5
 
 ;;; Installation:
 ;;
@@ -135,7 +138,7 @@
 
 ;;; Code:
 
-(defvar screenshot-version "$Id: screenshot.el,v 1.7 2009/03/07 18:11:40 rubikitch Exp $")
+(defvar screenshot-version "$Id: screenshot.el,v 1.7 2009/03/07 18:11:40 rubikitch Exp rubikitch $")
 (eval-when-compile (require 'cl))
 (require 'yaoddmuse nil t)              ;optional
 
@@ -185,7 +188,7 @@ It is recommend to have a delay time to enable us to take a screenshot other tha
              (cons 'screenshot-prepare-minor-mode screenshot-prepare-minor-mode-map))
 
 ;;; (@* "Commands")
-(defun screenshot (filename &optional scheme)
+(defun screenshot (filename &optional scheme nomsg)
   "Prepare to take a screenshot to FILENAME with SCHEME.
 After pressing C-c C-c, executing `screenshot-take'.
 See also `screenshot-take' docstring. "
@@ -208,7 +211,7 @@ See also `screenshot-take' docstring. "
            (y-or-n-p (format "%s already exists. Retry? " screenshot-image-filename)))
       (call-interactively 'screenshot)
     (setq screenshot-prepare-minor-mode t)
-    (message "Press C-c C-c to take a screenshot!")))
+    (or nomsg (message "Press C-c C-c to take a screenshot!"))))
 
 (defun screenshot-take ()
   "Take a screenshot configured by `screenshot' command.
