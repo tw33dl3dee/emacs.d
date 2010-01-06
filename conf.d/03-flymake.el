@@ -63,5 +63,8 @@
 (add-to-list 'flymake-allowed-file-name-masks '("\\.py\\'" flymake-pylint-init))
 
 (mapcar (lambda (mode)
-	  (add-hook mode (lambda () (flymake-mode 1))))
+	  (add-hook mode (lambda () 
+			   ; Enter FlyMake mode only if can create temp buffer
+			   (if (file-writable-p (flymake-create-temp-inplace (buffer-file-name) nil))
+			       (flymake-mode 1)))))
 	'(python-mode-hook perl-mode-hook sh-mode-hook erlang-mode-hook))
