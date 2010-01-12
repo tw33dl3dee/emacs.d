@@ -11,8 +11,9 @@ def ${1:name}(self, $2):
             (mapconcat
              '(lambda (x)
                 (if (not (string= (nth 0 x) ""))
-                    (concat "- " (char-to-string 96) (nth 0 x)
-                            (char-to-string 96) ":")))
+					(concat (concat "@param " (nth 0 x) ":")
+							indent
+							(concat "@type  " (nth 0 x) ":") )))
              (mapcar
               '(lambda (x)
                  (mapcar
@@ -23,11 +24,9 @@ def ${1:name}(self, $2):
               (mapcar '(lambda (x) (split-string x "="))
                       (split-string text ",")))
              indent)))
-      (if (string= args "")
-          (make-string 3 34)
-        (mapconcat
-         'identity
-         (list "" "Arguments:" args (make-string 3 34))
-         indent)))
+      (mapconcat
+       'identity
+       (list (if (string= "" args) "" (concat indent args)) "@return:" (make-string 3 34))
+       indent))
     }
     $0
