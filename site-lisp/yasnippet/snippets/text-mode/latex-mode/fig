@@ -6,5 +6,5 @@
 \centering
 \includegraphics[width=${2:1.0}\textwidth]{$3}
 \caption{$0}
-\label{$3}
+\label{fig:$3}
 \end{figure}

@@ -892,7 +892,7 @@ Return nil ifs no errors were found."
 		    (match-string 1 output-file)
 		  "dvi")))))
   (if process (TeX-format-mode-line process))
-  (if (re-search-forward "^\\(!\\|.*:[0-9]+:\\) " nil t)
+  (if (re-search-forward "^\\(!\\|.*:[0-9]+:\\) .*[Ee]rror.*\n" nil t)
       (progn
 	(message "%s errors in `%s'. Use %s to display." name (buffer-name)
 		 (substitute-command-keys

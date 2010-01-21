@@ -4159,7 +4159,7 @@ Use multiple times to bind different COMMANDs to the same KEY."
 (yas/define-snippets 'latex-mode
 					 '(("begin" "\n\\begin{${1:environment}}\n$0\n\\end{$1}\n" "\\begin{environment} ... \\end{environment}" nil nil nil nil nil)
 					   ("eqns" "\n\\left\\{\n\\begin{array}{${1:ll}}\n$0\n\\end{array}\n\\right.\n" "\\left\\{ \\begin{array} .... \\end{array} \\right." nil nil nil nil nil)
-					   ("fig" "\n\\begin{figure}[${1:!htb}]\n\\centering\n\\includegraphics[width=${2:1.0}\\textwidth]{$3}\n\\caption{$0}\n\\label{$3}\n\\end{figure}\n" "\\begin{figure}[...] ... \\end{figure}" nil nil nil nil nil))
+					   ("fig" "\n\\begin{figure}[${1:!htb}]\n\\centering\n\\includegraphics[width=${2:1.0}\\textwidth]{$3}\n\\caption{$0}\n\\label{fig:$3}\n\\end{figure}\n" "\\begin{figure}[...] ... \\end{figure}" nil nil nil nil nil))
 					 '(text-mode))
 
 
