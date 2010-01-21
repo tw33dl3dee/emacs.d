@@ -67,4 +67,4 @@
 			   ; Enter FlyMake mode only if can create temp buffer
 			   (if (file-writable-p (flymake-create-temp-inplace (buffer-file-name) nil))
 			       (flymake-mode 1)))))
-	'(python-mode-hook perl-mode-hook sh-mode-hook erlang-mode-hook))
+	'(python-mode-hook perl-mode-hook sh-mode-hook))

@@ -11,6 +11,7 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(PC-include-file-path (quote ("/usr/include" "/usr/local/include")))
+ '(TeX-PDF-mode t)
  '(TeX-auto-save t)
  '(TeX-close-quote ">>")
  '(TeX-open-quote "<<")
@@ -100,7 +101,7 @@
  '(perl-tab-always-indent t)
  '(prolog-consult-string "[user].
 ")
- '(python-guess-indent nil)
+ '(python-guess-indent t)
  '(read-file-name-completion-ignore-case t)
  '(safe-local-variable-values (quote ((encoding . utf-8) (Mode . C) (sql-product . postgres) (erlang-indent-level . 4) (visual-line-mode . t) (word-wrap . t) (minor-mode . lojban))))
  '(save-place-file "~/.emacs.d/places")
@@ -116,7 +117,7 @@
  '(sql-server "localhost")
  '(sql-user "root")
  '(standard-indent 4)
- '(tab-always-indent nil)
+ '(tab-always-indent t)
  '(tab-stop-list (quote (4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 80 88 96 104 104 112)))
  '(tab-width 4)
  '(tags-revert-without-query t)

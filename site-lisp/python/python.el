@@ -553,9 +553,11 @@ Set `python-indent' locally to the value guessed."
 		    (setq done t))))))
 	(when done
 	  (set (make-local-variable 'python-indent) indent)
-	  ;; Python 3 makes this an error.
-	  (unless (= tab-width python-indent)
-	    (setq indent-tabs-mode nil))
+	  (set (make-local-variable 'indent-tabs-mode)
+	       (if (/= tab-width python-indent) 
+		   nil
+		 (goto-char (point-min))
+		 (re-search-forward "^\t" nil t)))
 	  indent)))))
 
 ;; Alist of possible indentations and start of statement they would

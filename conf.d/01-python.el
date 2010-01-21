@@ -6,9 +6,7 @@
 (add-hook 'python-mode-hook 
 	  '(lambda () 
 	     (define-key python-mode-map "\C-m" 'newline-and-indent)
-	     (define-key python-mode-map "\C-j" 'newline)
-			 ;;; Turn tabs off
-	     (set (make-local-variable 'indent-tabs-mode) nil)))
+	     (define-key python-mode-map "\C-j" 'newline)))
 
 ;; To enable ElDoc by default in your python mode buffers, you might want something like:
 ;;(add-hook 'python-mode-hook
