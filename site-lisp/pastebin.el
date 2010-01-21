@@ -46,6 +46,7 @@
     (jython-mode . "python")
     (perl-mode . "perl")
     (cperl-mode . "perl")
+    (haskell-mode . "haskell")
     (sh-mode . "bash")
     (shell-mode . "bash")
     (c-mode . "c")
