@@ -5659,7 +5659,7 @@ This variable influence the setting of other variables.")
 (defvar inferior-erlang-machine "erl"
   "*The name of the Erlang shell.")
 
-(defvar inferior-erlang-machine-options '()
+(defvar inferior-erlang-machine-options '("-pa" "../ebin")
   "*The options used when activating the Erlang shell.
 
 This must be a list of strings.")
@@ -5924,15 +5924,15 @@ There exists two workarounds for this bug:
     (setq end (inferior-erlang-send-command
 	       (if erlang-compile-use-outdir
 		   (if current-prefix-arg 
-		       (format "c(\"%s\", [{outdir, \"%s\"}, debug_info, export_all])." noext dir)
-		     (format "c(\"%s\", [{outdir, \"%s\"}])." noext dir))
+		       (format "c(\"%s\", [{outdir, \"%s\"}, debug_info, export_all, {i, \"../include\"}])." noext dir)
+		     (format "c(\"%s\", [{outdir, \"%s\"}, {i, \"../include\"}])." noext dir))
 		 (format
 		  (concat
 		   "f(%s), {ok, %s} = file:get_cwd(), "
 		   "file:set_cwd(\"%s\"), "
 		   (if current-prefix-arg 
-		       "%s = c(\"%s\", [debug_info, export_all]), file:set_cwd(%s), f(%s), %s."
-		     "%s = c(\"%s\"), file:set_cwd(%s), f(%s), %s."))
+		       "%s = c(\"%s\", [debug_info, export_all, {i, \"../include\"}]), file:set_cwd(%s), f(%s), %s."
+		     "%s = c(\"%s\", [{i, \"../include\"}]), file:set_cwd(%s), f(%s), %s."))
 		  tmpvar2 tmpvar
 		  dir
 		  tmpvar2 noext tmpvar tmpvar tmpvar2))
