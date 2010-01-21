@@ -66,6 +66,7 @@
  '(global-font-lock-mode t nil (font-lock))
  '(grep-command "nice grep -nH -e ")
  '(grep-template "nice grep <C> -nH -e <R> <F>")
+ '(haskell-program-name "ghci \"+.\"")
  '(icomplete-mode t nil (icomplete))
  '(ido-create-new-buffer (quote always))
  '(ido-max-prospects 10)
