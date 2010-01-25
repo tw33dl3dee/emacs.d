@@ -551,9 +551,11 @@ Set `python-indent' locally to the value guessed."
 		    (setq indent (- (current-indentation) initial)))
 		(if (and indent (>= indent 2) (<= indent 8)) ; sanity check
 		    (setq done t))))))
+	;; TABs by default shall not be used, only if already present in buffer
+	(set (make-local-variable 'indent-tabs-mode) nil)
 	(when done
 	  (set (make-local-variable 'python-indent) indent)
-	  (set (make-local-variable 'indent-tabs-mode)
+	  (setq indent-tabs-mode
 	       (if (/= tab-width python-indent) 
 		   nil
 		 (goto-char (point-min))
