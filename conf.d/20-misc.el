@@ -13,3 +13,6 @@
 
 ;; Clean unused buffers periodically
 (require 'midnight)
+
+;; Use M-<right/left...> to switch between windows
+(windmove-default-keybindings 'meta)
