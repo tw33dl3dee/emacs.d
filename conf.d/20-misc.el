@@ -10,3 +10,6 @@
 
 ;; Replace selection when typing
 (delete-selection-mode t)
+
+;; Clean unused buffers periodically
+(require 'midnight)
