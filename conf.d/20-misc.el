@@ -24,3 +24,6 @@
     (if mark-active (list (region-beginning) (region-end))
       (list (line-beginning-position)
         (line-beginning-position 2)))))
+
+;; Use iedit for fancy replace
+(require 'iedit)

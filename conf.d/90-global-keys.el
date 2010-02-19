@@ -25,6 +25,7 @@
 (global-set-key "\C-\M-g" (lambda () (interactive) (scroll-other-window '-)))
 (global-set-key "\C-xvw" 'my-git-whatsnew)
 (global-set-key (kbd "C-x K") 'kill-other-buffers-of-this-file-name)
+(global-set-key (kbd "C-;") 'iedit-mode)
 
 ;; make C-return alias to M-TAB (coz' ESC TAB is too slow)
 (global-set-key [C-return] "\M-\t")
