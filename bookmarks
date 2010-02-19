@@ -1,0 +1,14 @@
+;;;; Emacs Bookmark Format Version 1 ;;;;
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("package.use"
+  (filename . "/sudo:root@mordor.twee.cc:/etc/portage/package.use")
+  (front-context-string . "app-admin/conky ")
+  (rear-context-string)
+  (position . 1))
+ ("emacs.d"
+  (filename . "~/.emacs.d/")
+  (front-context-string . ".svn\n  drwxr-xr-")
+  (rear-context-string . "0K Feb 20 00:51 ")
+  (position . 215)))
