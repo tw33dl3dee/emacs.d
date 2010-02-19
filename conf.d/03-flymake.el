@@ -49,8 +49,8 @@
 		      (file-name-directory buffer-file-name))))
     (list flymake-shell-of-choice (append flymake-shell-arguments (list local-file)))))
 
-(add-to-list 'flymake-allowed-file-name-masks '("\\.sh$" flymake-shell-init))
-(add-to-list 'flymake-err-line-patterns '("^\\(.+\\): line \\([0-9]+\\): \\(.+\\)$" 1 2 nil 3))
+;;(add-to-list 'flymake-allowed-file-name-masks '("\\.sh$" flymake-shell-init))
+;;(add-to-list 'flymake-err-line-patterns '("^\\(.+\\): line \\([0-9]+\\): \\(.+\\)$" 1 2 nil 3))
 
 (defun flymake-pylint-init ()
   (let* ((temp-file (flymake-init-create-temp-buffer-copy
