@@ -26,6 +26,11 @@
 (global-set-key "\C-xvw" 'my-git-whatsnew)
 (global-set-key (kbd "C-x K") 'kill-other-buffers-of-this-file-name)
 (global-set-key (kbd "C-;") 'iedit-mode)
+(global-set-key (kbd "<f9>") 'elscreen-create)
+(global-set-key (kbd "S-<f9>") 'elscreen-kill)
+(global-set-key (kbd "C-<f9>") 'elscreen-clone)
+(global-set-key (kbd "<S-left>") 'elscreen-previous)
+(global-set-key (kbd "<S-right>") 'elscreen-next)
 
 ;; make C-return alias to M-TAB (coz' ESC TAB is too slow)
 (global-set-key [C-return] "\M-\t")
