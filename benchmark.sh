@@ -10,4 +10,4 @@ TIME=`which time`
 	$TIME -f%E emacs -eval '(kill-emacs)' 2>&1
 ) >> bench.log
 
-tail -n3 bench.log
+tail -n10 bench.log
