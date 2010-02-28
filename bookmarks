@@ -2,7 +2,17 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("package.use"
+(("package.mask"
+  (filename . "/sudo:root@mordor.twee.cc:/etc/portage/package.mask/")
+  (front-context-string . "doesnt-build\n  -")
+  (rear-context-string . "76 Feb 15 17:38 ")
+  (position . 202))
+ ("pmlparse"
+  (filename . "~/work/mstu/coding/pspin/src/pmlparse/")
+  (front-context-string . "expression.py\n  ")
+  (rear-context-string . "5K Feb 19 13:36 ")
+  (position . 405))
+ ("package.use"
   (filename . "/sudo:root@mordor.twee.cc:/etc/portage/package.use")
   (front-context-string . "app-admin/conky ")
   (rear-context-string)
