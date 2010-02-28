@@ -3,6 +3,7 @@
 (load "auctex")
 (load "preview-latex")
 
+;; Find master file by looking at all open LaTeX files
 (add-hook 'TeX-mode-hook (lambda () (setq TeX-master (guess-TeX-master (buffer-file-name)))))
 
 (defun guess-TeX-master (filename)
@@ -25,8 +26,15 @@
 	(message "TeX master document: %s" (file-name-nondirectory candidate)))
     candidate))
 
+;; Default modes
 (add-hook 'LaTeX-mode-hook 'auto-fill-mode)
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
 
+;; RefTeX
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (setq reftex-plug-into-AUCTeX t)
+
+;; Set PDF viewer (from local settings)
+(add-hook 'LaTeX-mode-hook (lambda ()
+			     (when my-TeX-pdf-viewer
+			       (rplacd (assoc "^pdf$" TeX-output-view-style) '("." "okular %o")))))
