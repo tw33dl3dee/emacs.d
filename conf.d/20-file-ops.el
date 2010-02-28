@@ -26,21 +26,21 @@
 
 (add-hook 'find-file-hooks 'tj-find-file-check-make-large-file-read-only-hook)
 
-;; Different dialog when closing file
-(defadvice kill-buffer (around my-kill-buffer-check activate)
-  "Prompt when a buffer is about to be killed."
-  (let* ((buffer-file-name (buffer-file-name)))
-    (if (and (buffer-modified-p)
-             buffer-file-name
-             (file-exists-p buffer-file-name))
-        (let ((answer (completing-read (format "Buffer modified %s, (d)iff, (s)ave, (k)ill? " (buffer-name))
-                                       '("d" "s" "k") nil t)))
-          (cond ((equal answer "d")
-		 (diff-buffer-with-file (current-buffer)))
-                ((equal answer "k")
-                 (set-buffer-modified-p nil)
-                 ad-do-it)
-                (t
-                 (save-buffer)
-                 ad-do-it)))
-      ad-do-it)))
+;; Different dialog when closing file -- DOES NOT WORK WILL WITH RENAMING
+;; (defadvice kill-buffer (around my-kill-buffer-check activate)
+;;   "Prompt when a buffer is about to be killed."
+;;   (let* ((buffer-file-name (buffer-file-name)))
+;;     (if (and (buffer-modified-p)
+;;              buffer-file-name
+;;              (file-exists-p buffer-file-name))
+;;         (let ((answer (completing-read (format "Buffer modified %s, (d)iff, (s)ave, (k)ill? " (buffer-name))
+;;                                        '("d" "s" "k") nil t)))
+;;           (cond ((equal answer "d")
+;; 		 (diff-buffer-with-file (current-buffer)))
+;;                 ((equal answer "k")
+;;                  (set-buffer-modified-p nil)
+;;                  ad-do-it)
+;;                 (t
+;;                  (save-buffer)
+;;                  ad-do-it)))
+;;       ad-do-it)))
