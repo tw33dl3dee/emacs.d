@@ -13,8 +13,8 @@
 ;;
 ;; to your ~/.emacs.el
 
-(add-to-list 'load-path "/home/twee/.emacs.d/site-lisp/dvc//")
-(add-to-list 'Info-default-directory-list "/home/twee/.emacs.d/share/info/")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/dvc//")
+(add-to-list 'Info-default-directory-list "~/.emacs.d/share/info/")
 
 (if (featurep 'dvc-core)
     (dvc-reload)

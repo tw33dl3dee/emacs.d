@@ -55,7 +55,7 @@ TeX-auto-* (automatically generated lisp).")
   "The directory where the AUCTeX non-Lisp data is located.")
 
 (defcustom TeX-auto-global
-    "/home/twee/.emacs.d/auctex"
+    "~/.emacs.d/auctex"
   "*Directory containing automatically generated information.
 Must end with a directory separator.
 

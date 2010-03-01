@@ -123,7 +123,7 @@
  '(screenshot-schemes (quote (("local" :dir "~/pix/") ("current-directory" :dir default-directory) ("remote-ftp" :dir "/tmp/" :ssh-dir "home.twee.cc:/home/ftp/pix/" :url "ftp://home.twee.cc/pix/") ("ftp" :dir "/home/ftp/pix/" :url "ftp://home.twee.cc/pix/"))))
  '(screenshot-take-delay 0.0)
  '(scroll-preserve-screen-position t)
- '(session-save-file "/home/twee/.emacs.d/.session")
+ '(session-save-file "~/.emacs.d/.session")
  '(session-undo-check 0)
  '(sh-here-document-word "-EOF")
  '(show-paren-mode t nil (paren))
