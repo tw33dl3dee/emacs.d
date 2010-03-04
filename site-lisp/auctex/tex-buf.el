@@ -1663,14 +1663,15 @@ name(\\([^)]+\\))\\)\\|\
 			 (setq buffer-read-only t)
 			 (goto-line (point-min))
 			 (search-forward error nil t 1)))
-		  (progn
-		    (re-search-forward "^l\\.")
-		    (re-search-forward "^ [^\n]+$")
-		    (forward-char 1)
-		    (let ((start (point)))
-		      (re-search-forward "^$")
-		      (concat "From the .log file...\n\n"
-			      (buffer-substring start (point)))))
+		  (or
+		    (and (re-search-forward "^l\\.")
+			 (re-search-forward "^ [^\n]+$")
+			 (forward-char 1)
+			 (let ((start (point)))
+			   (re-search-forward "^$")
+			   (concat "From the .log file...\n\n"
+				   (buffer-substring start (point)))))
+		    "")
 		(cdr (nth TeX-error-pointer
 			  TeX-error-description-list)))))
     (goto-char (point-min))
