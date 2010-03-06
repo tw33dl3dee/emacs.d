@@ -6,6 +6,7 @@
 
 (defun my-git-whatsnew ()
   (interactive) 
+  (require 'xgit)
   (xgit-changelog "ORIG_HEAD" "HEAD" t))
 
 ;;; When opening VC status on vc-controlled subdirectory, jump to the top directory
