@@ -4,7 +4,7 @@
 ;;; nXML mode
 
 ;; Already in Emacs 23
-;;(add-to-list 'load-path "~/.emacs.d/site-lisp/nxml-mode")
+;;(add-site-load-path "nxml-mode")
 ;;(load "rng-auto")
 
 (add-to-list 'auto-mode-alist '("\\.\\(xml\\|xsl\\|rng\\|xhtml\\)\\'" . nxml-mode))

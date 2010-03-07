@@ -1,6 +1,6 @@
 ;; Lojban support
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/lojban")
+(add-site-load-path "lojban")
 (autoload 'lojban-parse-region "lojban" "Parse the region as lojban text." t)
 (autoload 'lojban-describe-valsi "lojban" "Qualify VALSI and returns its description" t)
 (autoload 'lojban-mode "lojban-mode" "Lojban language mode." t)

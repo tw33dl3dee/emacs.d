@@ -1,6 +1,6 @@
 ;; Yasnippet mode
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/yasnippet")
+(add-site-load-path "yasnippet")
 
 ;(require 'yasnippet)
 ;(yas/initialize)

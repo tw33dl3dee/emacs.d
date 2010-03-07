@@ -2,7 +2,7 @@
 ;; based on http://www.rubygarden.org/Ruby/page/show/InstallingEmacsExtensions  
 ;;                                                                              
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/ruby")
+(add-site-load-path "ruby")
 (autoload 'ruby-mode "ruby-mode"
   "Mode for editing ruby source files" t)
 (add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))

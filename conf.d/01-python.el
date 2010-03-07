@@ -1,6 +1,6 @@
 ;;; Python mode
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/python")
+(add-site-load-path "python")
 
 ;;; indent after Return
 (add-hook 'python-mode-hook 

@@ -1,4 +1,4 @@
 ;; DICT mode
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/dictionary")
+(add-site-load-path "dictionary")
 (load "dictionary-init")

@@ -1,6 +1,6 @@
 ;;; Gentoo emerge syntax
 
-(add-to-list 'load-path "~/.emacs.d/emacs/site-lisp/gentoo-syntax")
+(add-site-load-path "gentoo-syntax")
 
 (autoload 'ebuild-mode "gentoo-syntax" "Major mode for Portage .ebuild and .eclass files." t)
 (autoload 'eselect-mode "gentoo-syntax" "Major mode for .eselect files." t)

@@ -1,6 +1,6 @@
 ;;; Haskell mode
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/haskell")
+(add-site-load-path "haskell")
 (add-to-list 'auto-mode-alist '("\\.hs$" . haskell-mode))
 
 (autoload 'haskell-mode "haskell-mode" "Major mode for editing Haskell programs." t)

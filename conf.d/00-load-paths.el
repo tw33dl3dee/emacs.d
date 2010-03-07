@@ -1,8 +1,8 @@
 ; global load paths required by later commands
 
 ; APE library
-(add-to-list 'load-path "~/.emacs.d/site-lisp/apel")
-(add-to-list 'load-path "~/.emacs.d/site-lisp/emu")
+(add-site-load-path "apel")
+(add-site-load-path "emu")
 
 ; FLIM library
-(add-to-list 'load-path "~/.emacs.d/site-lisp/flim")
+(add-site-load-path "flim")

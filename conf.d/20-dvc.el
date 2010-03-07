@@ -1,7 +1,7 @@
 ;;; Various enhancements for DVCSs (dvc-mode, custom commands, etc)
 ;;;
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/dvc")
+(add-site-load-path "dvc")
 (require 'dvc-autoloads)
 
 (defun my-git-whatsnew ()
