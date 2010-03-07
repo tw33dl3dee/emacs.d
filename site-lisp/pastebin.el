@@ -129,7 +129,6 @@ Optional argument subdomain will request the virtual host to use,
    (let ((pastebin-subdomain
 	  (if current-prefix-arg
 	      (read-string "pastebin subdomain:" nil 'pastebin-subdomain-history) pastebin-default-subdomain)))
-     (message "subdomain: %s" pastebin-subdomain)
      (list pastebin-subdomain)))
   (pastebin (point-min) (point-max) subdomain))
 
