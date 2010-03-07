@@ -125,8 +125,12 @@
   "Send the whole buffer to pastebin.com.
 Optional argument subdomain will request the virtual host to use,
  eg:'emacs' for 'emacs.pastebin.com'."
-  (interactive (if current-subdomain-arg
-                   (list (read-string "pastebin subdomain:" nil 'pastebin-subdomain-history))))
+  (interactive
+   (let ((pastebin-subdomain
+	  (if current-prefix-arg
+	      (read-string "pastebin subdomain:" nil 'pastebin-subdomain-history) pastebin-default-subdomain)))
+     (message "subdomain: %s" pastebin-subdomain)
+     (list pastebin-subdomain)))
   (pastebin (point-min) (point-max) subdomain))
 
 (defun pastebin (start end &optional subdomain)
@@ -167,7 +171,7 @@ virtual host to use.  For example use 'emacs' for 'emacs.pastebin.com'."
                                     (lambda (arg)
                                       (cond
                                        ((equal :error (car arg))
-                                        (signal (cdr arg)))
+                                        (signal 'pastebin-error (cdr arg)))
                                        (t
 					(re-search-forward "\n\n")
 					(clipboard-kill-ring-save (point) (point-max))
