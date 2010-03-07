@@ -113,6 +113,7 @@
  '(octave-block-offset 4)
  '(org-startup-folded nil)
  '(partial-completion-mode t nil (complete))
+ '(pastebin-default-subdomain "bmstu")
  '(perl-tab-always-indent t)
  '(prolog-consult-string "[user].
 ")
