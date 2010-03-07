@@ -14,10 +14,15 @@
 		(load-file (concat path "/" fname))))
 	(directory-files path)))
 
-(load-files-in-dir "~/.emacs.d/conf.d" "^\\(.+\\)\.el$")
+(defun load-file-silently (path &optional fallback)
+  (if (file-readable-p path) (load-file path)
+    (if fallback (funcall fallback))))
+
+;; First try to load configuration from cached conf.el
+;; Fallback to raeding conf.d
+(load-file-silently "~/.emacs.d/conf.el" 
+		    (lambda () 
+		      (load-files-in-dir "~/.emacs.d/conf.d" "^\\(.+\\)\.el$")))
 
 ;;; Load site-local configuration, if any
-(defun load-file-silently (path)
-  (if (file-readable-p path) (load-file path)))
-
 (load-file-silently "~/.emacs.d/local.el")
