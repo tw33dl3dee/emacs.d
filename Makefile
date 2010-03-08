@@ -6,9 +6,9 @@ PRELOAD=base.el
 
 all: byte-recompile autoloads conf.el 
 
-conf.el: $(CONFD)
+conf.el: conf.d $(CONFD)
 	@echo ">>> Recaching configuration..."
-	@cat $^ > $@
+	@cat $(CONFD) > $@
 
 byte-recompile:
 	@echo ">>> Byte-compiling..."
