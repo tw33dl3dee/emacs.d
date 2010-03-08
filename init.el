@@ -1,7 +1,7 @@
 ;;; Main Emacs config
 
 ;;; Init load paths
-(load-file "base.el")
+(load-file "~/.emacs.d/base.el")
 
 (add-to-list 'load-path emacs-user-root)
 (add-to-list 'load-path emacs-user-lisp-root)
