@@ -3,7 +3,7 @@
 CONFD=$(wildcard conf.d/*.el)
 SITELISP=site-lisp
 
-all: byte-recompile conf.el 
+all: byte-recompile autoloads conf.el 
 
 conf.el: $(CONFD)
 	@echo ">>> Recaching configuration..."
@@ -11,6 +11,10 @@ conf.el: $(CONFD)
 
 byte-recompile:
 	@echo ">>> Byte-compiling..."
-	@emacs --batch --eval '(byte-recompile-directory "$(SITELISP)")' --kill
+	@emacs --batch --script base.el --eval '(user-byte-recompile)' --kill
 
-.PHONY: byte-recompile
+autoloads:
+	@echo ">>> Updating autoloads..."
+	@emacs --batch --script base.el --eval '(user-update-autoloads)' --kill
+
+.PHONY: byte-recompile autoloads

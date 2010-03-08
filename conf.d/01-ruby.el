@@ -3,8 +3,6 @@
 ;;                                                                              
 
 (add-site-load-path "ruby")
-(autoload 'ruby-mode "ruby-mode"
-  "Mode for editing ruby source files" t)
 (add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
 (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
 (autoload 'run-ruby "inf-ruby"

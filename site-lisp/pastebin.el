@@ -36,6 +36,7 @@
 
 ;;; Code:
 
+;;;###autoload
 (defgroup pastebin nil
   "Pastebin -- pastebin.com client"
   :tag "Pastebin"
@@ -128,6 +129,7 @@
 
 (defvar pastebin-subdomain-history '())
 
+;;;###autoload
 (defun pastebin-buffer (&optional subdomain)
   "Send the whole buffer to pastebin.com.
 Optional argument subdomain will request the virtual host to use,
@@ -139,6 +141,7 @@ Optional argument subdomain will request the virtual host to use,
      (list pastebin-subdomain)))
   (pastebin (point-min) (point-max) subdomain))
 
+;;;###autoload
 (defun pastebin (start end &optional subdomain)
   "An interface to the pastebin code snippet www service.
 

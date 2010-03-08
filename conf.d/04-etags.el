@@ -1,8 +1,5 @@
 ;;; Completion and search in TAGS
 
-(autoload 'etags-select-find-tag-at-point "etags-select" "Do a find-tag-at-point, and display all exact matches." t)
-(autoload 'etags-select-find-tag "etags-select" "Do a find-tag, and display all exact matches." t)
-
 ;; binding the keys
 (global-set-key "\M-?" 'etags-select-find-tag-at-point)
 (global-set-key "\M-." 'etags-select-find-tag)

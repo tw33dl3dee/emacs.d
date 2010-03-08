@@ -1460,7 +1460,7 @@ If the \"File\" menu does not exist, no submenu is added.  See
 			(cond ((vectorp first) (aref first 0))
 			      ((consp first) (car first))))))))
 
-;;;###autoload
+;;; cannot autoload -- defunx!
 (defunx session-initialize (&rest dummies)
   ;; checkdoc-params: (dummies)
   "Initialize package session and read previous session file.

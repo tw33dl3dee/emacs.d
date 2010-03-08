@@ -1,3 +1,3 @@
 ;;; CFlow mode
 
-(autoload 'cflow-mode "cflow-mode" "Mode for viewing CFlow output" t)
+(add-to-list 'auto-mode-alist '("\\.cflow\\'" . cflow-mode))

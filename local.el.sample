@@ -5,7 +5,8 @@
 (setq initial-frame-alist '((width . 154) (height . 80)))
 
 ;; Default font face
-(set-face-attribute 'default nil :font "Liberation Mono 10")
+(when window-system 
+  (set-face-attribute 'default nil :font "Liberation Mono 10"))
 
 ;; Slackware/Gentoo uses profile instead of bashrc -- use login shell
 (setq explicit-bash-args (quote ("--noediting" "-l" "-i")))
