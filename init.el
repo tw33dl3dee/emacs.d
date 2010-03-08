@@ -10,7 +10,10 @@
 (load custom-file 'noerror)
 
 ;; Redefined in base.el
-(load-file-silently generated-autoload-file)
+(load-file-silently generated-autoload-file
+		    (lambda ()
+		      (error "You need to run `make' in %s (%s is missing)" 
+			     emacs-user-root generated-autoload-file)))
 
 ;; First try to load configuration from cached conf.el
 ;; Fallback to reading conf.d/*.el

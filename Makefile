@@ -16,5 +16,6 @@ byte-recompile:
 autoloads:
 	@echo ">>> Updating autoloads..."
 	@emacs --batch --script base.el --eval '(user-update-autoloads)' --kill
+	@$(RM) autoloads.el~
 
 .PHONY: byte-recompile autoloads
