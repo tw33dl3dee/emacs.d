@@ -1,7 +1,5 @@
 ;;; Python mode
 
-(add-site-load-path "python")
-
 ;;; indent after Return
 (add-hook 'python-mode-hook 
 	  '(lambda () 

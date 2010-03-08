@@ -1,7 +1,6 @@
 ;;; Various enhancements for DVCSs (dvc-mode, custom commands, etc)
 ;;;
 
-(add-site-load-path "dvc")
 (require 'dvc-autoloads)
 
 (defun my-git-whatsnew ()

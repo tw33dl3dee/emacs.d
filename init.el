@@ -3,9 +3,6 @@
 ;;; Init load paths
 (load-file "~/.emacs.d/base.el")
 
-(add-to-list 'load-path emacs-user-root)
-(add-to-list 'load-path emacs-user-lisp-root)
-
 (setq custom-file (user-path "custom.el"))
 (load custom-file 'noerror)
 

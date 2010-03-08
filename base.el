@@ -44,25 +44,26 @@ If HIDDEN is t, hidden directories are walked, too."
 listed in `user-autoloaded-subdirs' and saves them to `generated-autoload-file'.
 
 To be called from Makefile."
+  (load-file (user-path "conf.d/00-load-paths.el"))
   (apply 'update-directory-autoloads
 	 (cons emacs-user-lisp-root
 	       (mapcar (lambda (dir) (concat emacs-user-lisp-root "/" dir)) 
 		       user-autoloaded-subdirs))))
-  ;; (let (subdirs) 
-  ;;   (walk-subdirectories emacs-user-lisp-root
-  ;; 			 (lambda (dir) (add-to-list 'subdirs dir)))
-  ;;   (apply 'update-directory-autoloads (reverse subdirs))))
 
 (defun user-byte-recompile ()
   "Byte-recompiles all compiled files under `emacs-user-lisp-root'.
 
 To be called from Makefile."
+  (load-file (user-path "conf.d/00-load-paths.el"))
   (byte-recompile-directory emacs-user-lisp-root))
 
-;;; Paths
+;;; Load paths
 
 (setq emacs-user-root      "~/.emacs.d")
 (setq emacs-user-lisp-root "~/.emacs.d/site-lisp")
+
+(add-to-list 'load-path emacs-user-root)
+(add-to-list 'load-path emacs-user-lisp-root)
 
 ;; Autoloads from `emacs-user-lisp-root'
 (setq generated-autoload-file (user-path "autoloads.el"))

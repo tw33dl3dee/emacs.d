@@ -2,7 +2,6 @@
 ;; based on http://www.rubygarden.org/Ruby/page/show/InstallingEmacsExtensions  
 ;;                                                                              
 
-(add-site-load-path "ruby")
 (add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
 (add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
 (autoload 'run-ruby "inf-ruby"
