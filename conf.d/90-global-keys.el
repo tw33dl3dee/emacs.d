@@ -33,6 +33,7 @@
 (global-set-key (kbd "<S-right>") 'elscreen-next)
 (global-set-key (kbd "C-x C-b") 'ibuffer-and-jump-to-last)
 (global-set-key (kbd "C-x B") 'buffer-menu)
+(global-set-key [(f13)] 'toggle-input-method)
 
 ;; make C-return alias to M-TAB (coz' ESC TAB is too slow)
 (global-set-key [C-return] "\M-\t")
