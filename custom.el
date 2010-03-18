@@ -132,7 +132,7 @@
  '(safe-local-variable-values (quote ((buffer-file-coding-system . utf-8-unix) (sgml-indent-step . 4) (folded-file . t) (prompt-to-byte-compile) (sh-indent-comment . t) (sgml-parent-document "dancer-oper-guide.sgml" "book") (sgml-omittag . t) (sgml-shorttag . t) (sgml-namecase-general . t) (sgml-general-insert-case . lower) (sgml-minimize-attributes) (sgml-always-quote-attributes . t) (sgml-indent-step . 2) (sgml-indent-data . t) (sgml-parent-document "charybdis-oper-guide.sgml" "book") (sgml-exposed-tags) (encoding . utf-8) (Mode . C) (sql-product . postgres) (erlang-indent-level . 4) (visual-line-mode . t) (word-wrap . t) (minor-mode . lojban))))
  '(save-place-file "~/.emacs.d/places")
  '(screenshot-default-scheme "ftp")
- '(screenshot-schemes (quote (("local" :dir "~/pix/") ("current-directory" :dir default-directory) ("remote-ftp" :dir "/tmp/" :ssh-dir "home.twee.cc:/home/ftp/pix/" :url "ftp://home.twee.cc/pix/") ("ftp" :dir "/home/ftp/pix/" :url "ftp://home.twee.cc/pix/"))))
+ '(screenshot-schemes (quote (("local" :dir "~/pix/") ("current-directory" :dir default-directory) ("remote-ftp" :dir "/tmp/" :ssh-dir "mordor:/home/ftp/pix/" :url "ftp://home.twee.cc/pix/") ("ftp" :dir "/home/ftp/pix/" :url "ftp://home.twee.cc/pix/"))))
  '(screenshot-take-delay 0.0)
  '(scroll-preserve-screen-position t)
  '(session-save-file "~/.emacs.d/.session")
