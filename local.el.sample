@@ -19,6 +19,3 @@
 
 ;; Use okular (KDE4) as PDF viewer for TeX
 (setq my-TeX-pdf-viewer "okular %o")
-
-;; Upload screenshots to remote FTP by default
-(setq screenshot-default-scheme "remote-ftp")
