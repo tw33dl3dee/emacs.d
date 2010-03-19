@@ -19,3 +19,6 @@
 
 ;; Use okular (KDE4) as PDF viewer for TeX
 (setq my-TeX-pdf-viewer "okular %o")
+
+;; Some modern systems have mlocate instead of slocate
+;(setq locate-command "mlocate")
