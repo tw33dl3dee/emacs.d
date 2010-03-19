@@ -153,7 +153,7 @@
  '(tex-open-quote "<<")
  '(tool-bar-mode nil)
  '(tramp-default-method "ssh")
- '(tramp-default-proxies-alist (quote (("vps" "root" "/ssh:%h:"))))
+ '(tramp-default-proxies-alist (quote (("vps" "root" "/ssh:%h:") ("mordor" "root" "/ssh:%h:"))))
  '(tramp-verbose 4)
  '(transient-mark-mode t)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify))
