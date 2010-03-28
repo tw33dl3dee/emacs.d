@@ -49,7 +49,7 @@
  '(delphi-indent-level 4)
  '(dictionary-default-dictionary "jbo->en")
  '(dictionary-server "www.lojban.org")
- '(dired-listing-switches "-al -v -h")
+ '(dired-listing-switches "-alvh")
  '(dired-recursive-copies (quote always))
  '(dired-recursive-deletes (quote top))
  '(dirtrackp t t)
