@@ -120,7 +120,7 @@
  '(org-enforce-todo-dependencies t)
  '(org-log-done (quote time))
  '(org-log-note-clock-out nil)
- '(org-startup-folded nil)
+ '(org-startup-folded (quote content))
  '(org-tags-column -80)
  '(partial-completion-mode t nil (complete))
  '(pastebin-default-subdomain "bmstu")
