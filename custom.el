@@ -122,6 +122,7 @@
  '(org-log-note-clock-out nil)
  '(org-startup-folded (quote content))
  '(org-tags-column -80)
+ '(parens-require-spaces nil)
  '(partial-completion-mode t nil (complete))
  '(pastebin-default-subdomain "bmstu")
  '(perl-tab-always-indent t)
