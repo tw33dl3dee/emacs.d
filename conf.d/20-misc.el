@@ -28,3 +28,12 @@
 
 ;; Use iedit for fancy replace
 (require 'iedit)
+
+;; Drew Adams' enhancements
+
+(require 'menu-bar+)
+(require 'info+)
+(require 'apropos+)
+(require 'thingatpt+)
+(require 'isearch+)
+(require 'replace+)

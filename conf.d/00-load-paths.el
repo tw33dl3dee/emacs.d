@@ -8,6 +8,9 @@
 ;; FLIM library
 (add-site-load-path "flim")
 
+;; Drew Adams' library
+(add-site-load-path "dadams")
+
 ;; Everything from other files
 (add-site-load-path "auctex")
 (add-site-load-path "autoconf-mode")
