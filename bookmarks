@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("make.conf"
+(("pspin"
+  (filename . "~/work/mstu/coding/pspin/src/pspin/")
+  (front-context-string . "CMakeFiles\n  -rw")
+  (rear-context-string . "0K Mar 25 08:22 ")
+  (position . 236))
+ ("make.conf"
   (filename . "/sudo:root@mordor.twee.cc:/etc/make.conf")
   (front-context-string . "CHOST=\"i686-pc-l")
   (rear-context-string)
