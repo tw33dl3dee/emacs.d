@@ -3,6 +3,12 @@
 ;;; I don't like it
 ;;(glasses-mode) 
 
+;; C-ElDoc
+;; Derive include paths from PC-include-file-path
+(setq c-eldoc-includes (concat "-I. -I.. " 
+			       (mapconcat (lambda (path) (concat "-I" path)) PC-include-file-path " ")))
+(add-hook 'c-mode-hook 'c-turn-on-eldoc-mode)
+
 ;; CUDA files are C++ also
 ;; as Slice definitions, too (a little weird, yeah)
 (add-to-list 'auto-mode-alist '("\\.\\(cu\\|cpp\\|cxx\\|cc\\|ice\\)$" . c++-mode))
