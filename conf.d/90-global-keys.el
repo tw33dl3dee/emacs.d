@@ -21,6 +21,7 @@
 (global-set-key [(f2)] 'ffap-perl-module)
 (global-set-key [(f5)] (lambda () (interactive) (smart-find-file (current-word))))
 (global-set-key [(f6)] (lambda () (interactive) (switch-to-buffer (find-buffer-visiting (current-word)))))
+(global-set-key [(f7)] 'switch-cc-to-h)
 (global-set-key (kbd "C-=") 'lisp-match-paren)
 (global-set-key "\C-\M-g" (lambda () (interactive) (scroll-other-window '-)))
 (global-set-key "\C-xvw" 'my-git-whatsnew)
