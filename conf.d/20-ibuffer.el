@@ -51,6 +51,7 @@
 	   (mode . plsql-mode)
 	   (mode . po-mode)
 	   (mode . prolog-mode)
+	   (mode . promela-mode)
 	   (mode . python-2-mode)
 	   (mode . python-3-mode)
 	   (mode . python-basic-mode)
