@@ -55,7 +55,7 @@
  '(dirtrackp t t)
  '(display-time-mode t)
  '(doxymacs-use-external-xml-parser t)
- '(ebs-exclude-buffer-regexps (quote ("^ " "^\\*Messages\\*" "^\\*Buffer List\\*" "^\\*Completions\\*" "^\\*scratch\\*" "^\\*debug.*\\*" "^\\*GNU Emacs\\*" "^\\*Help\\*")))
+ '(ebs-exclude-buffer-regexps (quote ("^ " "^\\*Messages\\*" "^\\*Buffer List\\*" "^\\*Completions\\*" "^\\*scratch\\*" "^\\*debug.*\\*" "^\\*GNU Emacs\\*" "^\\*Help\\*" "-preprocessed\\*$")))
  '(eldoc-echo-area-use-multiline-p nil)
  '(elscreen-buffer-list-enabled t)
  '(elscreen-display-screen-number nil)
