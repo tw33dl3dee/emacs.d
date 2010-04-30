@@ -18,7 +18,8 @@ ignore = ",".join([
     "C0111",  # Missing docstring
     "W0621",  # Redefining name from outer scope
     "C0323",  # Operator not followed by a space
-#    "W0141",  # Used builtin function
+    "W0603",  # Using the global statement
+    #    "W0141",  # Used builtin function
 ])
 
 cmd = "pylint --output-format parseable --include-ids y --reports n --disable-msg=%s %s" % (ignore, sys.argv[1])
