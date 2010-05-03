@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("pspin"
+(("package.keywords"
+  (filename . "/sudo:root@mordor.twee.cc:/etc/portage/package.keywords")
+  (front-context-string . "# use stabe oper")
+  (rear-context-string)
+  (position . 1))
+ ("pspin"
   (filename . "~/work/mstu/coding/pspin/src/pspin/")
   (front-context-string . "CMakeFiles\n  -rw")
   (rear-context-string . "0K Mar 25 08:22 ")
