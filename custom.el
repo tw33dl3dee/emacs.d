@@ -24,7 +24,7 @@
  '(c-basic-offset 4)
  '(c-echo-syntactic-information-p t)
  '(c-electric-pound-behavior (quote (alignleft)))
- '(c-offsets-alist (quote ((topmost-intro-cont . 0) (brace-list-open . 0) (statement-cont . +) (substatement-open . 0) (cpp-macro-cont . +))))
+ '(c-offsets-alist (quote ((topmost-intro-cont . 0) (brace-list-open . 0) (statement-cont . +) (substatement-open . 0) (label . 2) (cpp-macro-cont . +))))
  '(c-tab-always-indent t)
  '(case-fold-search t)
  '(cperl-clobber-lisp-bindings t)
