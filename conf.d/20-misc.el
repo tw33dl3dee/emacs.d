@@ -37,3 +37,11 @@
 (require 'thingatpt+)
 (require 'isearch+)
 (require 'replace+)
+
+;; When mouse pointer leaves minibuffer, kill it (abort recursive edit)
+(defun stop-using-minibuffer ()
+  "kill the minibuffer"
+  (when (>= (recursion-depth) 1)
+    (abort-recursive-edit)))
+
+(add-hook 'mouse-leave-buffer-hook 'stop-using-minibuffer)
