@@ -1,0 +1,10 @@
+#name : #ifdef .. #else .. #endif
+# --
+#ifdef $1
+
+$0
+
+#else /* $1 */
+
+
+#endif /* $1 */
