@@ -36,7 +36,7 @@
 
 ;; Set PDF viewer (from local settings)
 (add-hook 'LaTeX-mode-hook (lambda ()
-			     (when my-TeX-pdf-viewer
+			     (when (boundp 'my-TeX-pdf-viewer)
 			       (rplacd (assoc "^pdf$" TeX-output-view-style) '("." "okular %o")))))
 
 ;; Insert ~ instead of big Yo in russian keyboard layout
