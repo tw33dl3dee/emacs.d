@@ -38,3 +38,8 @@
 (add-hook 'LaTeX-mode-hook (lambda ()
 			     (when my-TeX-pdf-viewer
 			       (rplacd (assoc "^pdf$" TeX-output-view-style) '("." "okular %o")))))
+
+;; Insert ~ instead of big Yo in russian keyboard layout
+(add-hook 'TeX-mode-hook (lambda ()
+			   (define-key TeX-mode-map "Ё" 
+			     (lambda () (interactive) (insert "~")))))
