@@ -14,7 +14,7 @@
          (add-to-list 'jka-compr-compression-info-list
                       ;; this element from emacs 22
                       ["\\.\\(dia\\|DIA\\)\\'"
-                       nil              nil     nil
+                       "compressing"    "gzip"  ("-c" "-q")
                        "uncompressing"  "gzip"  ("-c" "-q" "-d")
                        nil t "\037\213"])
          ;; if already enabled then toggle to get our addition recognised (note
