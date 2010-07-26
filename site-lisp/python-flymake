@@ -22,7 +22,7 @@ ignore = ",".join([
     #    "W0141",  # Used builtin function
 ])
 
-cmd = "pylint --output-format parseable --include-ids y --reports n --disable-msg=%s %s" % (ignore, sys.argv[1])
+cmd = "pylint --output-format parseable --include-ids y --reports n --disable=%s %s" % (ignore, sys.argv[1])
 
 p = Popen(cmd, shell = True, bufsize = -1, stdin = PIPE, stdout = PIPE, stderr = PIPE, close_fds = True)
 
