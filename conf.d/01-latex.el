@@ -41,5 +41,5 @@
 
 ;; Insert ~ instead of big Yo in russian keyboard layout
 (add-hook 'TeX-mode-hook (lambda ()
-			   (define-key TeX-mode-map "Ё" 
+			   (define-key TeX-mode-map [1025]
 			     (lambda () (interactive) (insert "~")))))
