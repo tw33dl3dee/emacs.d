@@ -6,7 +6,7 @@
   ;; If there is more than one, they won't work right.
  '(Info-fit-frame-flag nil)
  '(LaTeX-font-list (quote ((1 "" "" "\\mathcal{" "}") (2 "\\textbf{" "}" "\\mathbf{" "}") (3 "\\Code{" "}") (5 "\\emph{" "}") (6 "\\textsf{" "}" "\\mathsf{" "}") (9 "\\textit{" "}" "\\mathit{" "}") (13 "\\textmd{" "}") (14 "\\textnormal{" "}" "\\mathnormal{" "}") (18 "\\textrm{" "}" "\\mathrm{" "}") (19 "\\textsl{" "}" "\\mathbb{" "}") (20 "\\texttt{" "}" "\\mathtt{" "}") (21 "\\textup{" "}") (22 "\\Term{" "}") (4 "" "" t))))
- '(LaTeX-verbatim-environments (quote ("verbatim" "verbatim*" "CodeBlock")))
+ '(LaTeX-verbatim-environments (quote ("verbatim" "verbatim*" "CodeBlock" "lstlisting")))
  '(PC-include-file-path (quote ("/usr/include" "/usr/local/include")))
  '(TeX-PDF-mode t)
  '(TeX-auto-save t)
@@ -131,7 +131,7 @@
 ")
  '(python-guess-indent t)
  '(read-file-name-completion-ignore-case t)
- '(safe-local-variable-values (quote ((buffer-file-coding-system . utf-8-unix) (sgml-indent-step . 4) (folded-file . t) (prompt-to-byte-compile) (sh-indent-comment . t) (sgml-parent-document "dancer-oper-guide.sgml" "book") (sgml-omittag . t) (sgml-shorttag . t) (sgml-namecase-general . t) (sgml-general-insert-case . lower) (sgml-minimize-attributes) (sgml-always-quote-attributes . t) (sgml-indent-step . 2) (sgml-indent-data . t) (sgml-parent-document "charybdis-oper-guide.sgml" "book") (sgml-exposed-tags) (encoding . utf-8) (Mode . C) (sql-product . postgres) (erlang-indent-level . 4) (visual-line-mode . t) (word-wrap . t) (minor-mode . lojban))))
+ '(safe-local-variable-values (quote ((goal-column . 120) (erlang-indent-level . 2) (buffer-file-coding-system . koi8-r-unix) (buffer-file-coding-system . utf-8-unix) (sgml-indent-step . 4) (folded-file . t) (prompt-to-byte-compile) (sh-indent-comment . t) (sgml-parent-document "dancer-oper-guide.sgml" "book") (sgml-omittag . t) (sgml-shorttag . t) (sgml-namecase-general . t) (sgml-general-insert-case . lower) (sgml-minimize-attributes) (sgml-always-quote-attributes . t) (sgml-indent-step . 2) (sgml-indent-data . t) (sgml-parent-document "charybdis-oper-guide.sgml" "book") (sgml-exposed-tags) (encoding . utf-8) (Mode . C) (sql-product . postgres) (erlang-indent-level . 4) (visual-line-mode . t) (word-wrap . t) (minor-mode . lojban))))
  '(save-place-file "~/.emacs.d/places")
  '(screenshot-default-scheme "remote-ftp")
  '(screenshot-schemes (quote (("local" :dir "~/pix/") ("remote-ftp" :dir "/tmp/" :ssh-dir "mordor:/home/ftp/pix/" :url "ftp://home.twee.cc/pix/") ("ftp" :dir "/home/ftp/pix/" :url "ftp://home.twee.cc/pix/"))))
