@@ -1,3 +1,4 @@
+;;; -*- emacs-lisp -*-
 ;;; Site-local configuration
 
 ;; Maximize frame
@@ -21,4 +22,15 @@
 (setq my-TeX-pdf-viewer "okular %o")
 
 ;; Some modern systems have mlocate instead of slocate
-;(setq locate-command "mlocate")
+(setq locate-command "mlocate")
+
+;; For damn old systems with damn old coreutils
+(setq dired-listing-switches "-al -v -h")
+
+;; Upload screenshots to remote FTP by default
+(setq screenshot-default-scheme "remote-ftp")
+
+;; Corporative coding style
+(add-hook find-file-hook (lambda ()
+			   (if (string-match-p "/work/" (buffer-file-name))
+			       (setq indent-tabs-mode nil)))
