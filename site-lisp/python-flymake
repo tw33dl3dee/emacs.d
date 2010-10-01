@@ -6,6 +6,7 @@ from subprocess import Popen, PIPE
 
 ignore = ",".join([
     "C0103",  # Naming convention
+    "C0301",  # Line too long
     "I0011",  # Warning locally suppressed using disable-msg
     "I0012",  # Warning locally suppressed using disable-msg
 #    "W0511",  # FIXME/TODO
