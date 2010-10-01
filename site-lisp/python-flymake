@@ -26,13 +26,13 @@ cmd = "pylint --output-format parseable --include-ids y --reports n --disable=%s
 
 p = Popen(cmd, shell = True, bufsize = -1, stdin = PIPE, stdout = PIPE, stderr = PIPE, close_fds = True)
 
-pylint_re = re.compile('^([^:]+):(\d+):\s*\[([WECR])([^,]+),\s*([^\]]+)\]\s*(.*)$')
+pylint_re = re.compile('^([^:]+):(\d+):\s*\[([WECR])([^\]]+)\]\s*(.*)$')
 
 for line in p.stdout:
     line = line.strip()
     m = pylint_re.match(line)
     if m:
-        filename, linenum, errtype, errnum, context, description = m.groups()
+        filename, linenum, errtype, errnum, description = m.groups()
 
         if errtype == "E":
             msg = "Error"
