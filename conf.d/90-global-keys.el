@@ -42,3 +42,7 @@
 
 ;; make C-return alias to M-TAB (coz' ESC TAB is too slow)
 (global-set-key [C-return] "\M-\t")
+
+;; window split operation
+(global-set-key [C-c up] 'window-change-split-type)
+(global-set-key [C-c down] 'window-roll-v-3)
