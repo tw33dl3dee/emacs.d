@@ -68,3 +68,6 @@
 			   (if (file-writable-p (flymake-create-temp-inplace (buffer-file-name) nil))
 			       (flymake-mode 1)))))
 	'(python-mode-hook perl-mode-hook sh-mode-hook))
+
+(defun flymake-get-tex-args (file-name)
+    (list "pdflatex" (list "-file-line-error" "-draftmode" "-interaction=nonstopmode" file-name)))
