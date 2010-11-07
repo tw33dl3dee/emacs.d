@@ -1,6 +1,6 @@
 ##
 
-CONFD=$(wildcard conf.d/*.el)
+CONFD=$(sort $(wildcard conf.d/*.el))
 SITELISP=site-lisp
 PRELOAD=base.el
 
