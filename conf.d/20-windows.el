@@ -253,3 +253,14 @@
   (case (length (window-list))
     (3 (window-change-split-type-3))
     (2 (window-change-split-type-2))))
+
+
+(defun toggle-fullscreen (&optional f)
+  "Toggle fullscreen mode"
+  (interactive)
+  (let ((current-value (frame-parameter nil 'fullscreen)))
+    (set-frame-parameter nil 'fullscreen
+                         (if (equal 'fullboth current-value)
+                             (if (boundp 'old-fullscreen) old-fullscreen nil)
+                           (progn (setq old-fullscreen current-value)
+                                  'fullboth)))))
