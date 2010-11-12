@@ -264,3 +264,25 @@
                              (if (boundp 'old-fullscreen) old-fullscreen nil)
                            (progn (setq old-fullscreen current-value)
                                   'fullboth)))))
+
+;;; Window movement: don't signal error on <M-left>, etc, when there is no window to move to
+
+(defadvice windmove-left (around windmove-left-ignore-errors activate)
+  "`windmove-left' with errors ignored."
+  (ignore-errors
+    ad-do-it))
+
+(defadvice windmove-right (around windmove-right-ignore-errors activate)
+  "`windmove-right' with errors ignored."
+  (ignore-errors
+    ad-do-it))
+
+(defadvice windmove-up (around windmove-up-ignore-errors activate)
+  "`windmove-up' with errors ignored."
+  (ignore-errors
+    ad-do-it))
+
+(defadvice windmove-down (around windmove-down-ignore-errors activate)
+  "`windmove-down' with errors ignored."
+  (ignore-errors
+    ad-do-it))
