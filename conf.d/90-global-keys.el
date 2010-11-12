@@ -34,6 +34,7 @@
 (global-set-key (kbd "<S-right>") 'elscreen-next)
 (global-set-key (kbd "C-x C-b") 'ibuffer-and-jump-to-last)
 (global-set-key (kbd "C-x B") 'buffer-menu)
+;; Rebind CAPS to f12 for this to work
 (global-set-key [(f13)] 'toggle-input-method)
 
 ;; These keys are very easy to press in C-SPC END combo, so better unbind them
@@ -46,3 +47,6 @@
 ;; window split operation
 (global-set-key (kbd "C-c <up>") 'window-change-split-type)
 (global-set-key (kbd "C-c <down>") 'window-roll-v-3)
+(global-set-key (kbd "C-z C-3") 'window-split-3)
+
+(global-set-key (kbd "C-<f10>") 'toggle-fullscreen)
