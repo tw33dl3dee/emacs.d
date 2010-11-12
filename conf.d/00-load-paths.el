@@ -24,5 +24,6 @@
 (add-site-load-path "preview")
 (add-site-load-path "python")
 (add-site-load-path "ruby")
+(add-site-load-path "w3")
 (add-site-load-path "w3m")
 (add-site-load-path "yasnippet")
