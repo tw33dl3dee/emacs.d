@@ -61,6 +61,7 @@
  '(elscreen-buffer-list-enabled t)
  '(elscreen-display-screen-number nil)
  '(elscreen-prefix-key "f")
+ '(elscreen-startup-command-line-processing nil)
  '(elscreen-tab-display-control nil)
  '(elscreen-tab-display-kill-screen (quote left))
  '(esense-check-syntax-when-idle 10)
