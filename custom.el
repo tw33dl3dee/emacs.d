@@ -79,6 +79,7 @@
  '(glasses-face "bold")
  '(glasses-separate-parentheses-p nil)
  '(glasses-separator "")
+ '(global-auto-revert-mode t)
  '(global-font-lock-mode t nil (font-lock))
  '(grep-command "nice grep -nH -e ")
  '(grep-template "nice grep <C> -nH -e <R> <F>")
