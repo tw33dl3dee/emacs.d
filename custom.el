@@ -96,7 +96,7 @@
  '(initial-buffer-choice nil)
  '(ispell-dictionary "russian")
  '(ispell-program-name "/usr/bin/ispell")
- '(locate-command "slocate")
+ '(locate-command "mlocate")
  '(locate-prompt-for-command nil)
  '(locate-update-command "sudo updatedb")
  '(lojban-cmavo-file "~/.emacs.d/site-lisp/lojban/data/cmavo.txt")
