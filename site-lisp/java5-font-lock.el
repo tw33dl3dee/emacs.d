@@ -123,8 +123,8 @@ matcher will represent three matched subexpressions (any of which may be
                          0))
                (vare (or (and (> varb 0) (match-end 1))
                          0)))
-          (message (format "outer=%s, inner=%s, b=%d, e=%d, varb=%d, vare=%d"
-                           outer inner b e varb vare))
+          ;;(message (format "outer=%s, inner=%s, b=%d, e=%d, varb=%d, vare=%d"
+          ;;                 outer inner b e varb vare))
           (if outer
               (setq ret (append ret (list b e 0 0 0 0)))
             (if inner
