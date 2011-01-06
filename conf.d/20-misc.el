@@ -80,3 +80,11 @@
   (when newline-and-indent
     (indent-according-to-mode)))
 (global-set-key (kbd "M-o") 'open-previous-line)
+
+;; Frame title: list of visible buffer names
+
+(setq frame-title-format
+  '("" invocation-name ": " (:eval 
+			     (mapconcat #'(lambda (win) 
+					    (buffer-name (window-buffer win)))
+					(window-list) " | "))))
