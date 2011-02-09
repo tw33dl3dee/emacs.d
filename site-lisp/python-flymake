@@ -2,28 +2,57 @@
 
 import re
 import sys
+from os import chdir, path
 from subprocess import Popen, PIPE
 
 ignore = ",".join([
-    "C0103",  # Naming convention
-    "C0301",  # Line too long
-    "I0011",  # Warning locally suppressed using disable-msg
-    "I0012",  # Warning locally suppressed using disable-msg
+#    "C0103",  # Naming convention
+#    "C0301",  # Line too long
+#    "I0011",  # Warning locally suppressed using disable-msg
+#    "I0012",  # Warning locally suppressed using disable-msg
 #    "W0511",  # FIXME/TODO
-    "W0142",  # *args or **kwargs magic.
-    "R0913",  # Too many arguments
-    "R0904",  # Too many public methods
-    "R0201",  # Method could be a function
-    "R0903",  # Too few public methods
-    "R0902",  # Too many instance attributes
-    "C0111",  # Missing docstring
-    "W0621",  # Redefining name from outer scope
-    "C0323",  # Operator not followed by a space
-    "W0603",  # Using the global statement
+#    "W0142",  # *args or **kwargs magic.
+#    "R0913",  # Too many arguments
+#    "R0904",  # Too many public methods
+#    "R0201",  # Method could be a function
+#    "R0903",  # Too few public methods
+#    "R0902",  # Too many instance attributes
+#    "C0111",  # Missing docstring
+#    "W0621",  # Redefining name from outer scope
+#    "C0323",  # Operator not followed by a space
+#    "W0603",  # Using the global statement
     #    "W0141",  # Used builtin function
+#    "W0212",  # Access to a protected member of a client class
+#    "R0922",  # Abstract class is only referenced 1 times
+#    "R0921",  # Abstract class not referenced
 ])
 
-cmd = "pylint --output-format parseable --include-ids y --reports n --disable=%s %s" % (ignore, sys.argv[1])
+def get_target(filename):
+    # Find highest-level __init__.py to get full package-module name
+    modname = path.splitext(path.basename(filename))[0]
+    dirname = path.dirname(path.abspath(filename))
+    package = [modname]
+    rcfile = None
+    rcpath = path.join(dirname, '.pylintrc')
+    if path.isfile(rcpath):
+        rcfile = rcpath
+    while dirname and path.isfile(path.join(dirname, '__init__.py')):
+        package.append(path.basename(dirname))
+        dirname = path.dirname(dirname)
+        chdir('..')
+        rcpath = path.join(dirname, '.pylintrc')
+        if rcfile is None and path.isfile(rcpath):
+            rcfile = rcpath
+    # Default rcfile
+    rcfile = rcfile or path.expanduser('~/.emacs.d/etc/pylintrc')
+    if len(package) > 1:
+        return '.'.join(reversed(package)), rcfile
+    else:
+        return filename, rcfile
+
+target, rcfile = get_target(sys.argv[1])
+
+cmd = "pylint --output-format parseable --include-ids y --reports n --rcfile=%s %s" % (rcfile, target)
 
 p = Popen(cmd, shell = True, bufsize = -1, stdin = PIPE, stdout = PIPE, stderr = PIPE, close_fds = True)
 
@@ -34,6 +63,7 @@ for line in p.stdout:
     m = pylint_re.match(line)
     if m:
         filename, linenum, errtype, errnum, description = m.groups()
+        filename = path.basename(filename)
 
         if errtype == "E":
             msg = "Error"
