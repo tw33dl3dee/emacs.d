@@ -115,6 +115,7 @@
     (python-mode . "python")
     (ruby-mode . "ruby")
     (scheme-mode . "lisp")
+    (scss-mode . "css")
     (shell-mode . "bash")
     (sh-mode . "bash")
     (smalltalk-mode . "smalltalk")
