@@ -71,7 +71,7 @@ To be called from Makefile."
 ;; From which directories to generate autoloads
 (setq user-autoloaded-subdirs
       '("autoconf-mode"
-		"gentoo-syntax"
-		"haskell"
-		"python"
-		"ruby"))
+	"gentoo-syntax"
+	"haskell"
+	"python"
+	"ruby"))

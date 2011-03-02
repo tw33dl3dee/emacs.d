@@ -27,3 +27,9 @@
 (add-site-load-path "w3")
 (add-site-load-path "w3m")
 (add-site-load-path "yasnippet")
+
+;; nXHTML: big fukken load of shit
+(add-site-load-path "nxhtml")
+(add-site-load-path "nxhtml/nxhtml")
+(add-site-load-path "nxhtml/related")
+(add-site-load-path "nxhtml/util")
