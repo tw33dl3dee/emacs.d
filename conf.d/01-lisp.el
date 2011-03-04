@@ -15,3 +15,8 @@
 		       (eldoc-mode 1))))
 	'(lisp-mode-hook emacs-lisp-mode-hook lisp-interaction-mode-hook))
 
+;; Highlight nested parens
+(add-hook 'lisp-mode-hook #'(lambda () 
+			      (highlight-parentheses-mode t)))
+(add-hook 'emacs-lisp-mode-hook #'(lambda () 
+				    (highlight-parentheses-mode t)))
