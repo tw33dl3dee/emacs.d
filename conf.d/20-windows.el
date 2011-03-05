@@ -289,3 +289,25 @@
   "`windmove-down' with errors ignored."
   (ignore-errors
     ad-do-it))
+
+;;; Buffer movement: same here
+
+(defadvice buf-move-left (around buf-move-left-ignore-errors activate)
+  "`buf-move-left' with errors ignored."
+  (ignore-errors
+    ad-do-it))
+
+(defadvice buf-move-right (around buf-move-right-ignore-errors activate)
+  "`buf-move-right' with errors ignored."
+  (ignore-errors
+    ad-do-it))
+
+(defadvice buf-move-up (around buf-move-up-ignore-errors activate)
+  "`buf-move-up' with errors ignored."
+  (ignore-errors
+    ad-do-it))
+
+(defadvice buf-move-down (around buf-move-down-ignore-errors activate)
+  "`buf-move-down' with errors ignored."
+  (ignore-errors
+    ad-do-it))

@@ -50,3 +50,9 @@
 (global-set-key (kbd "C-z C-3") 'window-split-3)
 
 (global-set-key (kbd "C-<f10>") 'toggle-fullscreen)
+
+;; buffer movement
+(global-set-key (kbd "S-M-<up>") 'buf-move-up)
+(global-set-key (kbd "S-M-<down>") 'buf-move-down)
+(global-set-key (kbd "S-M-<left>") 'buf-move-left)
+(global-set-key (kbd "S-M-<right>") 'buf-move-right)
