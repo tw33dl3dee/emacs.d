@@ -18,7 +18,7 @@
 ;;  +-----------------------+----------------------+
 
 (defun window-split-4 ()
-  "Splite window into 4 sub-windows"
+  "Split window into 4 sub-windows"
   (interactive)
   (if (= 1 (length (window-list)))
       (progn (split-window-vertically)
@@ -37,7 +37,7 @@
 ;;  +-----------------------+----------------------+
 
 (defun window-split-3 ()
-  "Splite window into 3 sub-windows"
+  "Split window into 3 sub-windows"
   (interactive)
   (if (= 1 (length (window-list)))
       (progn (split-window-vertically)
@@ -169,6 +169,9 @@
 	    (set-window-buffer 2ndWin 1stBuf)
 	    (set-window-buffer 3rdWin 2ndBuf))))))
 
+;;; Window transpose functions -- OBSOLETE by transpose-frame
+
+(require 'transpose-frame)
 
 ;;;  +----------------------+                +---------- +----------+
 ;;;  |                      |          \     |           |          |
