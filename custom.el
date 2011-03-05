@@ -130,6 +130,7 @@
  '(partial-completion-mode t nil (complete))
  '(pastebin-default-subdomain "bmstu")
  '(perl-tab-always-indent t)
+ '(popwin:special-display-config (quote (("*Help*") ("*Completions*" :noselect t))))
  '(prolog-consult-string "[user].
 ")
  '(python-guess-indent t)
