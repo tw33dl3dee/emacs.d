@@ -354,6 +354,7 @@ the range U+E000-U+F8FF, inclusive)."
 ;;; Mode Definition
 ;;; ---------------------------------------------------------------------
 
+;;;###autoload
 (define-minor-mode fci-mode
   "Toggle fci-mode on and off.
 Fci-mode indicates the location of the fill column by drawing a
