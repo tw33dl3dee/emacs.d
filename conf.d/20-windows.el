@@ -7,6 +7,51 @@
 ;;                                                 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;;  +---------------+---------------+--------------+
+;;  |               |               |              |
+;;  |               |               |              |
+;;  |               |               |              |
+;;  +---------------+---------------+--------------+
+;;  |               |               |              |
+;;  |               |               |              |
+;;  |               |               |              |
+;;  +---------------+---------------+--------------+
+
+(defun window-split-6 ()
+  "Split window into 6 sub-windows"
+  (interactive)
+  (if (= 1 (length (window-list)))
+      (progn (split-window-horizontally)
+             (split-window-vertically)
+             (other-window 2)
+             (split-window-horizontally)
+             (split-window-vertically)
+             (other-window 2)
+             (split-window-vertically)
+             (balance-windows))))
+
+;;  +---------------+---------------+--------------+
+;;  |               |               |              |
+;;  |               |               |              |
+;;  |               |               |              |
+;;  |               +---------------+--------------+
+;;  |               |               |              |
+;;  |               |               |              |
+;;  |               |               |              |
+;;  +---------------+---------------+--------------+
+
+(defun window-split-5()
+  "Split window into 5 sub-windows"
+  (interactive)
+  (if (= 1 (length (window-list)))
+      (progn (split-window-horizontally)
+             (other-window 1)
+             (split-window-horizontally)
+             (split-window-vertically)
+             (other-window 2)
+             (split-window-vertically)
+             (balance-windows))))
+
 ;;  +-----------------------+----------------------+
 ;;  |                       |                      |
 ;;  |                       |                      |
@@ -27,10 +72,10 @@
 	     (split-window-horizontally))))
 
 ;;  +-----------------------+----------------------+
-;;  |                                              |
-;;  |                                              |
-;;  |                                              |
-;;  +-----------------------+----------------------+
+;;  |                       |                      |
+;;  |                       |                      |
+;;  |                       |                      |
+;;  +                       +----------------------+
 ;;  |                       |                      |
 ;;  |                       |                      |
 ;;  |                       |                      |
@@ -40,9 +85,9 @@
   "Split window into 3 sub-windows"
   (interactive)
   (if (= 1 (length (window-list)))
-      (progn (split-window-vertically)
+      (progn (split-window-horizontally)
 	     (other-window 1)
-	     (split-window-horizontally))))
+	     (split-window-vertically))))
 
 ;;  +----------------------+                 +----------- +-----------+ 
 ;;  |                      |           \     |            |           | 
@@ -311,3 +356,14 @@
   "`buf-move-down' with errors ignored."
   (ignore-errors
     ad-do-it))
+
+;;; Dedicated window toggling
+
+(defun toggle-current-window-dedication ()
+  (interactive)
+  (let* ((window (selected-window))
+         (dedicated (window-dedicated-p window)))
+    (set-window-dedicated-p window (not dedicated))
+    (message "Window %sdedicated to %s"
+             (if dedicated "no longer " "")
+             (buffer-name))))

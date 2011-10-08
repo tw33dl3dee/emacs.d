@@ -48,6 +48,11 @@
 (global-set-key (kbd "C-c <up>") 'transpose-frame)
 (global-set-key (kbd "C-c <down>") 'window-roll-v-3)
 (global-set-key (kbd "C-z C-3") 'window-split-3)
+(global-set-key (kbd "C-z C-4") 'window-split-4)
+(global-set-key (kbd "C-z C-5") 'window-split-5)
+(global-set-key (kbd "C-z C-6") 'window-split-6)
+
+(global-set-key [pause] 'toggle-current-window-dedication)
 
 (global-set-key (kbd "C-<f10>") 'toggle-fullscreen)
 
