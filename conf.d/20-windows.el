@@ -367,3 +367,13 @@
     (message "Window %sdedicated to %s"
              (if dedicated "no longer " "")
              (buffer-name))))
+
+;;; Duplicate buffer in the upper/lower window.
+(defun window-duplicate ()
+  (interactive)
+  (let ((buf (current-buffer)))
+    (windmove-down)
+    (switch-to-buffer buf)
+    (windmove-up)
+    (windmove-up)
+    (switch-to-buffer buf)))
