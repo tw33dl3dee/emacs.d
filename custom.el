@@ -51,6 +51,7 @@
  '(dictionary-default-dictionary "jbo->en")
  '(dictionary-server "www.lojban.org")
  '(dired-listing-switches "-alvh")
+ '(dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^\\.")
  '(dired-recursive-copies (quote always))
  '(dired-recursive-deletes (quote top))
  '(dirtrackp t t)
