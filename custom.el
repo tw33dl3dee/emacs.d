@@ -167,7 +167,7 @@
  '(transient-mark-mode t)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify))
  '(use-dialog-box nil)
- '(user-mail-address "twee@tweedle-dee.org")
+ '(user-mail-address "tw33dl3.dee@gmail.com")
  '(vc-svn-global-switches (quote ("--non-interactive")))
  '(w3m-home-page "http://localhost/")
  '(w3m-use-cookies t)
