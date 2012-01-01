@@ -130,7 +130,7 @@
  '(org-tags-column -80)
  '(parens-require-spaces nil)
  '(partial-completion-mode t nil (complete))
- '(pastebin-default-subdomain "bmstu")
+ '(pastebin-default-domain "pastebin.com")
  '(perl-tab-always-indent t)
  '(popwin:special-display-config (quote (("*Help*") ("*Completions*" :noselect t))))
  '(prolog-consult-string "[user].
@@ -139,7 +139,7 @@
  '(read-file-name-completion-ignore-case t)
  '(safe-local-variable-values (quote ((goal-column . 120) (erlang-indent-level . 2) (buffer-file-coding-system . koi8-r-unix) (buffer-file-coding-system . utf-8-unix) (sgml-indent-step . 4) (folded-file . t) (prompt-to-byte-compile) (sh-indent-comment . t) (sgml-parent-document "dancer-oper-guide.sgml" "book") (sgml-omittag . t) (sgml-shorttag . t) (sgml-namecase-general . t) (sgml-general-insert-case . lower) (sgml-minimize-attributes) (sgml-always-quote-attributes . t) (sgml-indent-step . 2) (sgml-indent-data . t) (sgml-parent-document "charybdis-oper-guide.sgml" "book") (sgml-exposed-tags) (encoding . utf-8) (Mode . C) (sql-product . postgres) (erlang-indent-level . 4) (visual-line-mode . t) (word-wrap . t) (minor-mode . lojban))))
  '(save-place-file "~/.emacs.d/places")
- '(screenshot-default-scheme "remote-ftp")
+ '(screenshot-default-scheme "remote-ftp" t)
  '(screenshot-schemes (quote (("local" :dir "~/pix/") ("remote-ftp" :dir "/tmp/" :ssh-dir "mordor:/home/ftp/pix/" :url "ftp://home.twee.cc/pix/") ("ftp" :dir "/home/ftp/pix/" :url "ftp://home.twee.cc/pix/"))))
  '(screenshot-take-delay 0.0)
  '(scroll-preserve-screen-position t)
