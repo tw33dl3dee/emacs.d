@@ -1,4 +1,6 @@
 *~
+.*
+!.gitignore
 /TAGS
 /auctex
 /auto-install
@@ -11,3 +13,4 @@
 /session.*
 /tramp
 /tutorial
+/url
