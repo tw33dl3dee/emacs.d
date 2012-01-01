@@ -1,0 +1,1 @@
+This is my GNU/Emacs config. It contains lots of settings and pre-bundled Lisp packages. Some parts may be useful to everyone while some (like my personal settings in Custom) -- to me only. Feel free to use it and modify as you wish.
