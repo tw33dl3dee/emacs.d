@@ -1,0 +1,13 @@
+*~
+/TAGS
+/auctex
+/auto-install
+/auto-save-list
+/autoloads.el
+/bench.log
+/conf.el
+/local.el
+/octave-core
+/session.*
+/tramp
+/tutorial
