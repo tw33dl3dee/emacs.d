@@ -38,14 +38,15 @@
 ;; Use iedit for fancy replace
 (require 'iedit)
 
-;; Drew Adams' enhancements
+;; Drew Adams' enhancements (stopped working in Emacs24)
+;; TODO: update them?
 
-(require 'menu-bar+)
-(require 'info+)
-(require 'apropos+)
-(require 'thingatpt+)
-(require 'isearch+)
-(require 'replace+)
+;; (require 'menu-bar+)
+;; (require 'info+)
+;; (require 'apropos+)
+;; (require 'thingatpt+)
+;; (require 'isearch+)
+;; (require 'replace+)
 
 ;; When mouse pointer leaves minibuffer, kill it (abort recursive edit)
 (defun stop-using-minibuffer ()

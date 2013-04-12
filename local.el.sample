@@ -12,12 +12,6 @@
 ;; Slackware/Gentoo uses profile instead of bashrc -- use login shell
 (setq explicit-bash-args (quote ("--noediting" "-l" "-i")))
 
-;; Local include paths
-(add-to-list 'PC-include-file-path "/usr/include/qt4")
-(add-to-list 'PC-include-file-path "/usr/include/gtk-2.0")
-(add-to-list 'PC-include-file-path "/usr/include/glib-2.0")
-(add-to-list 'PC-include-file-path "/usr/include/gstreamer-0.10")
-
 ;; Use okular (KDE4) as PDF viewer for TeX
 (setq my-TeX-pdf-viewer "okular %o")
 
