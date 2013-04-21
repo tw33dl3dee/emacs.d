@@ -1,9 +1,9 @@
 ;;; Variables set by Custom are stored here
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(Info-fit-frame-flag nil)
  '(LaTeX-font-list (quote ((1 "" "" "\\mathcal{" "}") (2 "\\textbf{" "}" "\\mathbf{" "}") (3 "\\Code{" "}") (5 "\\emph{" "}") (6 "\\textsf{" "}" "\\mathsf{" "}") (9 "\\textit{" "}" "\\mathit{" "}") (13 "\\textmd{" "}") (14 "\\textnormal{" "}" "\\mathnormal{" "}") (18 "\\textrm{" "}" "\\mathrm{" "}") (19 "\\textsl{" "}" "\\mathbb{" "}") (20 "\\texttt{" "}" "\\mathtt{" "}") (21 "\\textup{" "}") (22 "\\Term{" "}") (4 "" "" t))))
  '(LaTeX-verbatim-environments (quote ("verbatim" "verbatim*" "CodeBlock" "lstlisting")))
@@ -24,7 +24,7 @@
  '(c-basic-offset 2)
  '(c-echo-syntactic-information-p t)
  '(c-electric-pound-behavior (quote (alignleft)))
- '(c-offsets-alist (quote ((topmost-intro-cont . 0) (brace-list-open . 0) (statement-cont . +) (substatement-open . 0) (label . 2) (cpp-macro-cont . +))))
+ '(c-offsets-alist (quote ((topmost-intro-cont . 0) (brace-list-open . 0) (statement-cont . +) (substatement-open . 0) (access-label . /) (label . 2) (cpp-macro-cont . +))))
  '(c-tab-always-indent t)
  '(case-fold-search t)
  '(cperl-clobber-lisp-bindings t)
@@ -186,10 +186,10 @@
  '(xref-completion-linkage-check t)
  '(xref-display-active-project-in-minibuffer nil))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(default ((t (:stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :family "monospace"))))
  '(cperl-array-face ((t (:foreground "Blue" :weight bold))))
  '(cperl-hash-face ((((class color) (background light)) (:foreground "Red" :weight bold))))

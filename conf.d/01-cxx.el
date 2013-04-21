@@ -8,6 +8,10 @@
 (font-lock-add-keywords 'c++-mode '(("\\<\\(interface\\)\\>" . font-lock-keyword-face)))
 (font-lock-add-keywords 'c++-mode '(("\\<\\(extends\\)\\>" . font-lock-keyword-face)))
 
+;; C++11
+(font-lock-add-keywords 'c++-mode '(("\\<\\(nullptr\\)\\>" . font-lock-constant-face)))
+(font-lock-add-keywords 'c++-mode '(("\\<\\(override\\)\\>" . font-lock-keyword-face)))
+
 ;; Align with mixed spaces and tabs (http://stianse.wordpress.com/2008/11/17/indent-with-tabs-align-with-spaces/)
 
 (add-hook 'c-mode-hook (lambda ()
