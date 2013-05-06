@@ -4,18 +4,35 @@
 ;; as Slice definitions, too (a little weird, yeah)
 (add-to-list 'auto-mode-alist '("\\.\\(cu\\|cpp\\|cxx\\|cc\\|ice\\)$" . c++-mode))
 
-(font-lock-add-keywords 'c++-mode '(("\\<\\(idempotent\\)\\>" . font-lock-keyword-face)))
-(font-lock-add-keywords 'c++-mode '(("\\<\\(interface\\)\\>" . font-lock-keyword-face)))
-(font-lock-add-keywords 'c++-mode '(("\\<\\(extends\\)\\>" . font-lock-keyword-face)))
+;; Slice keywords
+(font-lock-add-keywords
+ 'c++-mode '(("\\<\\(idempotent\\|interface\\|extends\\)\\>" . font-lock-keyword-face)))
 
-;; C++11
-(font-lock-add-keywords 'c++-mode '(("\\<\\(nullptr\\)\\>" . font-lock-constant-face)))
-(font-lock-add-keywords 'c++-mode '(("\\<\\(override\\)\\>" . font-lock-keyword-face)))
+;; C++11 class enum
+;; BUG: not really working.
+(defun inside-class-enum-p (pos)
+  "Checks if POS is within the braces of a C++ \"enum class\"."
+  (ignore-errors
+    (save-excursion
+      (goto-char pos)
+      (up-list -1)
+      (backward-sexp 1)
+      (looking-back "enum[ \t]+class[ \t]+[^}]*"))))
 
-;; Align with mixed spaces and tabs (http://stianse.wordpress.com/2008/11/17/indent-with-tabs-align-with-spaces/)
+(defun align-enum-class (langelem)
+  (if (inside-class-enum-p (c-langelem-pos langelem))
+      0
+    (c-lineup-topmost-intro-cont langelem)))
 
-(add-hook 'c-mode-hook (lambda ()
-			 (add-hook 'c-special-indent-hook 'c-indent-align-with-spaces-hook)))
+(defun align-enum-class-closing-brace (langelem)
+  (if (inside-class-enum-p (c-langelem-pos langelem))
+      '-
+    '+))
+
+;; C++11 keywords
+(font-lock-add-keywords
+ 'c++-mode '(("\\<\\(nullptr\\)\\>" . font-lock-constant-face)
+             ("\\<\\(alignof\\|alignas\\|constexpr\\|decltype\\|noexcept\\|static_assert\\|thread_local\\|override\\|final\\)\\>" . font-lock-keyword-face)))
 
 ;; Switch fromm *.<impl> to *.<head> and vice versa
 (defun switch-cc-to-h ()
@@ -50,47 +67,3 @@
  		   ((file-exists-p (concat name ".c"))
  		    (find-file (concat name ".c"))
 		    )))))))
-
-;; ;;; Functions for lineup in math exprs (UNUSED)
-;; (defun my-c-lineup-math (langelem)
-;;   (save-excursion
-;;     (let ((equalp (save-excursion
-;; 		    (goto-char (c-point 'boi))
-;; 		    (let ((eol (c-point 'eol)))
-;; 		      (c-forward-token-1 0 t eol)
-;; 		      (while (and (not (eq (char-after) ?=))
-;; 				  (= (c-forward-token-1 1 t eol) 0))))
-;; 		    (and (eq (char-after) ?=)
-;; 			 (- (point) (c-point 'boi)))))
-;; 	  (langelem-col (c-langelem-col langelem))
-;; 	  donep)
-;;       (while (and (not donep)
-;; 		  (< (point) (c-point 'eol)))
-;; 	(skip-chars-forward "^=" (c-point 'eol))
-;; 	(if (c-in-literal (cdr langelem))
-;; 	    (forward-char 1)
-;; 	  (setq donep t)))
-;;       (if (or (not (eq (char-after) ?=))
-;; 	      (save-excursion
-;; 		(forward-char 1)
-;; 		(c-forward-syntactic-ws (c-point 'eol))
-;; 		(eolp)))
-;; 	  ;; there's no equal sign on the line
-;; 	  ;; c-basic-offset
-;; 	  nil
-;; 	;; calculate indentation column after equals and ws, unless
-;; 	;; our line contains an equals sign
-;; 	(if (not equalp)
-;; 	    (progn
-;; 	      (forward-char 1)
-;; 	      (skip-chars-forward " \t")
-;; 	      (setq equalp 0)))
-;; 	(- (current-column) equalp langelem-col))
-;;       )))
-
-;; (defun my-c-lineup-space (langelem)
-;;   (save-excursion
-;;     (let ((langelem-col (c-langelem-col langelem)))
-;;       (re-search-forward "[_A-Za-z0-9]* " (c-point 'eol) 'move)
-;;       (goto-char (match-end 0))
-;;       (- (current-column) langelem-col))))
