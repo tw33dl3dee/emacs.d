@@ -8,7 +8,7 @@
 /autoloads.el
 /bench.log
 /conf.el
-/local.el
+/local*.el
 /octave-core
 /session.*
 /tramp
