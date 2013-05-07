@@ -464,6 +464,7 @@ where
 
 (make-variable-buffer-local 'doxymacs-mode)
 
+;;;###autoload
 (defun doxymacs-mode (&optional arg)
   ;; All of the following text shows up in the "mode help" (C-h m)
   "Minor mode for using/creating Doxygen documentation.
@@ -639,6 +640,7 @@ Key bindings:
     '(1 font-lock-constant-face prepend)
     '(3 font-lock-string-face prepend))))
 
+;;;###autoload
 (defun doxymacs-font-lock ()
   "Turn on font-lock for Doxygen keywords."
   ;; FIXME How do I turn *off* font-lock for Doxygen keywords?
