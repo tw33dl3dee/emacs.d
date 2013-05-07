@@ -8,6 +8,7 @@
 (require 'derived)
 (require 'cc-mode)
 
+;;;###autoload
 (define-derived-mode flex-mode c-mode "Flex"
   "Major mode for editing flex files"
   
@@ -40,4 +41,3 @@
 (defalias 'flex-indent-command 'c-indent-command)
 
 (provide 'flex-mode)
-

@@ -2158,6 +2158,7 @@ save-excursion of `plsql-indent'."
       (setq lines-indented (1+ lines-indented)))
     (message "Indenting region...done")))
 
+;;;###autoload
 (defun plsql-mode ()
   "Programming support mode for PL/SQL code."
 

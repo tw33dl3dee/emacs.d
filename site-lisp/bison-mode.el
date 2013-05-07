@@ -239,6 +239,7 @@ and \(point\)"
 
 ;; *************** bison-mode ***************
 
+;;;###autoload
 (define-derived-mode bison-mode flex-mode "Bison"
   "Major mode for editing bison/yacc files
 
@@ -991,4 +992,3 @@ declaration section, then indent to bison-decl-token-column
 (provide 'bison-mode)
 
 ;; *************** end of code ***************
-

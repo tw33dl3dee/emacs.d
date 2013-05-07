@@ -435,6 +435,7 @@ If (match-beginning 2) is non-nil, the item is followed by a `value'."
 ;; -------------------------------------------------------------------------
 ;; Promela-mode itself
 
+;;;###autoload
 (defun promela-mode ()
   "Major mode for editing PROMELA code.
 \\{promela-mode-map}

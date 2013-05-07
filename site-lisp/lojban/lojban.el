@@ -745,6 +745,7 @@ See also `lojban-describe-gismu', `lojban-describe-cmavo', `lojban-describe-lujv
     (unless valsi (error "Unrecognized rafsi: %s" rafsi))
     (lojban-describe-valsi valsi short t)))
 
+;;;###autoload
 (defun lojban-describe-valsi (&optional valsi short inner)
   "Qualify VALSI and return its description as returned by one of 
 `lojban-describe-gismu', `lojban-describe-compound-cmavo', or `lojban-describe-lujvo'.
