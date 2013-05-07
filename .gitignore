@@ -8,6 +8,7 @@
 /autoloads.el
 /bench.log
 /conf.el
+/elpa
 /local*.el
 /octave-core
 /session.*
