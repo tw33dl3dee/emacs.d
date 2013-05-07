@@ -1,4 +1,5 @@
 ;;; Kill other buffers with same name
+
 (defun kill-other-buffers-of-this-file-name (&optional buffer)
   "Kill all other buffers visiting files of the same base name."
   (interactive "bBuffer to make unique: ")

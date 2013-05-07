@@ -462,7 +462,6 @@ the last word of text cancelled with SI, SA or SU."
 (define-key lojban-mode-keymap "\C-cs" 'lojban-parse-sentence)
 (define-key lojban-mode-keymap "\C-cd" 'lojban-describe-valsi-at-point)
 
-;;;###autoload
 (or (assoc 'lojban-mode minor-mode-alist)
     (add-to-list 'minor-mode-alist (list 'lojban-mode lojban-mode-line-string)))
 

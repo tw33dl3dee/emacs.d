@@ -1,7 +1,7 @@
 ;;; Custom Git commands.
 
 (defun my-git-whatsnew ()
-  (interactive) 
+  (interactive)
   (require 'xgit)
   (xgit-changelog "ORIG_HEAD" "HEAD" t))
 
@@ -9,8 +9,8 @@
 ;;; This makes all paths correct
 (defadvice vc-dir-prepare-status-buffer (before my-vcs-goto-top-directory activate compile)
   (let* ((backend (ad-get-arg 2))
-	 (vcs-dir (ad-get-arg 1))
-	 (vcs-top-dir (vc-call-backend backend 'responsible-p vcs-dir)))
+         (vcs-dir (ad-get-arg 1))
+         (vcs-top-dir (vc-call-backend backend 'responsible-p vcs-dir)))
     (when (stringp vcs-top-dir)
       (ad-set-arg 1 vcs-top-dir))))
 

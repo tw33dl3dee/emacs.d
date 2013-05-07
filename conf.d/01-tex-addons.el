@@ -9,21 +9,21 @@
 (defun guess-TeX-master (filename)
   "Guess the master file for FILENAME from currently open .tex files."
   (let ((candidate nil)
-	(filename (file-name-nondirectory filename)))
+        (filename (file-name-nondirectory filename)))
     (save-excursion
       (dolist (buffer (buffer-list))
-	(with-current-buffer buffer
-	  (let ((name (buffer-name))
-		(file buffer-file-name))
-	    (if (and file (string-match "\\.tex$" file))
-		(progn
-		  (goto-char (point-min))
-		  (if (re-search-forward (concat "\\\\input{" filename "}") nil t)
-		      (setq candidate file))
-		  (if (re-search-forward (concat "\\\\include{" (file-name-sans-extension filename) "}") nil t)
-		      (setq candidate file))))))))
+        (with-current-buffer buffer
+          (let ((name (buffer-name))
+                (file buffer-file-name))
+            (if (and file (string-match "\\.tex$" file))
+                (progn
+                  (goto-char (point-min))
+                  (if (re-search-forward (concat "\\\\input{" filename "}") nil t)
+                      (setq candidate file))
+                  (if (re-search-forward (concat "\\\\include{" (file-name-sans-extension filename) "}") nil t)
+                      (setq candidate file))))))))
     (if candidate
-	(message "TeX master document: %s" (file-name-nondirectory candidate)))
+        (message "TeX master document: %s" (file-name-nondirectory candidate)))
     candidate))
 
 ;; Default modes
@@ -36,10 +36,10 @@
 
 ;; Set PDF viewer (from local settings)
 (add-hook 'LaTeX-mode-hook (lambda ()
-			     (when (boundp 'my-TeX-pdf-viewer)
-			       (rplacd (assoc "^pdf$" TeX-output-view-style) '("." "okular %o")))))
+                             (when (boundp 'my-TeX-pdf-viewer)
+                               (rplacd (assoc "^pdf$" TeX-output-view-style) '("." "okular %o")))))
 
 ;; Insert ~ instead of big Yo in russian keyboard layout
 (add-hook 'TeX-mode-hook (lambda ()
-			   (define-key TeX-mode-map [1025]
-			     (lambda () (interactive) (insert "~")))))
+                           (define-key TeX-mode-map [1025]
+                             (lambda () (interactive) (insert "~")))))

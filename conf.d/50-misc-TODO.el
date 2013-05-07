@@ -20,20 +20,20 @@
 
 ;; M-w copies current line when no mark
 (defadvice kill-ring-save (before slick-copy activate compile)
-      "When called interactively with no active region, copy a single line instead."
-      (interactive
-       (if mark-active (list (region-beginning) (region-end))
-         (message "Copied line")
-         (list (line-beginning-position)
-               (line-beginning-position 2)))))
+  "When called interactively with no active region, copy a single line instead."
+  (interactive
+   (if mark-active (list (region-beginning) (region-end))
+     (message "Copied line")
+     (list (line-beginning-position)
+           (line-beginning-position 2)))))
 
 ;; C-w kills current line when no mark
 (defadvice kill-region (before slick-cut activate compile)
   "When called interactively with no active region, kill a single line instead."
   (interactive
-    (if mark-active (list (region-beginning) (region-end))
-      (list (line-beginning-position)
-        (line-beginning-position 2)))))
+   (if mark-active (list (region-beginning) (region-end))
+     (list (line-beginning-position)
+           (line-beginning-position 2)))))
 
 ;; Use iedit for fancy replace
 (require 'iedit)
@@ -73,7 +73,7 @@
 (global-set-key (kbd "C-o") 'open-next-line)
 
 (defun open-previous-line (arg)
-  "Open a new line before the current one. 
+  "Open a new line before the current one.
      See also `newline-and-indent'."
   (interactive "p")
   (beginning-of-line)
@@ -85,7 +85,7 @@
 ;; Frame title: list of visible buffer names
 
 (setq frame-title-format
-  '("" invocation-name ": " (:eval 
-			     (mapconcat #'(lambda (win) 
-					    (buffer-name (window-buffer win)))
-					(window-list) " | "))))
+      '("" invocation-name ": " (:eval
+                                 (mapconcat #'(lambda (win)
+                                                (buffer-name (window-buffer win)))
+                                            (window-list) " | "))))

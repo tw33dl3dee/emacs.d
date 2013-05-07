@@ -1,4 +1,5 @@
 ;;; Big files have no undo history to prevent high memory usage
+
 (defun tj-find-file-check-make-large-file-read-only-hook ()
   "If a file is over a given size, make the buffer read only."
   (when (> (buffer-size) (* 5 1024 1024))
