@@ -1,10 +1,3 @@
-;;; Various approaches to make compilation more convenient
-
-(defun compile-and-run()
-  (when (compile compile-command)
-    (delete-other-windows)
-    (shell)))
-
 ;;; Some few ways to close buffer after compilation
 
 ;; === Way 1 ===

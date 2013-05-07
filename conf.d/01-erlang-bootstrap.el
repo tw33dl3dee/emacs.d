@@ -1,4 +1,4 @@
-;; OTP Erlang support
+;;; OTP Erlang support
 
 (require 'erlang-start)
 

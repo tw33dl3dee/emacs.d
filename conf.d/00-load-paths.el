@@ -19,6 +19,7 @@
 (add-site-load-path "erlang")
 (add-site-load-path "gentoo-syntax")
 (add-site-load-path "haskell")
+(add-site-load-path "html5")
 (add-site-load-path "lojban")
 (add-site-load-path "po-mode")
 (add-site-load-path "preview")

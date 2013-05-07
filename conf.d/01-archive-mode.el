@@ -2,8 +2,12 @@
 ;; Extension list for Archive Mode, Auto-Compression Mode and Tar Mode
 ;;
 
-(add-to-list 'auto-mode-alist '("\\.\\(skz\\|pak\\|pk\\|pk3\\|pk4\\|SKZ\\|PAK\\|PK\\|PK3\\|PK4\\)$" . archive-mode))
-(add-to-list 'auto-coding-alist '("\\.\\(skz\\|pak\\|pk\\|pk3\\|pk4\\|SKZ\\|PAK\\|PK\\|PK3\\|PK4\\)$" . no-conversion))
+(add-to-list
+ 'auto-mode-alist
+ '("\\.\\(skz\\|pak\\|pk\\|pk3\\|pk4\\|SKZ\\|PAK\\|PK\\|PK3\\|PK4\\)\\'" . archive-mode))
+(add-to-list
+ 'auto-coding-alist
+ '("\\.\\(skz\\|pak\\|pk\\|pk3\\|pk4\\|SKZ\\|PAK\\|PK\\|PK3\\|PK4\\)\\'" . no-conversion))
 
 (add-to-list 'auto-mode-alist '("\\.\\(dia\\|DIA\\)$" . archive-mode))
 (add-to-list 'auto-coding-alist '("\\.\\(dia\\|DIA\\)$" . no-conversion))

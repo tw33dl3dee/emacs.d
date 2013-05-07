@@ -1,10 +1,10 @@
-;; Lojban support
+;; Lojban mode customization.
 
-(autoload 'lojban-parse-region "lojban" "Parse the region as lojban text." t)
-(autoload 'lojban-describe-valsi "lojban" "Qualify VALSI and returns its description" t)
-(autoload 'lojban-mode "lojban-mode" "Lojban language mode." t)
+;; (autoload 'lojban-parse-region "lojban" "Parse the region as lojban text." t)
+;; (autoload 'lojban-describe-valsi "lojban" "Qualify VALSI and returns its description" t)
+;; (autoload 'lojban-mode "lojban-mode" "Lojban language mode." t)
 
-(add-to-list 'auto-mode-alist '("\\.jbo$" . lojban-mode))
+;; (add-to-list 'auto-mode-alist '("\\.jbo$" . lojban-mode))
 
 (add-hook 'lojban-mode-hook
 	  '(lambda ()

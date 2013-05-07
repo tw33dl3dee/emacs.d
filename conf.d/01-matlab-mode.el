@@ -1,4 +1,3 @@
-;; Matlab mode
-;;
+;;; Matlab mode
 
 (add-to-list 'auto-mode-alist '("\\.m$" . matlab-mode))
