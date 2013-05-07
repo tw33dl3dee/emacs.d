@@ -1,5 +1,4 @@
-;;; Window management functions
-;;;
+;;; Custom window layouts.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                 ;;

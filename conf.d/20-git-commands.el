@@ -1,7 +1,4 @@
-;;; Various enhancements for DVCSs (dvc-mode, custom commands, etc)
-;;;
-
-(require 'dvc-autoloads)
+;;; Custom Git commands.
 
 (defun my-git-whatsnew ()
   (interactive) 
