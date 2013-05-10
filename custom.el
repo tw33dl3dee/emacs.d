@@ -158,7 +158,7 @@ The document was typeset with
  '(c-basic-offset 2)
  '(c-echo-syntactic-information-p t)
  '(c-electric-pound-behavior (quote (alignleft)))
- '(c-offsets-alist (quote ((topmost-intro-cont . align-enum-class) (brace-list-open . 0) (statement-cont . align-enum-class-closing-brace) (substatement-open . 0) (case-label . +) (access-label . /) (label . /) (arglist-intro . 4) (cpp-macro-cont . +) (innamespace . 0))))
+ '(c-offsets-alist (quote ((topmost-intro-cont . align-enum-class) (member-init-intro . ++) (brace-list-open . 0) (statement-cont . align-enum-class-closing-brace) (substatement-open . 0) (case-label . +) (access-label . /) (label . /) (arglist-intro . 4) (cpp-macro-cont . +) (innamespace . 0))))
  '(c-tab-always-indent t)
  '(case-fold-search t)
  '(cperl-clobber-lisp-bindings t)
