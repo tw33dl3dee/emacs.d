@@ -156,6 +156,7 @@ The document was typeset with
  '(browse-url-generic-args (quote ("-newpage")))
  '(browse-url-generic-program "")
  '(c-basic-offset 2)
+ '(c-default-style (quote ((c++-mode . "stroustrup") (java-mode . "java") (awk-mode . "awk") (other . "gnu"))))
  '(c-echo-syntactic-information-p t)
  '(c-electric-pound-behavior (quote (alignleft)))
  '(c-offsets-alist (quote ((topmost-intro-cont . align-enum-class) (member-init-intro . ++) (brace-list-open . 0) (statement-cont . align-enum-class-closing-brace) (substatement-open . 0) (case-label . +) (access-label . /) (label . /) (arglist-intro . 4) (cpp-macro-cont . +) (innamespace . 0))))
