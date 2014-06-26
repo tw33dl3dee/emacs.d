@@ -162,7 +162,7 @@
  '(tramp-default-proxies-alist (quote (("vps" "root" "/ssh:%h:"))))
  '(tramp-verbose 4)
  '(transient-mark-mode t)
- '(uniquify-buffer-name-style (quote forward) nil (uniquify))
+ '(uniquify-buffer-name-style (quote post-forward-angle-brackets) nil (uniquify))
  '(use-dialog-box nil)
  '(user-mail-address "tw33dl3.dee@gmail.com")
  '(vc-svn-global-switches (quote ("--non-interactive")))
