@@ -1,3 +1,3 @@
 ;;; Load Yasnippet
 
-(require 'yasnippet-bundle)
+;(require 'yasnippet-bundle)

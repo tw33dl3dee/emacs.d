@@ -42,9 +42,6 @@
 (global-unset-key (kbd "<C-end>"))
 (global-unset-key (kbd "<C-home>"))
 
-;; make C-return alias to M-TAB (coz' ESC TAB is too slow)
-(global-set-key [C-return] "\M-\t")
-
 ;; window split operation
 (global-set-key (kbd "C-c <up>") 'transpose-frame)
 (global-set-key (kbd "C-c <down>") 'window-duplicate)
