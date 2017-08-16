@@ -43,8 +43,9 @@
 (global-unset-key (kbd "<C-home>"))
 
 ;; window split operation
-(global-set-key (kbd "C-c <up>") 'transpose-frame)
+;;(global-set-key (kbd "C-c <up>") 'transpose-frame)
 (global-set-key (kbd "C-c <down>") 'window-duplicate)
+(global-set-key (kbd "C-c <up>") 'window-duplicate-lr)
 (global-set-key (kbd "C-z C-3") 'window-split-3)
 (global-set-key (kbd "C-z C-4") 'window-split-4)
 (global-set-key (kbd "C-z C-5") 'window-split-5)

@@ -376,3 +376,13 @@
     (windmove-up)
     (windmove-up)
     (switch-to-buffer buf)))
+
+;;; Duplicate buffer in the left/right window.
+(defun window-duplicate-lr ()
+  (interactive)
+  (let ((buf (current-buffer)))
+    (windmove-left)
+    (switch-to-buffer buf)
+    (windmove-right)
+    (windmove-right)
+    (switch-to-buffer buf)))
