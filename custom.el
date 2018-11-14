@@ -537,7 +537,7 @@ The document was typeset with
  '(vc-svn-global-switches (quote ("--non-interactive")))
  '(w3m-home-page "http://localhost/")
  '(w3m-use-cookies t)
- '(warning-suppress-types (quote ((initialization))))
+ '(warning-suppress-types (quote ((initialization bytecomp))))
  '(wdired-allow-to-change-permissions t)
  '(wdired-confirm-overwrite nil)
  '(which-function-mode t nil (which-func))
