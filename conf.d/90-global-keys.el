@@ -15,7 +15,6 @@
 (global-set-key "\C-zl" 'locate-with-filter)
 (global-set-key "\C-z\C-j" 'lojban-describe-valsi)
 (global-set-key "\C-z\C-x" (lambda () (interactive) (compile-and-run)))
-(global-set-key "\C-z\C-f" 'smart-find-file)
 (global-set-key "\C-z\C-r" (lambda () (interactive) (revert-buffer nil t)))
 (global-set-key [(f1)] (lambda () (interactive) (manual-entry (current-word))))
 (global-set-key [(f2)] 'ffap-perl-module)
