@@ -62,7 +62,7 @@ To be called from Makefile."
 (setq emacs-user-root      "~/.emacs.d")
 (setq emacs-user-lisp-root "~/.emacs.d/site-lisp")
 
-(add-to-list 'load-path emacs-user-root)
+;; (add-to-list 'load-path emacs-user-root)
 (add-to-list 'load-path emacs-user-lisp-root)
 
 ;; Autoloads from `emacs-user-lisp-root'
